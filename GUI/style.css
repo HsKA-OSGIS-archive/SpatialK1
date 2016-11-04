@@ -34,6 +34,7 @@ ul {
 	font-size: 12px;
 }
 .elemValue {
+	float: right;
 	
 }
 
@@ -52,12 +53,22 @@ h3{
 	
 }
 .vNameValueContainer {
-	float: none;
+	height: 23px;
+}
+.hNameValueContainer {
+	height: 23px;
+}
+.button {
+	color: #FFF;
+	background-color: #039;
+	text-align: center;
+	padding-top: 4px;
+	padding-right: 0px;
 	padding-bottom: 4px;
+	padding-left: 0px;
+	cursor: pointer;
 }
-.hNameValueContainerKopie {
-	float: left;
-}
+
 
 form{
 	opacity: 1.0;
