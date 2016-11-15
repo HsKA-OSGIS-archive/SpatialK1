@@ -4,10 +4,11 @@ function addr_search(){
 	//Zugrif auf EingabeObjekt
 	var inp = document.getElementById("addr");
 	//Eingabe-Objekt wird als Wert gespeichert
-	var inp_val = inp.value
+	var inp_val = inp.value;
 	//Sonderzeichen werden ersetzt
-	inp_val = inp_val.replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/Ä/g,"Ae").replace(/Ö/g,"Oe").replace(/Ü/g,"Ue").replace(/ß/g,"ss");
-	console.log("inp" + inp_val);
+	//inp_val = inp_val.replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/Ä/g,"Ae").replace(/Ö/g,"Oe").replace(/Ü/g,"Ue").replace(/ß/g,"ss");
+	console.log("inp" );
+	console.log(inp_val);
 
 	//Zugriff auf Nominatim
 	$.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + inp_val, function(data) {
@@ -17,6 +18,7 @@ function addr_search(){
 		    "<li><a href='#' onclick='chooseAddr(" +
 		    val.lat + ", " + val.lon + ");return false;'>" + val.display_name +
 		    '</a></li>'
+			//console.log("key:"+key);
 		  );
 		});
 
@@ -28,6 +30,7 @@ function addr_search(){
 	        html: items.join('')
 	      }).appendTo('#results');
 	    } else {
+			console.log("nicht");
 	      $('<p>', { html: "No results found" }).appendTo('#results');
 	    }
 	  });
