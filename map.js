@@ -4,8 +4,9 @@ function addr_search(){
 	//Zugrif auf EingabeObjekt
 	var inp = document.getElementById("start");
 	//Eingabe-Objekt wird als Wert gespeichert
-	var inp_val = inp.value
+	var inp_val = inp.value;
 	//Sonderzeichen werden ersetzt
+<<<<<<< HEAD
 	inp_val = inp_val.replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/Ä/g,"Ae").replace(/Ö/g,"Oe").replace(/Ü/g,"Ue").replace(/ß/g,"ss");
 	console.log("inp_val:  " + inp_val);
 
@@ -17,6 +18,23 @@ function addr_search(){
 		     "<li><a href='#' onclick='chooseAddr(" +
 		     val.lat + ", " + val.lon + ");return false;'>" + val.display_name +
 		     '</a></li>'
+=======
+	//inp_val = inp_val.replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/Ä/g,"Ae").replace(/Ö/g,"Oe").replace(/Ü/g,"Ue").replace(/ß/g,"ss");
+	console.log("inp" );
+	console.log(inp_val);
+
+	//Zugriff auf Nominatim
+	$.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + inp_val, function(data) {
+		var items = [];
+		$.each(data, function(key, val) {
+		  items.push(
+		    "<li><a href='#' onclick='chooseAddr(" +
+		    val.lat + ", " + val.lon + ");return false;'>" + val.display_name +
+		    '</a></li>'
+			//console.log("key:"+key);
+		  );
+		});
+>>>>>>> origin/GUI
 
 		   );
 		 });
@@ -28,12 +46,22 @@ function addr_search(){
 	    	
 	       $('<p>', { html: "Search results:" }).appendTo('#results');
 	      $('<ul/>', {
+<<<<<<< HEAD
 	         'class': 'my-new-list',
 	         html: items.join('')
 	       }).appendTo('#results');
 	     } else {
 	       $('<p>', { html: "No results found" }).appendTo('#results');
 	     }
+=======
+	        'class': 'my-new-list',
+	        html: items.join('')
+	      }).appendTo('#results');
+	    } else {
+			console.log("nicht");
+	      $('<p>', { html: "No results found" }).appendTo('#results');
+	    }
+>>>>>>> origin/GUI
 	  });
 }
 //------------------ENDE Geocoding mit Nominatim-------------------------
@@ -71,8 +99,10 @@ function addr_search(){
 				}
 			}
 //---------------------Ende der Zeichenfunktion--------------------------
-
+//---------------------Form--------------------------------------------------
+var begin, end, residence, ageGroup, stadiumFoetus, result;
+var actions = [];
+//---------------------Ende der Form--------------------------
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //--------------------------------------------------------------------------
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-

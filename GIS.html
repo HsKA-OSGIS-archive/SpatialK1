@@ -3,18 +3,19 @@
     <head>
         <title>OpenLayers Map Controls</title>
 		<meta charset="utf-8"/>
+		<html xmlns="http://www.w3.org/1999/xhtml">
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/OpenLayers.js"></script>
 		<!-- <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-routing.js?key=KEY"></script> -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/theme/default/style.css" type="text/css">
         <style>body, html, #map { width: 99%; height: 99%; }</style>
-		<link rel="stylesheet" href="./style.css" type="text/css">
-		<script type="text/javascript" href="geoJson.js"></script>
+		<!--<link rel="stylesheet" href="./style.css" type="text/css">-->
+		
 		<script src="map.js" charset="UTF-8"></script>
-		<script src="http://code.jquery.com/jquery-latest.min.js"
-        type="text/javascript"></script>
+		<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
         <script src="geoJson.js" type="text/javascript" charset="utf-8"></script>
         <link href="GUI/style.css" rel="stylesheet" type="text/css" />
-<script src="GUI/interfaceFunctionaity.js" type="text/javascript"></script>
+		<link href="map_style.css" rel="stylesheet" type="text/css" />
+		<script src="GUI/interfaceFunctionaity.js" type="text/javascript"></script>
 
 
 
@@ -22,12 +23,137 @@
     <body>
         <div id="map"></div>
 
-        
+
+         <div id="search">
+            <input type="text" name="addr" value="" id="addr" size="10" onkeydown = "if (event.keyCode == 13)
+            			document.getElementById('btnSearch').click()" />
+            <button type="button" id= "btnSearch" onclick="addr_search();">Search</button>
+            <div id="results"></div>
+        </div>
 		
+		
+		<div id="Container">
+			<h1>DOSISRECHNER</h1>
+		  <form name="persData">
+				 <h2>Persönliche Informationen</h2>
+				 <div class="InputUnit"><!-- general personal data-->
+					<div class="vNameValueContainer"><!-- Alter -->
+						<label class="elemName">Alter</label>
+						<select class="elemValue" name="age" id="age_dropdown" onchange="ageGroup = this;">
+							<option value="A1">&lt; 1 a</option>
+							<option value="A2">1 - 2 a</option>
+							<option value="A3">2 - 7 a</option>
+							<option value="A4">7 - 12 a</option>
+							<option value="A5">12 - 17 a</option>
+							<option value="A6">&gt 17 a</option>
+						</select>
+					</div><!-- END Alter -->
+				   <div class="hNameValueContainer"><!-- pregnancy -->
+						<label class="elemName">Schwangerschaft</label>
+						<input class="elemValue" type="checkbox" name="pregnancy" id="pregnancy_dropdown" onchange="if(this.checked == false){statiumFoetus = 0} else{staiumFoetus = 1}"/>	
+					</div><!-- END pregnancy -->
+				</div><!-- END general personal data-->
+				<h2>Aufenthalte</h2>
+				<div class="InputUnit"><!-- Departure info input -->
+					<div class="hNameValueContainer"><!-- Input elements for departure location -->
+						<label class="elemName">Start</label>
+						<input type="datetime" class="elemValue" name="start"/>
+					</div><!-- END Input elements for departure location -->
+					<!--div class="hNameValueContainer">
+						<label class="elemName">Aufenthaltsdauer</label>
+						<input type="text" class="elemValue" name="startDuration"/>
+					</div><-- END Duration of residence -->
+					<div class="hNameValueContainer">
+					<!-- Input elements for departing info -->
+						<label class="elemName">Ziel</label>
+						<input type="datetime" class="elemValue" name="destination"/>
+					</div>
+					</div>
+					<!--div class="hNameValueContainer">
+						<label class="elemName">Aufenthaltsdauer</label>
+						<input type="text" class="elemValue" name="destinationDuration"/>
+					</div-->
+					<div class="InputUnit">
+					<h2>Schutzmaßnahmen</h2>
+					<div class="rollOutMenu"><!--Protection mesures-->
+						<div class="hNameValueContainer">
+							<label class="elemName">Gasmaske</label>
+							<input class="elemValue" type="checkbox" name="Gasmask" onchange="if(this.checked == false){
+									while(actions.indexOf('protecting_mask') != -1){
+										actions.splice(actions.indexOf('protecting_mask'), 1);
+									}
+								}
+								else{
+									actions.push('protecting_mask');
+								}
+								alert(actions);"/>
+						</div>
+						<div class="hNameValueContainer">
+							<label class="elemName">Iodtablette</label>
+							<input class="elemValue" type="checkbox" name="Iodine" onchange="if(this.checked == false){
+									while(actions.indexOf('iodine') != -1){
+										actions.splice(actions.indexOf('iodine'), 1);
+									}
+								}
+								else{
+									actions.push('iodine');
+								}
+								alert(actions);"/>
+						</div>
+						<div class="hNameValueContainer">
+							<label class="elemName">Evakuierung</label>
+							<input class="elemValue" type="checkbox" name="Evacuation" onchange="if(this.checked == false){
+									while(actions.indexOf('evacuation') != -1){
+										actions.splice(actions.indexOf('evacuation'), 1);
+									}
+								}
+								else{
+									actions.push('evacuation');
+								}
+								alert(actions);"/>
+						</div>
+					</div><!--END protection mesures-->
+					<div class="vNameValueContainer"><!-- residens start-->
+						<label class="elemName">Aufenthaltsort</label>
+						<select class="elemValue" name="residenceStart" onchange="residence = this.value;">
+							<option value="outside">im Freien / Auto</option>
+							<option value="house">Haus</option>
+							<option value="basement">Keller</option>
+						</select>
+					</div><!-- END residens start-->
+				</div><!-- END Input elements for departure info-->
+				<div class="button" onclick="JSONXML()">Dosis Berechnen</div>
+				</form>
+			 </div>
+		</div>
+
+		<script type="text/javascript" href="geoJson.js"></script>
+		<script  src="XML_Writer.js"></script>
+		<script  src="XML_script.js"></script>
         <script type="text/javascript">
         // init the map object with a OSM base layer.
 
-        var map = new OpenLayers.Map('map', {
+       	var ageGroup;
+		var stadiumFoetus;
+		var json_var;
+		 
+		 
+		function readDropdown(){
+			ageGroup = document.getElementById("age_dropdown").value;
+			stadiumFoetus = document.getElementById("pregnancy_dropdown").value;
+		}
+		
+		function JSONXML(){
+		
+			inJson();
+			createXML();
+		
+		}
+
+
+
+
+	   var map = new OpenLayers.Map('map', {
                 layers: [
                     new OpenLayers.Layer.OSM('OSM'),
                     new OpenLayers.Layer.OSM('OpenCycleMap',
@@ -38,7 +164,11 @@
                 controls: [
                     new OpenLayers.Control.Navigation(),
                     new OpenLayers.Control.Attribution(),
+<<<<<<< HEAD
                     //new OpenLayers.Control.PanZoomBar(),
+=======
+                   //new OpenLayers.Control.PanZoomBar(),
+>>>>>>> origin/GUI
                     new OpenLayers.Control.LayerSwitcher({
                         'ascending': true
                     }),
@@ -76,11 +206,10 @@
 					{
 						clickout: true, toggle: false,
 						multiple: false, hover: false,
-						click: true,
 						toggleKey: "ctrlKey", // ctrl key removes from selection
 						multipleKey: "shiftKey", // shift key adds to selection
 						box: true,
-						//unselect: true
+						click: true
 
 					}
 
@@ -93,12 +222,7 @@
 
 
 		
-		// function remove(){
-
-		// 	sel = document.getElementsByTagName('select');
-		// 	editingLayer.removeFeatures(SelectFeatures;
-		// }
-		
+				
 		map.addLayers([editingLayer]);
 	
         	
@@ -112,7 +236,7 @@
 		function toggleControl(element) {
 			for(key in drawControls) {
 				var control = drawControls[key];
-				if(element.value == key && element.value) {
+				if(element == key && element) {
 					control.activate();
 				} else {
 					control.deactivate();
@@ -120,6 +244,7 @@
 			}
 		}
 
+<<<<<<< HEAD
 
 
 		//delete all selected features	
@@ -256,6 +381,10 @@
 
 	
 
+=======
+        </script>
+
+>>>>>>> origin/GUI
          <div id="search">
             <input type="text" name="addr" style = "display: none" value="" id="addr" size="10" onkeydown = "if (event.keyCode == 13)
             			document.getElementById('btnSearch').click()" />
@@ -264,17 +393,17 @@
         </div>
 
 
-
-
-
 		<div id= "toolbar">
-			<button type= "button" class="buttons" id="draw" value="line" onclick="toggleControl(this);"> Draw Line </button>
-			<button type= "button" class="buttons" id="drag" value="drag" onclick="toggleControl(this);"> Drag Line </button>
-			<button type= "button" class="buttons" id="select" value="select" onclick="toggleControl(this);"> Select Line </button>
-			<button type= "button" class="buttons" id="remove" value="remove" onclick="remove()"> Remove Line</button>
-			<button type= "button" class="buttons" id="submit" value="submit" onclick="inJson()"> Submit Route </button>
+			<img id="line" src="./Buttons/draw.svg" width="30px" height="30px"  onclick="toggleControl(this.id);"/></img>
+			
+			<img id="drag" src="./Buttons/drag.svg" width="30px" height="30px"  onclick="toggleControl(this.id);"/></img>
+			<img id="select" src="./Buttons/select.svg" width="30px" height="30px"   onclick="toggleControl(this.id);"/></img>
+			<img id="erase" src="./Buttons/erase.svg" width="30px" height="30px"   onclick="editingLayer.removeFeatures(editingLayer.selectedFeatures)"/></img>
+			
+			
 		</div>
 
+<<<<<<< HEAD
 
 
 
@@ -282,5 +411,7 @@
 
 
 		
+=======
+>>>>>>> origin/GUI
     </body>
 </html>
