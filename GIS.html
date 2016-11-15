@@ -3,6 +3,7 @@
     <head>
         <title>OpenLayers Map Controls</title>
 		<meta charset="utf-8"/>
+		<html xmlns="http://www.w3.org/1999/xhtml">
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/OpenLayers.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/theme/default/style.css" type="text/css">
         <style>body, html, #map { width: 99%; height: 99%; }</style>
@@ -25,7 +26,102 @@
             <button type="button" id= "btnSearch" onclick="addr_search();">Search</button>
             <div id="results"></div>
         </div>
-
+		
+		
+		<div id="Container">
+			<h1>DOSISRECHNER</h1>
+		  <form name="persData">
+				 <h2>Persönliche Informationen</h2>
+				 <div class="InputUnit"><!-- general personal data-->
+					<div class="vNameValueContainer"><!-- Alter -->
+						<label class="elemName">Alter</label>
+						<select class="elemValue" name="age" onchange="ageGroup = this;">
+							<option value="A1">&lt; 1 a</option>
+							<option value="A2">1 - 2 a</option>
+							<option value="A3">2 - 7 a</option>
+							<option value="A4">7 - 12 a</option>
+							<option value="A5">12 - 17 a</option>
+							<option value="A6">&gt 17 a</option>
+						</select>
+					</div><!-- END Alter -->
+				   <div class="hNameValueContainer"><!-- pregnancy -->
+						<label class="elemName">Schwangerschaft</label>
+						<input class="elemValue" type="checkbox" name="pregnancy" onchange="if(this.checked == false){statiumFoetus = 0} else{staiumFoetus = 1}"/>	
+					</div><!-- END pregnancy -->
+				</div><!-- END general personal data-->
+				<h2>Aufenthalte</h2>
+				<div class="InputUnit"><!-- Departure info input -->
+					<div class="hNameValueContainer"><!-- Input elements for departure location -->
+						<label class="elemName">Start</label>
+						<input type="datetime" class="elemValue" name="start"/>
+					</div><!-- END Input elements for departure location -->
+					<!--div class="hNameValueContainer">
+						<label class="elemName">Aufenthaltsdauer</label>
+						<input type="text" class="elemValue" name="startDuration"/>
+					</div><-- END Duration of residence -->
+					<div class="hNameValueContainer">
+					<!-- Input elements for departing info -->
+						<label class="elemName">Ziel</label>
+						<input type="datetime" class="elemValue" name="destination"/>
+					</div>
+					</div>
+					<!--div class="hNameValueContainer">
+						<label class="elemName">Aufenthaltsdauer</label>
+						<input type="text" class="elemValue" name="destinationDuration"/>
+					</div-->
+					<div class="InputUnit">
+					<h2>Schutzmaßnahmen</h2>
+					<div class="rollOutMenu"><!--Protection mesures-->
+						<div class="hNameValueContainer">
+							<label class="elemName">Gasmaske</label>
+							<input class="elemValue" type="checkbox" name="Gasmask" onchange="if(this.checked == false){
+									while(actions.indexOf('protecting_mask') != -1){
+										actions.splice(actions.indexOf('protecting_mask'), 1);
+									}
+								}
+								else{
+									actions.push('protecting_mask');
+								}
+								alert(actions);"/>
+						</div>
+						<div class="hNameValueContainer">
+							<label class="elemName">Iodtablette</label>
+							<input class="elemValue" type="checkbox" name="Iodine" onchange="if(this.checked == false){
+									while(actions.indexOf('iodine') != -1){
+										actions.splice(actions.indexOf('iodine'), 1);
+									}
+								}
+								else{
+									actions.push('iodine');
+								}
+								alert(actions);"/>
+						</div>
+						<div class="hNameValueContainer">
+							<label class="elemName">Evakuierung</label>
+							<input class="elemValue" type="checkbox" name="Evacuation" onchange="if(this.checked == false){
+									while(actions.indexOf('evacuation') != -1){
+										actions.splice(actions.indexOf('evacuation'), 1);
+									}
+								}
+								else{
+									actions.push('evacuation');
+								}
+								alert(actions);"/>
+						</div>
+					</div><!--END protection mesures-->
+					<div class="vNameValueContainer"><!-- residens start-->
+						<label class="elemName">Aufenthaltsort</label>
+						<select class="elemValue" name="residenceStart" onchange="residence = this.value;">
+							<option value="outside">im Freien / Auto</option>
+							<option value="house">Haus</option>
+							<option value="basement">Keller</option>
+						</select>
+					</div><!-- END residens start-->
+				</div><!-- END Input elements for departure info-->
+				<div class="button" onclick="inJson()">Dosis Berechnen</div>
+				</form>
+			 </div>
+		</div>
 		
         <script type="text/javascript">
         // init the map object with a OSM base layer.
@@ -41,7 +137,7 @@
                 controls: [
                     new OpenLayers.Control.Navigation(),
                     new OpenLayers.Control.Attribution(),
-                    new OpenLayers.Control.PanZoomBar(),
+                   //new OpenLayers.Control.PanZoomBar(),
                     new OpenLayers.Control.LayerSwitcher({
                         'ascending': true
                     }),
@@ -79,11 +175,10 @@
 					{
 						clickout: true, toggle: false,
 						multiple: false, hover: false,
-						click: true,
 						toggleKey: "ctrlKey", // ctrl key removes from selection
 						multipleKey: "shiftKey", // shift key adds to selection
 						box: true,
-						//unselect: true
+						click: true
 
 					}
 
@@ -115,7 +210,7 @@
 		function toggleControl(element) {
 			for(key in drawControls) {
 				var control = drawControls[key];
-				if(element.value == key && element.value) {
+				if(element == key && element) {
 					control.activate();
 				} else {
 					control.deactivate();
@@ -130,28 +225,17 @@
 			editingLayer.removeFeatures(editingLayer.selectedFeatures);
 		}
 
-
-
-
-
-
-        
-		
         </script>
 
-
-
-
 		<div id= "toolbar">
-			<button type= "button" class="buttons" id="draw" value="line" onclick="toggleControl(this);"> Draw Line </button>
-			<button type= "button" class="buttons" id="drag" value="drag" onclick="toggleControl(this);"> Drag Line </button>
-			<button type= "button" class="buttons" id="select" value="select" onclick="toggleControl(this);"> Select Line </button>
-			<button type= "button" class="buttons" id="remove" value="remove" onclick="remove()"> Remove Line</button>
-			<button type= "button" class="buttons" id="submit" value="submit" onclick="inJson()"> Submit Route </button>
+			<img id="line" src="./Buttons/draw.svg" width="30px" height="30px"  onclick="toggleControl(this.id);"/></img>
+			
+			<img id="drag" src="./Buttons/drag.svg" width="30px" height="30px"  onclick="toggleControl(this.id);"/></img>
+			<img id="select" src="./Buttons/select.svg" width="30px" height="30px"   onclick="toggleControl(this.id);"/></img>
+			<img id="remove" src="./Buttons/erase.svg" width="30px" height="30px"   onclick="remove()"/></img>
+			
+			
 		</div>
 
-
-
-		
     </body>
 </html>

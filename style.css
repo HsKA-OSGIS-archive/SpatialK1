@@ -1,58 +1,136 @@
+@charset "utf-8";
 #toolbar{
 	position: absolute;
-	right: 25px;
-	top: 20px;	
-	background-color: grey;
+	left: 360px;
+	top: 10px;	
+	background-color: none;
 	width: auto;
 	height: auto;
 	
 }
 #map{
 	position: absolute;
-	height: 99%;
+	height:auto;
+	margin-top: 0px;
 	width: 100%;
-	left: 5px;
-
-
-
-
+	left: 0px;
+	top: 0px;
+	bottom:0px;
 }
 
-#draw{
-	top: 10%;
+#line{
+	
 	text-align:center;
+	background-color: none;
+	
 }
 #drag{
-	top: 15%;
+
+	left: 0px;
 }
 #select{
-	top: 20%;
+	
+	left: 0px;
 }
 #submit{
-	top: 25%;
+	
 }
 .buttons{
-	width: 60%;
+	width: 150px;
 	position: relative;
+}
+#results {
+	  font-style: sans-serif;
+	  color: black;
+	  font-size: 75%;
+	}
+#search {
+	background-color: none;
+	position: absolute;
+	top: 395px;
+	left: 0px;
+	width: 300px;
+	height: auto;
+	padding: 10px;
+            }
+#search input {
+				width: 200px;
+}
+#Container {
+	font-family: opensansCondBold,Arial,helvetica,sans-serif;
+	height: auto;
+	width: 300px;
+	top: 0px;
+	position: relative;
+	border-top-style: dotted;
+	border-right-style: dotted;
+	border-bottom-style: dotted;
+	border-left-style: dotted;
+	background-color: #FFF;
+	opacity: 0.85;	
+	/*margin-left: 10px;*/
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	
+}
+.InputUnit {
+	border-bottom-style: solid;
+	border-top-style: none;
+	border-right-style: none;
+	border-left-style: none;
+	border-bottom-color: #999;
+	width: 300px;
+	border-bottom-width: 1px;
+	margin-bottom: 4px;
+	padding-bottom: 5px;
+}
+ul {
+	list-style-type: none;
+}
+
+.elemName {
+	text-align: left;
+	font-size: 12px;
+}
+.elemValue {
+	float: right;
+	
+}
+H1 {
+	font-size: 16px;
+	color: #039;
+}
+H2 {
+	font-size: 12px;
+	color: #039;	
+}
+h3{
+	font-size: 12px;
+	
+}
+.vNameValueContainer {
+	height: 23px;
+}
+.hNameValueContainer {
+	height: 23px;
+}
+.button {
+	color: #FFF;
+	background-color: #039;
+	text-align: center;
+	padding-top: 4px;
+	padding-right: 0px;
+	padding-bottom: 4px;
+	padding-left: 0px;
+	cursor: pointer;
 }
 
 
-#results {
-              font-style: sans-serif;
-              color: black;
-              font-size: 75%;
-            }
+form{
+	opacity: 1.0;
+}
 
-
-
-#search {
-                background-color: white;
-                position: absolute;
-                bottom: 75px;
-                left: 50px;
-                width: auto;
-                height: auto;
-                padding: 10px;
-            }
-#search input {
-                width: 200px;
+lable{
+	font-family:Verdana, Geneva, sans-serif;
+}
