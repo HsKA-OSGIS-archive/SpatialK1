@@ -1,0 +1,58 @@
+#toolbar{
+	position: absolute;
+	right: 25px;
+	top: 20px;	
+	background-color: grey;
+	width: auto;
+	height: auto;
+	
+}
+#map{
+	position: absolute;
+	height: 99%;
+	width: 100%;
+	left: 5px;
+
+
+
+
+}
+
+#draw{
+	top: 10%;
+	text-align:center;
+}
+#drag{
+	top: 15%;
+}
+#select{
+	top: 20%;
+}
+#submit{
+	top: 25%;
+}
+.buttons{
+	width: 60%;
+	position: relative;
+}
+
+
+#results {
+              font-style: sans-serif;
+              color: black;
+              font-size: 75%;
+            }
+
+
+
+#search {
+                background-color: white;
+                position: absolute;
+                bottom: 75px;
+                left: 50px;
+                width: auto;
+                height: auto;
+                padding: 10px;
+            }
+#search input {
+                width: 200px;
