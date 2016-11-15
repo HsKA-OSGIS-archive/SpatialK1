@@ -4,6 +4,7 @@
         <title>OpenLayers Map Controls</title>
 		<meta charset="utf-8"/>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/OpenLayers.js"></script>
+		<!-- <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-routing.js?key=KEY"></script> -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/theme/default/style.css" type="text/css">
         <style>body, html, #map { width: 99%; height: 99%; }</style>
 		<link rel="stylesheet" href="./style.css" type="text/css">
@@ -37,7 +38,7 @@
                 controls: [
                     new OpenLayers.Control.Navigation(),
                     new OpenLayers.Control.Attribution(),
-                    new OpenLayers.Control.PanZoomBar(),
+                    //new OpenLayers.Control.PanZoomBar(),
                     new OpenLayers.Control.LayerSwitcher({
                         'ascending': true
                     }),
@@ -128,6 +129,19 @@
 
 
 
+		// 		//Routing function
+		// var dir = MQ.routing.directions();
+		// dir.route({
+		// 	locations:[getElementById, end_loc]
+		// });
+
+		// map.addLayers(MQ.routing.routeLayer({
+		// 	directions: dir,
+		// 	fitBounds:true
+		// }));
+
+
+
 
 
 
@@ -160,16 +174,25 @@
             <div class="InputUnit"><!-- Departure info input -->
 				<div class="hNameValueContainer"><!-- Input elements for departure location -->
                 	<label class="elemName">Start</label>
-                	<input type="datetime" class="elemValue" name="start"/>
+                	<input type="text" class="elemValue" name="start" id = "start" onkeydown = "if (event.keyCode == 13)
+            			document.getElementById('btnSearch').click()"  />
+            			 <div id="results"></div>
                 </div><!-- END Input elements for departure location -->
                 <!--div class="hNameValueContainer">
                 	<label class="elemName">Aufenthaltsdauer</label>
                 	<input type="text" class="elemValue" name="startDuration"/>
                 </div><-- END Duration of residence -->
+
+
+
+
+
+
                 <div class="hNameValueContainer">
                 <!-- Input elements for departing info -->
                 	<label class="elemName">Ziel</label>
-                	<input type="datetime" class="elemValue" name="destination"/>
+                	<input type="text" class="elemValue" name="destination" id = "destination" onkeydown = "if (event.keyCode == 13)
+            			document.getElementById('btnSearch').click()" />
                 </div>
                 </div>
                 <!--div class="hNameValueContainer">
@@ -234,10 +257,10 @@
 	
 
          <div id="search">
-            <input type="text" name="addr" value="" id="addr" size="10" onkeydown = "if (event.keyCode == 13)
+            <input type="text" name="addr" style = "display: none" value="" id="addr" size="10" onkeydown = "if (event.keyCode == 13)
             			document.getElementById('btnSearch').click()" />
-            <button type="button" id= "btnSearch" onclick="addr_search();">Search</button>
-            <div id="results"></div>
+            <button type="button" style = "display: none" id= "btnSearch" onclick="addr_search();">Search</button>
+           
         </div>
 
 
@@ -251,6 +274,10 @@
 			<button type= "button" class="buttons" id="remove" value="remove" onclick="remove()"> Remove Line</button>
 			<button type= "button" class="buttons" id="submit" value="submit" onclick="inJson()"> Submit Route </button>
 		</div>
+
+
+
+
 
 
 
