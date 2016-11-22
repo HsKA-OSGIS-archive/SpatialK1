@@ -28,34 +28,29 @@ var map = new OpenLayers.Map('map', {
 
         // we will use this vector layer to demonstrate editing vector features
         var editingLayer = new OpenLayers.Layer.Vector("Editing");
+		var drawControls ={
+			line: new OpenLayers.Control.DrawFeature(editingLayer,
+						OpenLayers.Handler.Path),
+			drag: new OpenLayers.Control.DragFeature(editingLayer),
+			select: new OpenLayers.Control.SelectFeature(
+					editingLayer,
+					{
+						clickout: true, toggle: false,
+						multiple: false, hover: false,
+						toggleKey: "ctrlKey", // ctrl key removes from selection
+						multipleKey: "shiftKey", // shift key adds to selection
+						box: true,
+						click: true
+
+					}
+
+
+				)
+			
+
+		};	
         map.addLayers([editingLayer]);
         //var snapVertex = {methods: ['vertex', 'edge'], layers: [vectors]};
-
-        
-
-
-
-
-
-
-
-        // init the editing toolbar and a basic selection control
-        var editingToolbar = new OpenLayers.Control.EditingToolbar(editingLayer);
-        var selectCtrl = new OpenLayers.Control.SelectFeature(
-                editingLayer, {
-                //hover: true
-                eventListeners:{
-                    featurehighlighted: function overlay_delete(event){
-                        var feature = event.feature;
-
-                        //if(confirm(strConfirmMessage)){
-                            editingLayer.removeFeatures([feature]);
-                        //}
-                    }
-                }
-            });
-        map.addControls([editingToolbar, selectCtrl]);
-        selectCtrl.activate();
 
 
 
@@ -66,18 +61,16 @@ function addr_search(id){
 		//Zugriff auf EingabeObjekt
 	var inp = id;
 	//Eingabe-Objekt wird als Wert gespeichert
-	var inp_val = document.getElementById(inp).value;// ;  $(id).value;
-	console.log("inp: " + inp + " inp_val: " + inp_val);
+	var inp_val = document.getElementById(inp).value;
 	//Sonderzeichen werden ersetzt
 	inp_val = inp_val.replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/Ä/g,"Ae").replace(/Ö/g,"Oe").replace(/Ü/g,"Ue").replace(/ß/g,"ss");
-	alert('Nach replae: ' + inp_val);
 
 	//Zugriff auf Nominatim
 	$.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + inp_val, function(data) {
 		 var items = [];
 		 $.each(data, function(key, val) {
 		   items.push(
-		     "<li><a href='#' onclick='chooseAddr(" +
+		     "<li class='suggest'><a href='#' onclick='chooseAddr(" +
 		     val.lat + ", " + val.lon + ");return false;'>" + val.display_name +
 		     '</a></li>'
 
@@ -89,7 +82,6 @@ function addr_search(id){
 
 		    $(resultContainer).empty();
 	     if (items.length != 0) {
-	    	alert('more than 0 results');
 	      $('<ul/>', {
 	         'class': 'my-new-list',
 			 'onclick' : '$('+ resultContainer + ').empty()',
@@ -111,6 +103,7 @@ function addr_search(id){
 	  var location = new OpenLayers.LonLat(lng,lat);
 	  map.setCenter(location.transform('EPSG:4326', 'EPSG:3857'));
 	  map.zoomTo(17);
+	  $(".suggest").remove();
 	}
 //-------------------Ende Fokus auf eingegebene Adresse
 
@@ -119,6 +112,10 @@ function addr_search(id){
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //---------------------Zeichenfunktion-----------------------------------
+		 for(var key in drawControls) {
+					map.addControl(drawControls[key]);
+		}
+		 
 		 function toggleControl(element) {
 				
 				for(key in drawControls) {
