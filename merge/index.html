@@ -50,13 +50,13 @@
                 </div><!-- END Alter -->
 			    <div class="hNameValueContainer"><!-- pregnancy -->
                		<label class="elemName">Schwangerschaft</label>
-                	<input class="elemValue" type="checkbox" id="pregnancy_dropdown" name="pregnancy" onchange="if(this.checked == false){statiumFoetus = 0} else{staiumFoetus = 1}"/>	
+                	<input class="elemValue" type="checkbox" id="pregnancy_dropdown" name="pregnancy" onchange="if(this.checked == false){statiumFoetus = '0'} else{staiumFoetus = '1'}"/>	
                 </div><!-- END pregnancy -->
             </div><!-- END general personal data-->
             <div class="InputUnit"><!-- Departure info input -->
 				<h2>Aufenthalte</h2>
                 <div class="tFieldPLUSButton">
-               		<input class="locSearch" id="start" type="text" ng-model="model" name="start" placeholder="Start" onkeydown = "console.log('Tip')"/>
+               		<input class="locSearch" id="start" type="text" ng-model="model" name="start" placeholder="Start"/>
                 	<div class="searchButton" onclick="addr_search('start')">S</div>
                 </div>
                 <div id="resultsstart"></div>
