@@ -1,5 +1,29 @@
-var begin, end, residence, ageGroup, stadiumFoetus, result;
+var begin, end, residence, ageGroup, stadiumFoetus, result, json_var;
+
+
 var actions = [];
+
+		var checkboxValue;
+
+		function readDropdown(){
+			ageGroup = document.getElementById("age_dropdown").value;
+			checkboxValue = document.getElementById("pregnancy_dropdown").checked;
+			
+			if (checkboxValue == true){
+				stadiumFoetus = "1";
+			}
+			else if (checkboxValue == false){
+				stadiumFoetus = "0";
+			}
+		}
+		
+		function JSONXML(){
+		
+			inJson();
+			createXML();
+		
+		}
+
 
 $(function(){	
 			$('.daterangepickerCon').daterangepicker({

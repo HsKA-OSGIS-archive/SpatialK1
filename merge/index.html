@@ -23,7 +23,7 @@
 <script src="Scripts_external/daterangepicker/daterangepicker.js"></script>
 <link href="Scripts_external/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
 
-<script src="Scripts_own/XML_Writer.js" type="text/javascript"></script>
+<script src="Scripts_external/XML_Writer.js" type="text/javascript"></script>
 <script src="Scripts_own/XML_script.js" type="text/javascript"></script>
 
 <link href="Styles/style.css" rel="stylesheet" type="text/css" />
@@ -39,7 +39,7 @@
              <div class="InputUnit"><!-- general personal data-->
                 <div class="vNameValueContainer"><!-- Alter -->
                 	<label class="elemName">Alter</label>
-                	<select class="elemValue" name="age" onchange="ageGroup = this;">
+                	<select class="elemValue" name="age" id="age_dropdown" onchange="ageGroup = this;">
                 		<option value="A1">&lt; 1 a</option>
                     	<option value="A2">1 - 2 a</option>
                     	<option value="A3">2 - 7 a</option>
@@ -50,7 +50,7 @@
                 </div><!-- END Alter -->
 			    <div class="hNameValueContainer"><!-- pregnancy -->
                		<label class="elemName">Schwangerschaft</label>
-                	<input class="elemValue" type="checkbox" name="pregnancy" onchange="if(this.checked == false){statiumFoetus = 0} else{staiumFoetus = 1}"/>	
+                	<input class="elemValue" type="checkbox" id="pregnancy_dropdown" name="pregnancy" onchange="if(this.checked == false){statiumFoetus = 0} else{staiumFoetus = 1}"/>	
                 </div><!-- END pregnancy -->
             </div><!-- END general personal data-->
             <div class="InputUnit"><!-- Departure info input -->
@@ -134,7 +134,7 @@
                     </select>
                 </div><!-- END residens start-->
             </div><!-- END Input elements for departure info-->
-            <div class="button" onclick="createXML()">Dosis Berechnen</div>
+            <div class="button" onclick="JSONXML()">Dosis Berechnen</div>
             </form>
          </div>
 	</div>

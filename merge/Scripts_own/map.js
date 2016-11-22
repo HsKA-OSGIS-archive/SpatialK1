@@ -64,10 +64,10 @@ function addr_search(id){
 	//id = "#" + id;
 	var resultContainer = '#results' + id.replace('#', '');
 		//Zugriff auf EingabeObjekt
-	var inp = $(id);
+	var inp = id;
 	//Eingabe-Objekt wird als Wert gespeichert
-	var inp_val = document.getElementById('id').text// ;  $(id).value;
-	alert(inp_val);
+	var inp_val = document.getElementById(inp).value;// ;  $(id).value;
+	console.log("inp: " + inp + " inp_val: " + inp_val);
 	//Sonderzeichen werden ersetzt
 	inp_val = inp_val.replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/Ä/g,"Ae").replace(/Ö/g,"Oe").replace(/Ü/g,"Ue").replace(/ß/g,"ss");
 	alert('Nach replae: ' + inp_val);

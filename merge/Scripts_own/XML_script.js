@@ -80,7 +80,7 @@ readDropdown();
 		   v.writeStartElement("Data", "wps");   
 				v.writeStartElement("ComplexData", "wps");
 				v.writeAttributeString('mimeType','application/json');				
-				v.writeCDATA(geoJSON());
+				v.writeCDATA(json_var);
 		   v.writeEndElement();
 		   v.writeEndElement();
 	   v.writeEndElement();
