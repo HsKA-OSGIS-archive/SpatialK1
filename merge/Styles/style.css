@@ -126,11 +126,3 @@ lable{
 	height: 23px;
 	background-color: #F3F3F3;
 }
-#buttoncontainer {
-	display: inline;
-}
-.geomButton {
-	height: 40px;
-	width: 40px;
-	cursor: pointer;
-}

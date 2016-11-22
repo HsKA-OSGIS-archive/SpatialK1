@@ -48,6 +48,8 @@ function inJson(){
 }
 
 function createXML(){  
+
+readDropdown();
   
    v = new XMLWriter();
    v.writeStartDocument(true);  
