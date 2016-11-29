@@ -71,7 +71,7 @@
                 </div>
                 <h2>Route einzeichnen</h2>
                 <div id='buttoncontainer'>
-                	<img class='geomButton' src="./Images/draw.svg" onclick="toggleControl('draw')"></img>
+                	<img class='geomButton' src="./Images/draw.svg" id="line" onclick="toggleControl(this.id);"></img>
                     <img class='geomButton' src='./Images/select.svg' onclick="toggleControl('select')"></img>
                     <img class='geomButton' src='./Images/drag.svg' onclick="toggleControl('drag')"></img>
                     <img class='geomButton' src='./Images/erase.svg' onclick="editingLayer.removeFeatures(editingLayer.selectedFeatures)"></img>
