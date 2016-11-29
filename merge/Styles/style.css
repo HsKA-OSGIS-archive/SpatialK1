@@ -37,16 +37,13 @@ ul {
 .elemValue {
 	float: right;
 }
-
-
-
-H1 {
+h1 {
 	font-size: 16px;
 	color: #039;
 }
-H2 {
-	font-size: 12px;
-	color: #039;	
+h2 {
+	font-size: 14px;
+	color: #039;
 }
 h3{
 	font-size: 12px;
@@ -125,4 +122,12 @@ lable{
 	border-top-left-radius: 4px;
 	height: 23px;
 	background-color: #F3F3F3;
+}
+#buttoncontainer {
+	display: inline;
+}
+.geomButton {
+	height: 40px;
+	width: 40px;
+	cursor: pointer;
 }

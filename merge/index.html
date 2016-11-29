@@ -23,7 +23,7 @@
 <script src="Scripts_external/daterangepicker/daterangepicker.js"></script>
 <link href="Scripts_external/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
 
-<script src="Scripts_own/XML_Writer.js" type="text/javascript"></script>
+<script src="Scripts_external/XML_Writer.js" type="text/javascript"></script>
 <script src="Scripts_own/XML_script.js" type="text/javascript"></script>
 
 <link href="Styles/style.css" rel="stylesheet" type="text/css" />
@@ -39,7 +39,7 @@
              <div class="InputUnit"><!-- general personal data-->
                 <div class="vNameValueContainer"><!-- Alter -->
                 	<label class="elemName">Alter</label>
-                	<select class="elemValue" name="age" onchange="ageGroup = this;">
+                	<select class="elemValue" name="age" onchange="ageGroup = this.value;">
                 		<option value="A1">&lt; 1 a</option>
                     	<option value="A2">1 - 2 a</option>
                     	<option value="A3">2 - 7 a</option>
@@ -50,69 +50,58 @@
                 </div><!-- END Alter -->
 			    <div class="hNameValueContainer"><!-- pregnancy -->
                		<label class="elemName">Schwangerschaft</label>
-                	<input class="elemValue" type="checkbox" name="pregnancy" onchange="if(this.checked == false){statiumFoetus = 0} else{staiumFoetus = 1}"/>	
+                	<input class="elemValue" type="checkbox" name="pregnancy" onchange="if(this.checked == false){stadiumFoetus = '0'} else{stadiumFoetus = '1'}"/>	
                 </div><!-- END pregnancy -->
             </div><!-- END general personal data-->
             <div class="InputUnit"><!-- Departure info input -->
 				<h2>Aufenthalte</h2>
                 <div class="tFieldPLUSButton">
-               		<input class="locSearch" id="start" type="text" ng-model="model" name="start" placeholder="Start" onkeydown = "console.log('Tip')"/>
+               		<input class="locSearch" id="start" type="text" ng-model="model" name="start" placeholder="Start" value=""onkeydown = "console.log('Tip')"/>
                 	<div class="searchButton" onclick="addr_search('start')">S</div>
                 </div>
-                <div id="resultsstart"></div>
-                <!--div class="hNameValueContainer"><
-                	<label class="elemName">Start</label>
-                	<input class="hNameValueContainer" type="text" ng-model="model" class="elemValue" name="start"/>
-                </div-->
+                <div id="resultsstart">
+                </div>
                 <div class="tFieldPLUSButton">
-                	<input type="text" class="locSearch" id="destLocation" name="destination_place" placeholder="Zielort" onClick="addr_search()"/>
+                	<input type="text" class="locSearch" id="destLocation" name="destination_place" placeholder="Zielort"/>
                     <div class="searchButton" onclick="addr_search('destLocation')">S</div>
                 </div>
-                <div id="resultsdestLocation"></div>
-                <!--div class="hNameValueContainer">
-                	<label class="elemName">Zielort</label>
-                	<input class="hNameValueContainer" type="text" class="elemValue" id="destLocation" name="destination_place"/>
-                </div-->
+                <div id="resultsdestLocation">
+                </div>
                 <div>
                 	<input type="text" class="daterangepickerCon" name="timerange"/>
                 </div>
-                <!--div class="hNameValueContainer">
-                	<label class="elemName">Aufenthaltsdauer</label>
-                	<input type="text" class="elemValue" name="startDuration"/>
-                </div><-- END Duration of residence -->
-                <!-- arrival info input -->
-                <div class="hNameValueContainer"/></div><!-- vertical breake -->
-                <!-- end arrival location input -->
-             </div><!-- end 
-                <!--div class="hNameValueContainer">
-                	<label class="elemName">Aufenthaltsdauer</label>
-                	<input type="text" class="elemValue" name="destinationDuration"/>
-                </div-->
+                <h2>Route einzeichnen</h2>
+                <div id='buttoncontainer'>
+                	<img class='geomButton' src="./Images/draw.svg" onclick="toggleControl('draw')"></img>
+                    <img class='geomButton' src='./Images/select.svg' onclick="toggleControl('select')"></img>
+                    <img class='geomButton' src='./Images/drag.svg' onclick="toggleControl('drag')"></img>
+                    <img class='geomButton' src='./Images/erase.svg' onclick="editingLayer.removeFeatures(editingLayer.selectedFeatures)"></img>
+                </div>
+             </div>
              <div class="InputUnit">
                 <h2>Schutzmaßnahmen</h2>
-                <div class="rollOutMenu"><!--Protection mesures-->
                 	<div class="hNameValueContainer">
                     	<label class="elemName">Gasmaske</label>
-                    	<input class="elemValue" type="checkbox" name="Gasmask" onchange="if(this.checked == false){
-                            	while(actions.indexOf('protecting_mask') != -1){
-                        			actions.splice(actions.indexOf('protecting_mask'), 1);
-                                }
-                            }
-                            else{
-                                actions.push('protecting_mask');
-                            }"/>
-                    </div>
-                    <div class="hNameValueContainer">
-                    	<label class="elemName">Iodtablette</label>
-                    	<input class="elemValue" type="checkbox" name="Iodine" onchange="if(this.checked == false){
-                            	while(actions.indexOf('iodine') != -1){
-                        			actions.splice(actions.indexOf('iodine'), 1);
-                                }
-                            }
-                            else{
-                                actions.push('iodine');
-                            }"/>
-                    </div>
+                   		<input class="elemValue" type="checkbox" name="Gasmask" onchange="if(this.checked == false){
+                    	       	while(actions.indexOf('protecting_mask') != -1){
+                    	   			actions.splice(actions.indexOf('protecting_mask'), 1);
+                    	        }
+                    	    }
+                    	    else{
+                    	        actions.push('protecting_mask');
+                   	    }"/>
+             		</div>
+            		<div class="hNameValueContainer">
+               			<label class="elemName">Iodtablette</label>
+               			<input class="elemValue" type="checkbox" name="Iodine" onchange="if(this.checked == false){
+                    	   	while(actions.indexOf('iodine') != -1){
+                   				actions.splice(actions.indexOf('iodine'), 1);
+                    	    }
+                    	    }
+                    	    else{
+                    	        actions.push('iodine');
+                    	    }"/>
+            		</div>
                     <div class="hNameValueContainer">
                     	<label class="elemName">Evakuierung</label>
                     	<input class="elemValue" type="checkbox" name="Evacuation" onchange="if(this.checked == false){
@@ -133,12 +122,11 @@
                     	<option value="basement">Keller</option>
                     </select>
                 </div><!-- END residens start-->
-            </div><!-- END Input elements for departure info-->
-            <div class="button" onclick="createXML()">Dosis Berechnen</div>
+            <div class="button" onclick="JSONXML()">Dosis Berechnen</div>
             </form>
          </div>
 	</div>
     <script src="Scripts_own/map.js" type="text/javascript"></script>
-    <script src="Scripts_own/interfaceFunctionaity.js" type="text/javascript"></script>    
+    <script src="Scripts_own/interfaceFunctionality.js" type="text/javascript"></script>    
 </body>
 </html>

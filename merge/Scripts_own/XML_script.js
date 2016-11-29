@@ -1,45 +1,7 @@
-//var stadiumFoetus = ""
-//var ageGroup = ""
-//var jsonpath = ""
+
 
 var v;
-/*
-var JSONvariable = {
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "properties": {
-         "begin": "02.06.2015 11:30",
-         "end": "02.06.2015 15:00",
-         "residence": "outside",
-         "actions": [ "iodine", "evacuation" ]
-      },
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-             8.6015,
-            49.5271
-          ],
-          [
-             8.8125,
-            49.9521
-          ],
-          [
-             8.8125,
-            49.5530
-          ],
-          [
-             8.8312,
-            49.4469
-          ]
-        ]
-      }
-    }
-  ]
-}
-*/
+
 
 function inJson(){
 	var geoJSON = new OpenLayers.Format.GeoJSON();
@@ -48,8 +10,6 @@ function inJson(){
 }
 
 function createXML(){  
-
-readDropdown();
   
    v = new XMLWriter();
    v.writeStartDocument(true);  
@@ -80,7 +40,7 @@ readDropdown();
 		   v.writeStartElement("Data", "wps");   
 				v.writeStartElement("ComplexData", "wps");
 				v.writeAttributeString('mimeType','application/json');				
-				v.writeCDATA(geoJSON());
+				v.writeCDATA(json_var);
 		   v.writeEndElement();
 		   v.writeEndElement();
 	   v.writeEndElement();
@@ -100,11 +60,11 @@ readDropdown();
 		   v.writeEndElement();
 		   v.writeEndElement();
 	   v.writeEndElement();
- //  v.writeEndDocument();
+ 
    
    
    //Pregnant
- //  v.writeStartDocument(true);
+
 	   v.writeStartElement("Input", "wps"); 
 		   v.writeStartElement("Identiefier", "ows"); 
 		   v.writeString("stadiumFoetus");

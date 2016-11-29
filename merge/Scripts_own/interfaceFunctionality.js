@@ -1,5 +1,12 @@
-var begin, end, residence, ageGroup, stadiumFoetus, result;
+var begin, end, residence, ageGroup, stadiumFoetus, result, json_var;
 var actions = [];
+
+function JSONXML(){
+		
+			inJson();
+			createXML();
+		
+		}
 
 $(function(){	
 			$('.daterangepickerCon').daterangepicker({

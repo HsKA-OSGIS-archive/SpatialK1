@@ -60,36 +60,37 @@ var map = new OpenLayers.Map('map', {
 
 
 //--------------- Geocoding Funktion mit Nominatim---------------------
+var inp;
+var items = [];
+var val_name;
 function addr_search(id){
 	//id = "#" + id;
 	var resultContainer = '#results' + id.replace('#', '');
 		//Zugriff auf EingabeObjekt
-	var inp = $(id);
+	inp = id;
 	//Eingabe-Objekt wird als Wert gespeichert
-	var inp_val = document.getElementById('id').text// ;  $(id).value;
-	alert(inp_val);
+	var inp_val = document.getElementById(inp).value;// ;  $(id).value;
+	console.log("inp: " + inp + " inp_val: " + inp_val);
 	//Sonderzeichen werden ersetzt
 	inp_val = inp_val.replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/Ä/g,"Ae").replace(/Ö/g,"Oe").replace(/Ü/g,"Ue").replace(/ß/g,"ss");
-	alert('Nach replae: ' + inp_val);
 
 	//Zugriff auf Nominatim
 	$.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + inp_val, function(data) {
-		 var items = [];
+	items.length = 0;	 
 		 $.each(data, function(key, val) {
 		   items.push(
-		     "<li><a href='#' onclick='chooseAddr(" +
-		     val.lat + ", " + val.lon + ");return false;'>" + val.display_name +
+		     "<li id='list'><a href='#' onclick='chooseAddr(" +
+		     val.lat + ", " + val.lon + ", '" + val.display_name + "');return false;'>" + val.display_name +
 		     '</a></li>'
-
+			
 			//console.log("key:"+key);
 		  );
+		  val_name=val.display_name;
 		});
 	
 		//var first_item = chooseAddr(val.lat, val.lon);
-
 		    $(resultContainer).empty();
 	     if (items.length != 0) {
-	    	alert('more than 0 results');
 	      $('<ul/>', {
 	         'class': 'my-new-list',
 			 'onclick' : '$('+ resultContainer + ').empty()',
@@ -107,10 +108,37 @@ function addr_search(id){
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //------------------Fokus auf eingegebene Adresse-------------------------
-	function chooseAddr(lat, lng) {
+	function chooseAddr(lat, lng, dispName) {
 	  var location = new OpenLayers.LonLat(lng,lat);
 	  map.setCenter(location.transform('EPSG:4326', 'EPSG:3857'));
-	  map.zoomTo(17);
+	  map.zoomTo(17);	 
+	  $('.my-new-list').remove(); //remove list when item chosen
+
+//------------------write chosen location to input field---------------------  
+	  //inp_val=val_name;	  
+	  console.log('inp_val: ' + inp_val);
+	  if(inp=='start'){
+		document.getElementById("start").value=dispName;
+	  }else{
+		document.getElementById("destLocation").value = dispName;
+	  }
+	  
+//------------------add Marker to map -------------------------------------
+	  var markers = new OpenLayers.Layer.Markers( "Markers" );
+	  map.addLayer(markers);
+
+	  var size = new OpenLayers.Size(42,50);
+	  var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+	  if(inp=='start'){
+		var icon = new OpenLayers.Icon('./icons/Start_icon.svg', size, offset);
+	  }else{
+		var icon = new OpenLayers.Icon('./icons/Ziel_icon.svg', size, offset);
+	  }
+	  markers.addMarker(new OpenLayers.Marker(location,icon));
+	  markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(0,0),icon.clone()));
+		  
+	  
+	  
 	}
 //-------------------Ende Fokus auf eingegebene Adresse
 
