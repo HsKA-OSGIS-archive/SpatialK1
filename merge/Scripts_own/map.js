@@ -92,7 +92,7 @@ var map = new OpenLayers.Map('map', {
 //--------------- Geocoding Funktion mit Nominatim---------------------
 var inp;
 var items = [];
-var val_name;
+var inp_val;
 function addr_search(id){
 	//id = "#" + id;
 	var resultContainer = '#results' + id.replace('#', '');
@@ -115,11 +115,9 @@ function addr_search(id){
 			
 			//console.log("key:"+key);
 		  );
-		  val_name=val.display_name;
+		 
 		});
-		 console.log("val.display_name");
-		 console.log(val_name);
-	
+		 
 		//var first_item = chooseAddr(val.lat, val.lon);
 		    $(resultContainer).empty();
 	     if (items.length != 0) {
@@ -140,16 +138,18 @@ function addr_search(id){
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //------------------Fokus auf eingegebene Adresse-------------------------
-	function chooseAddr(lat, lng) {
+	function chooseAddr(lat, lng, display_name) {
 	  var location = new OpenLayers.LonLat(lng,lat);
 	  map.setCenter(location.transform('EPSG:4326', 'EPSG:3857'));
 	  map.zoomTo(17);	 
 	 $('.my-new-list').empty(); //remove list when item chosen
-	  var test = this.name;
+	  //var test = this.name;
 	 //onsole.log('test' +this.display_name);
 //------------------write chosen location to input field---------------------  
-	  inp_val=val_name;	  
-	  console.log('inp_val: ' + inp_val);
+	  //inp_val=val_name;	  
+	  //console.log('inp_val: ' + inp_val);
+	  console.log('display_name ');
+	  console.log($('list'));
 	  if(inp=='start'){
 		document.getElementById("start").value=inp_val;
 		console.log("value of start location");
