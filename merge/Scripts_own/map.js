@@ -1,3 +1,7 @@
+function log(input){
+	console.log(input);
+}
+
 var map = new OpenLayers.Map('map', {
                 layers: [
                     new OpenLayers.Layer.OSM('OSM'),
@@ -93,7 +97,8 @@ var map = new OpenLayers.Map('map', {
 var inp;
 var items = [];
 var inp_val;
-
+var dtlat;
+var dtlon;
 function addr_search(id){
 	//id = "#" + id;
 	var resultContainer = '#results' + id.replace('#', '');
@@ -109,16 +114,15 @@ function addr_search(id){
 	$.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + inp_val, function(data) {
 	items.length = 0;	 
 		 $.each(data, function(key, val) {
+		 log(val);
 		   items.push(
 		     "<li id='list'><a href='#' onclick='chooseAddr(" +
-		     val.lat + ", " + val.lon + ");return false;'>" + val.display_name +
+		     val.lat + ", " + val.lon + "," + val.display +");'>" + val.display_name +
 		     '</a></li>'
-			
-			//console.log("key:"+key);
 		  );
-		 
+		  
 		});
-		 
+	
 		//var first_item = chooseAddr(val.lat, val.lon);
 		    $(resultContainer).empty();
 	     if (items.length != 0) {
@@ -137,7 +141,19 @@ function addr_search(id){
 
 //------------------Routin Funktion mit OSRM--------------------------------------
 var url = "http://router.project-osrm.org/viaroute?loc=";
+function routing( lon, lat){
+	lat_start = dtlat_start;
+	lon_start = dtlon_start;
+	lat_stop = dtlat_stop;
+	lon_stop = dtlon_stop;
+	
 
+	$.getJSON('http://router.project-osrm.org/route/v1/driving/'+lon_start+','+lat_start+';'+ lon_stop +','
+	+ lat_stop + '?alternatives=false&steps=true&geometries=polyline&overview=full');
+
+	//$.getJSON('http://router.project-osrm.org/route/v1/driving/'+lat_start+','+lon_start+';'+ lat_stop +','+ lon_stop);
+	log('http://router.project-osrm.org/route/v1/driving/'+lon_start+','+lat_start+';'+ lon_stop +','+ lat_stop + '?alternatives=false&steps=true&geometries=polyline&overview=full');
+}
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //--------------------------------------------------------------------------
@@ -145,6 +161,21 @@ var url = "http://router.project-osrm.org/viaroute?loc=";
 
 //------------------Fokus auf eingegebene Adresse-------------------------
 	function chooseAddr(lat, lng) {
+	if (inp == "start"){
+		dtlat_start = lat;
+		dtlon_start = lng;
+		console.log(dtlat_start);
+		console.log(dtlon_start);
+	};
+
+	if (inp == "stop"){
+		dtlat_stop = lat;
+		dtlon_stop = lng;
+		console.log(dtlat_stop);
+		console.log(dtlon_stop);
+	};
+
+	
 	  var location = new OpenLayers.LonLat(lng,lat);
 	  map.setCenter(location.transform('EPSG:4326', 'EPSG:3857'));
 	  map.zoomTo(17);	 
