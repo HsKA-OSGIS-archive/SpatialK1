@@ -87,6 +87,8 @@ function addr_search(id){
 		  );
 		  val_name=val.display_name;
 		});
+		 console.log("val.display_name");
+		 console.log(val_name);
 	
 		//var first_item = chooseAddr(val.lat, val.lon);
 		    $(resultContainer).empty();
@@ -108,18 +110,20 @@ function addr_search(id){
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //------------------Fokus auf eingegebene Adresse-------------------------
-	function chooseAddr(lat, lng, display_name) {
+	function chooseAddr(lat, lng) {
 	  var location = new OpenLayers.LonLat(lng,lat);
 	  map.setCenter(location.transform('EPSG:4326', 'EPSG:3857'));
 	  map.zoomTo(17);	 
 	 $('.my-new-list').empty(); //remove list when item chosen
 	  var test = this.name;
-	 console.log('test' +this.display_name);
+	 //onsole.log('test' +this.display_name);
 //------------------write chosen location to input field---------------------  
 	  inp_val=val_name;	  
 	  console.log('inp_val: ' + inp_val);
 	  if(inp=='start'){
 		document.getElementById("start").value=inp_val;
+		console.log("value of start location");
+		console.log(value);
 	  }else{
 		document.getElementById("destLocation").value=inp_val;
 	  }
@@ -151,7 +155,7 @@ function addr_search(id){
 		 function toggleControl(element) {
 				
 				for(key in drawControls) {
-					console.log("hi");
+					
 					var control = drawControls[key];
 					
 					if(element.value == key && element.value) {
