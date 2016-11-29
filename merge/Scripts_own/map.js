@@ -93,6 +93,7 @@ var map = new OpenLayers.Map('map', {
 var inp;
 var items = [];
 var inp_val;
+
 function addr_search(id){
 	//id = "#" + id;
 	var resultContainer = '#results' + id.replace('#', '');
@@ -126,6 +127,7 @@ function addr_search(id){
 			 'onclick' : '$('+ resultContainer + ').empty()',
 	         html: items.join('')
 	       }).appendTo(resultContainer);
+
 	     } else {
 	       $('<p>', { html: "Keine Vorschläge gefunden" }).appendTo(resultContainer);
 	     }
@@ -133,12 +135,16 @@ function addr_search(id){
 }
 //------------------ENDE Geocoding mit Nominatim-------------------------
 
+//------------------Routin Funktion mit OSRM--------------------------------------
+var url = "http://router.project-osrm.org/viaroute?loc=";
+
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //--------------------------------------------------------------------------
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //------------------Fokus auf eingegebene Adresse-------------------------
-	function chooseAddr(lat, lng, display_name) {
+	function chooseAddr(lat, lng) {
 	  var location = new OpenLayers.LonLat(lng,lat);
 	  map.setCenter(location.transform('EPSG:4326', 'EPSG:3857'));
 	  map.zoomTo(17);	 

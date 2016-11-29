@@ -61,14 +61,15 @@
                 <div id="resultsstart">
                 </div>
                 <div class="tFieldPLUSButton">
-                	<input type="text" class="locSearch" id="destLocation" name="destination_place" placeholder="Zielort" onkeypress="if(event.keyCode==13){document.getElementById('DestButton').click()}"/>
+                	<input type="text" class="locSearch" id="stop" name="destination_place" placeholder="Zielort" onkeypress="if(event.keyCode==13){document.getElementById('DestButton').click()}"/>
                     <div id="DestButton" class="searchButton" onclick="addr_search('destLocation')">S</div>
                 </div>
-                <div id="resultsdestLocation">
+                <div id="resultsstop">
                 </div>
                 <div>
                 	<input type="text" class="daterangepickerCon" name="timerange"/>
                 </div>
+                <div class="button" id= "rButton" onclick="routing()">Route automatisch berechnen</div>
                 <h2>Route einzeichnen</h2>
                 <div id='buttoncontainer'>
                 	<img class='geomButton' src="./Images/draw.svg" id="line" onclick="toggleControl(this.id);"></img>
@@ -122,6 +123,7 @@
                     </select>
                 </div><!-- END residens start-->
             <div class="button" onclick="JSONXML()">Dosis Berechnen</div>
+
             </form>
          </div>
 	</div>
