@@ -148,7 +148,7 @@ function addr_search(id){
 //------------------write chosen location to input field---------------------  
 	  //inp_val=val_name;	  
 	  //console.log('inp_val: ' + inp_val);
-	  console.log('display_name ');
+	 /* console.log('display_name ');
 	  console.log($('list'));
 	  if(inp=='start'){
 		document.getElementById("start").value=inp_val;
@@ -156,7 +156,7 @@ function addr_search(id){
 		console.log(inp);
 	  }else{
 		document.getElementById("destLocation").value=inp_val;
-	  }
+	  }*/
 	  
 //------------------add Marker to map -------------------------------------
 	  var markers = new OpenLayers.Layer.Markers( "Markers" );
