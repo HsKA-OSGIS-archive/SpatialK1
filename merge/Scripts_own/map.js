@@ -7,19 +7,24 @@ var map = new OpenLayers.Map('map', {
                     'http://c.tile.opencyclemap.org/cycle/${z}/${x}/${y}.png'])
                     ],
                 controls: [
+                    new OpenLayers.Control.Navigation(),
                     new OpenLayers.Control.Attribution(),
+
+                    //new OpenLayers.Control.PanZoomBar(),
+
+                   //new OpenLayers.Control.PanZoomBar(),
+
                     new OpenLayers.Control.LayerSwitcher({
                         'ascending': true
                     }),
                     new OpenLayers.Control.ScaleLine(),
                     new OpenLayers.Control.MousePosition(),
-                    
+                    new OpenLayers.Control.SelectFeature(),
                     new OpenLayers.Control.KeyboardDefaults(),
-                   
+                    
                 ],
-                center: new OpenLayers.LonLat(8.39, 48.999).transform('EPSG:4326', 'EPSG:3857'),
+                center: new OpenLayers.LonLat(8.4028, 49.011 ).transform('EPSG:4326', 'EPSG:3857'),
                 zoom: 13
-
            
             });
      
@@ -27,36 +32,66 @@ var map = new OpenLayers.Map('map', {
 
 
         // we will use this vector layer to demonstrate editing vector features
-        var editingLayer = new OpenLayers.Layer.Vector("Editing");
+        var styleMap = new OpenLayers.StyleMap({
+				
+				"default": 	new OpenLayers.Style({
+				 strokeWidth: 4,
+				 strokeColor: '#1c74cc',
+				 strokeOpacity:1,
+            }),
+               "select": new OpenLayers.Style({
+                strokeWidth: 5,
+			    strokeColor: '#d81b23',
+				strokeOpacity: 1,
+            })
+		});
+		var editingLayer = new OpenLayers.Layer.Vector("Editing", {styleMap: styleMap} );
         map.addLayers([editingLayer]);
         //var snapVertex = {methods: ['vertex', 'edge'], layers: [vectors]};
 
-        
+		
+		        
+
+  // init the editing toolbar and a basic selection control
+         var drawControls ={
+			line: new OpenLayers.Control.DrawFeature(editingLayer,
+						OpenLayers.Handler.Path),
+			drag: new OpenLayers.Control.DragFeature(editingLayer),
+			select: new OpenLayers.Control.SelectFeature(
+					editingLayer,
+					{
+						clickout: true, toggle: false,
+						multiple: false, hover: false,
+						toggleKey: "ctrlKey", // ctrl key removes from selection
+						multipleKey: "shiftKey", // shift key adds to selection
+						box: true,
+						click: true
+
+					}
 
 
+				)
+			
 
+		};		
 
-
-
-
-        // init the editing toolbar and a basic selection control
-        var editingToolbar = new OpenLayers.Control.EditingToolbar(editingLayer);
-        var selectCtrl = new OpenLayers.Control.SelectFeature(
-                editingLayer, {
-                //hover: true
-                eventListeners:{
-                    featurehighlighted: function overlay_delete(event){
-                        var feature = event.feature;
-
-                        //if(confirm(strConfirmMessage)){
-                            editingLayer.removeFeatures([feature]);
-                        //}
-                    }
-                }
-            });
-        map.addControls([editingToolbar, selectCtrl]);
-        selectCtrl.activate();
-
+		
+		for(var key in drawControls) {
+					map.addControl(drawControls[key]);
+		}
+		
+		//---------------------Zeichenfunktion-----------------------------------
+		  function toggleControl(element) {
+				
+				for(key in drawControls) {
+					var control = drawControls[key];
+					if(element == key && element) {
+						control.activate();
+					} else {
+						control.deactivate();
+					}
+				}
+			}
 
 
 //--------------- Geocoding Funktion mit Nominatim---------------------
@@ -147,19 +182,3 @@ function addr_search(id){
 //--------------------------------------------------------------------------
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-//---------------------Zeichenfunktion-----------------------------------
-		 function toggleControl(element) {
-				
-				for(key in drawControls) {
-					console.log("hi");
-					var control = drawControls[key];
-					
-					if(element.value == key && element.value) {
-						control.activate();
-						
-					} else {
-						control.deactivate();
-						
-					}
-				}
-			}
