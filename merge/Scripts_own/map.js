@@ -80,7 +80,7 @@ function addr_search(id){
 		 $.each(data, function(key, val) {
 		   items.push(
 		     "<li id='list'><a href='#' onclick='chooseAddr(" +
-		     val.lat + ", " + val.lon + ", '" + val.display_name + "');return false;'>" + val.display_name +
+		     val.lat + ", " + val.lon + ");return false;'>" + val.display_name +
 		     '</a></li>'
 			
 			//console.log("key:"+key);
@@ -108,19 +108,20 @@ function addr_search(id){
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //------------------Fokus auf eingegebene Adresse-------------------------
-	function chooseAddr(lat, lng, dispName) {
+	function chooseAddr(lat, lng, display_name) {
 	  var location = new OpenLayers.LonLat(lng,lat);
 	  map.setCenter(location.transform('EPSG:4326', 'EPSG:3857'));
 	  map.zoomTo(17);	 
-	  $('.my-new-list').remove(); //remove list when item chosen
-
+	 $('.my-new-list').empty(); //remove list when item chosen
+	  var test = this.name;
+	 console.log('test' +this.display_name);
 //------------------write chosen location to input field---------------------  
-	  //inp_val=val_name;	  
+	  inp_val=val_name;	  
 	  console.log('inp_val: ' + inp_val);
 	  if(inp=='start'){
-		document.getElementById("start").value=dispName;
+		document.getElementById("start").value=inp_val;
 	  }else{
-		document.getElementById("destLocation").value = dispName;
+		document.getElementById("destLocation").value=inp_val;
 	  }
 	  
 //------------------add Marker to map -------------------------------------
