@@ -66,13 +66,8 @@ var map = new OpenLayers.Map('map', {
 						multipleKey: "shiftKey", // shift key adds to selection
 						box: true,
 						click: true
-
 					}
-
-
 				)
-			
-
 		};		
 
 		
@@ -158,7 +153,7 @@ function addr_search(id){
 	  if(inp=='start'){
 		document.getElementById("start").value=inp_val;
 		console.log("value of start location");
-		console.log(value);
+		console.log(inp);
 	  }else{
 		document.getElementById("destLocation").value=inp_val;
 	  }
