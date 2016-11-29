@@ -186,22 +186,4 @@ function addr_search(id){
 //--------------------------------------------------------------------------
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-<<<<<<< HEAD
-//---------------------Zeichenfunktion-----------------------------------
-		 function toggleControl(element) {
-				
-				for(key in drawControls) {
-					
-					var control = drawControls[key];
-					
-					if(element.value == key && element.value) {
-						control.activate();
-						
-					} else {
-						control.deactivate();
-						
-					}
-				}
-			}
-=======
->>>>>>> origin/merge
+
