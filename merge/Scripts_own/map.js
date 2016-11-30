@@ -99,6 +99,7 @@ var items = [];
 var inp_val;
 var dtlat;
 var dtlon;
+var result;
 function addr_search(id){
 	//id = "#" + id;
 	var resultContainer = '#results' + id.replace('#', '');
@@ -109,15 +110,16 @@ function addr_search(id){
 	console.log("inp: " + inp + " inp_val: " + inp_val);
 	//Sonderzeichen werden ersetzt
 	inp_val = inp_val.replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/Ä/g,"Ae").replace(/Ö/g,"Oe").replace(/Ü/g,"Ue").replace(/ß/g,"ss");
-
+	
 	//Zugriff auf Nominatim
 	$.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + inp_val, function(data) {
+	result=data;
+	console.log("result:"+ data);
 	items.length = 0;	 
 		 $.each(data, function(key, val) {
-		 log(val);
-		   items.push(
+		    items.push(
 		     "<li id='list'><a href='#' onclick='chooseAddr(" +
-		     val.lat + ", " + val.lon + "," + val.display +");'>" + val.display_name +
+		     val.lat + ", " + val.lon + "," + val.place_id +");'>" + val.display_name +
 		     '</a></li>'
 		  );
 		  
@@ -160,40 +162,29 @@ function routing( lon, lat){
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //------------------Fokus auf eingegebene Adresse-------------------------
-	function chooseAddr(lat, lng) {
-	if (inp == "start"){
-		dtlat_start = lat;
-		dtlon_start = lng;
-		console.log(dtlat_start);
-		console.log(dtlon_start);
-	};
-
-	if (inp == "stop"){
-		dtlat_stop = lat;
-		dtlon_stop = lng;
-		console.log(dtlat_stop);
-		console.log(dtlon_stop);
-	};
+	function chooseAddr(lat, lng, name) {
+	
+	//--------------write result to start input field---------------------
+	for(placeid in result){
+		if (result[placeid].place_id==name){
+			log("placeid:"+result[placeid].place_id);			
+			
+		
+		if(inp=='start'){
+			document.getElementById("start").value=result[placeid].display_name;;
+			
+		}else{
+			document.getElementById("stop").value=result[placeid].display_name;;
+	  }
+	}
+	}
 
 	
 	  var location = new OpenLayers.LonLat(lng,lat);
 	  map.setCenter(location.transform('EPSG:4326', 'EPSG:3857'));
 	  map.zoomTo(17);	 
 	 $('.my-new-list').empty(); //remove list when item chosen
-	  //var test = this.name;
-	 //onsole.log('test' +this.display_name);
-//------------------write chosen location to input field---------------------  
-	  //inp_val=val_name;	  
-	  //console.log('inp_val: ' + inp_val);
-	 /* console.log('display_name ');
-	  console.log($('list'));
-	  if(inp=='start'){
-		document.getElementById("start").value=inp_val;
-		console.log("value of start location");
-		console.log(inp);
-	  }else{
-		document.getElementById("destLocation").value=inp_val;
-	  }*/
+	 
 	  
 //------------------add Marker to map -------------------------------------
 	  var markers = new OpenLayers.Layer.Markers( "Markers" );
