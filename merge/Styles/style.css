@@ -131,3 +131,8 @@ lable{
 	width: 40px;
 	cursor: pointer;
 }
+.searchResult {
+	width: 275px;
+	overflow-y: hidden;
+	max-height: 200px;
+}

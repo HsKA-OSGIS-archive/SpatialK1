@@ -122,7 +122,7 @@ function addr_search(id){
 		     val.lat + ", " + val.lon + "," + val.place_id +");'>" + val.display_name +
 		     '</a></li>'
 		  );
-		  
+		  console.log(val);
 		});
 	
 		//var first_item = chooseAddr(val.lat, val.lon);
@@ -141,13 +141,27 @@ function addr_search(id){
 }
 //------------------ENDE Geocoding mit Nominatim-------------------------
 
+//------------------ Setter methods for start and destination coordinate variables---
+
+var lat_start, lon_start, lat_stop, lon_stop;
+
+function setStart(startlat, startlon){
+	lat_start = startlat;
+	lon_start = startlon;
+}
+
+function setStop(stoplat, stoplon){
+	lat_stop = stoplat;
+	lon_stop = stoplon;
+}
+
 //------------------Routin Funktion mit OSRM--------------------------------------
 var url = "http://router.project-osrm.org/viaroute?loc=";
-function routing( lon, lat){
-	lat_start = dtlat_start;
+function routing(){
+	/*lat_start = dtlat_start;
 	lon_start = dtlon_start;
 	lat_stop = dtlat_stop;
-	lon_stop = dtlon_stop;
+	lon_stop = dtlon_stop;*/
 	
 
 	$.getJSON('http://router.project-osrm.org/route/v1/driving/'+lon_start+','+lat_start+';'+ lon_stop +','
@@ -172,9 +186,10 @@ function routing( lon, lat){
 		
 		if(inp=='start'){
 			document.getElementById("start").value=result[placeid].display_name;;
-			
+			setStart(lat, lng);
 		}else{
 			document.getElementById("stop").value=result[placeid].display_name;;
+			setStop(lat, lng);
 	  }
 	}
 	}

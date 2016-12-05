@@ -58,14 +58,14 @@
                     <input class="locSearch" id="start" type="text" ng-model="model" name="start" placeholder="Start" value="" onkeypress="if(event.keyCode==13){document.getElementById('startButton').click()}"/>
                     <div id="startButton" class="searchButton" onclick="addr_search('start')"  >S</div>
                 </div>
-                <div id="resultsstart">
+                <div id="resultsstart" class="searchResult">
                 </div>
                 <div class="tFieldPLUSButton">
                 <input type="text" class="locSearch" id="stop" name="destination_place" placeholder="Zielort" onkeypress="if(event.keyCode==13){document.getElementById('DestButton').click()}"/>
 
                     <div id="DestButton" class="searchButton" onclick="addr_search('stop')">S</div>
                 </div>
-                <div id="resultsstop">
+                <div id="resultsstop" class="searchResult">
                 </div>
                 <div>
                     <input type="text" class="daterangepickerCon" name="timerange"/>
