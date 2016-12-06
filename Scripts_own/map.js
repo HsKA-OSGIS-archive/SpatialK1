@@ -212,6 +212,7 @@ function routing(){
 	log('http://router.project-osrm.org/route/v1/driving/'+lon_start+','+lat_start+';'+ lon_stop +','+ lat_stop + '?alternatives=false&steps=false&geometries=geojson&overview=full');
 }
 
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //--------------------------------------------------------------------------
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
