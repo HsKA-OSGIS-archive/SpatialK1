@@ -164,11 +164,45 @@ function routing(){
 	lon_stop = dtlon_stop;*/
 	
 
-	$.getJSON('http://router.project-osrm.org/route/v1/driving/'+lon_start+','+lat_start+';'+ lon_stop +','
-	+ lat_stop + '?alternatives=false&steps=true&geometries=polyline&overview=full');
+	var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/driving/'+lon_start+','+lat_start+';'+ lon_stop +','
+	+ lat_stop + '?alternatives=false&steps=false&geometries=geojson&overview=full', function (data) {
+        var test = data.routes[0].geometry.coordinates;
+		var testLine = new OpenLayers.Geometry.LineString(test);
+        alert(testLine);
+		
+		//test to add linestring to display
+		
+		var routeStyle = new OpenLayers.StyleMap({
+				
+				"default": 	new OpenLayers.Style({
+				 strokeWidth: 4,
+				 strokeColor: '#1c74cc',
+				 strokeOpacity:1,
+            })
+		});
+		
+		var feature = new OpenLayers.Feature({
+        	geometry: new OpenLayers.Geometry.LineString(test)
+   		});
+		
+    	var vectorSource= new OpenLayers.Feature.Vector(
+			"Routing",
+			{
+			type: "LineString",
+        	features: [feature],
+			styleMap: routeStyle
+    	});
+
+    	var vectorLayer = new OpenLayers.Layer.Vector({
+        	features: vectorSource
+    	});
+
+    	map.addLayer(vectorLayer);
+		//end test
+    });
 
 	//$.getJSON('http://router.project-osrm.org/route/v1/driving/'+lat_start+','+lon_start+';'+ lat_stop +','+ lon_stop);
-	log('http://router.project-osrm.org/route/v1/driving/'+lon_start+','+lat_start+';'+ lon_stop +','+ lat_stop + '?alternatives=false&steps=true&geometries=polyline&overview=full');
+	log('http://router.project-osrm.org/route/v1/driving/'+lon_start+','+lat_start+';'+ lon_stop +','+ lat_stop + '?alternatives=false&steps=false&geometries=geojson&overview=full');
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
