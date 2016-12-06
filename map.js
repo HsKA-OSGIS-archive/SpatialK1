@@ -43,12 +43,21 @@ function addr_search(){
 		  );
 		});
 >>>>>>> origin/GUI
+<<<<<<< HEAD
 
 		   );
 		 });
 	
 		//var first_item = chooseAddr(val.lat, val.lon);
 
+=======
+
+		   );
+		 });
+	
+		//var first_item = chooseAddr(val.lat, val.lon);
+
+>>>>>>> origin/master
 		    $('#results').empty();
 	     if (items.length != 0) {
 	    	
@@ -82,8 +91,12 @@ function addr_search(){
 
 //------------------Fokus auf eingegebene Adresse-------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> refs/remotes/origin/master
 	function chooseAddr(lat, lng, type) {
+=======
+	function chooseAddr(lat, lng) {
+>>>>>>> origin/master
 =======
 	function chooseAddr(lat, lng) {
 >>>>>>> origin/master
