@@ -1,0 +1,138 @@
+@charset "utf-8";
+#Container {
+	font-family: opensansCondBold,Arial,helvetica,sans-serif;
+	height: auto;
+	width: 300px;
+	background-color: #FFF;
+	opacity: 0.9;
+	margin-left: 15px;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	position: absolute;
+	left: 8px;
+	top: 30px;
+	border-radius: 6px;
+}
+.InputUnit {
+	border-bottom-style: solid;
+	border-top-style: none;
+	border-right-style: none;
+	border-left-style: none;
+	border-bottom-color: #999;
+	/* [disabled]width: 300px; */
+	border-bottom-width: 1px;
+	margin-bottom: 4px;
+	padding-bottom: 5px;
+}
+ul {
+	list-style-type: none;
+}
+
+.elemName {
+	text-align: left;
+	font-size: 12px;
+	vertical-align: bottom;
+}
+.elemValue {
+	float: right;
+}
+h1 {
+	font-size: 16px;
+	color: #039;
+}
+h2 {
+	font-size: 14px;
+	color: #039;
+}
+h3{
+	font-size: 12px;
+	
+}
+.vNameValueContainer {
+	height: 24px;
+}
+.hNameValueContainer {
+	height: 24px;
+}
+.textInput {
+	height: 24px;
+	width: 275px;
+	background-color: #F3F3F3;
+	margin-top: 1px;
+	color: #333;
+	border-radius: 4px;
+}
+select {
+	background-color: #F3F3F3;
+}
+
+
+.button {
+	color: #FFF;
+	background-color: #039;
+	text-align: center;
+	padding-top: 4px;
+	padding-right: 0px;
+	padding-bottom: 4px;
+	padding-left: 0px;
+	cursor: pointer;
+	border-radius: 4px;
+}
+.searchButton {
+	color: #FFF;
+	background-color: #039;
+	text-align: center;
+	/* [disabled]padding-top: 4px; */
+	padding-right: 0px;
+	/* [disabled]padding-bottom: 4px; */
+	padding-left: 0px;
+	cursor: pointer;
+	height: 23px;
+	width: 23px;
+	float: right;
+	border-bottom-right-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+
+
+form{
+	opacity: 1.0;
+}
+
+lable{
+	font-family:Verdana, Geneva, sans-serif;
+}
+.daterangepickerCon{
+	width: 275px;
+	background-color: #F3F3F3;
+	color: #999;
+	height: 23px;
+	margin-top: 1px;
+	border-radius: 4px;
+}
+.tFieldPLUSButton {
+	float: left;
+	height: 24px;
+}
+.locSearch {
+	width: 253px;
+	border-bottom-left-radius: 4px;
+	border-top-left-radius: 4px;
+	height: 23px;
+	background-color: #F3F3F3;
+}
+#buttoncontainer {
+	display: inline;
+}
+.geomButton {
+	height: 40px;
+	width: 40px;
+	cursor: pointer;
+}
+.searchResult {
+	width: 275px;
+	overflow-y: hidden;
+	max-height: 200px;
+}
