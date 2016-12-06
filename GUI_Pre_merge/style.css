@@ -3,19 +3,16 @@
 	font-family: opensansCondBold,Arial,helvetica,sans-serif;
 	height: auto;
 	width: 300px;
-	top: 25px;
-	border-top-style: dotted;
-	border-right-style: dotted;
-	border-bottom-style: dotted;
-	border-left-style: dotted;
 	background-color: #FFF;
 	opacity: 0.95;
 	margin-left: 15px;
 	padding-right: 10px;
 	padding-left: 10px;
 	padding-bottom: 10px;
-
-
+	position: absolute;
+	left: 8px;
+	top: 30px;
+	border-radius: 6px;
 }
 .InputUnit {
 	border-bottom-style: solid;
@@ -23,12 +20,10 @@
 	border-right-style: none;
 	border-left-style: none;
 	border-bottom-color: #999;
-	width: 300px;
-
+	/* [disabled]width: 300px; */
 	border-bottom-width: 1px;
 	margin-bottom: 4px;
 	padding-bottom: 5px;
-
 }
 ul {
 	list-style-type: none;
@@ -37,10 +32,10 @@ ul {
 .elemName {
 	text-align: left;
 	font-size: 12px;
+	vertical-align: bottom;
 }
 .elemValue {
 	float: right;
-	
 }
 
 
@@ -58,11 +53,24 @@ h3{
 	
 }
 .vNameValueContainer {
-	height: 23px;
+	height: 24px;
 }
 .hNameValueContainer {
-	height: 23px;
+	height: 24px;
 }
+.textInput {
+	height: 24px;
+	width: 275px;
+	background-color: #F3F3F3;
+	margin-top: 1px;
+	color: #333;
+	border-radius: 4px;
+}
+select {
+	background-color: #F3F3F3;
+}
+
+
 .button {
 	color: #FFF;
 	background-color: #039;
@@ -72,6 +80,7 @@ h3{
 	padding-bottom: 4px;
 	padding-left: 0px;
 	cursor: pointer;
+	border-radius: 4px;
 }
 
 
@@ -81,4 +90,12 @@ form{
 
 lable{
 	font-family:Verdana, Geneva, sans-serif;
+}
+.daterangepickerCon{
+	width: 275px;
+	background-color: #F3F3F3;
+	color: #999;
+	height: 23px;
+	margin-top: 1px;
+	border-radius: 4px;
 }
