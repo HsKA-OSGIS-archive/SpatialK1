@@ -159,16 +159,25 @@ var url = "http://router.project-osrm.org/viaroute?loc=";
 var vectorLayer;
 var pArray = [];
 var lSArray = [];
+pointArray =[];
 function routing(){
-	/*lat_start = dtlat_start;
-	lon_start = dtlon_start;
-	lat_stop = dtlat_stop;
-	lon_stop = dtlon_stop;*/
-	
-
-	var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/driving/'+lon_start+','+lat_start+';'+ lon_stop +','
+var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/driving/'+lon_start+','+lat_start+';'+ lon_stop +','
 	+ lat_stop + '?alternatives=false&steps=false&geometries=geojson&overview=full', function (data) {
         var test = data.routes[0].geometry.coordinates;
+         epsg4326 =  new OpenLayers.Projection("EPSG:4326");
+        projectTo = map.getProjectionObject();
+
+
+        for (i = 0; i< test.length; i++){
+        	pointArray.push(new OpenLayers.Geometry.Point( test[i][0], test[i][1]).transform(epsg4326, projectTo));
+        	log(pointArray);
+        }
+  
+		var route_line = new OpenLayers.Geometry.LineString(pointArray);
+		//map.addLayer(testLine);
+		log("testline");
+		log(testLine);
+        //alert(testLine);
 		
 		
 		
@@ -201,15 +210,18 @@ function routing(){
 		/*({
         	features: vectorSource
     	});*/
+		var routeStyle = {strokeColor:"#0500bd", strokeWidth:3};
+		var feature = new OpenLayers.Feature.Vector(route_line, {},routeStyle);
+  
+
+    	var vectorLayer = new OpenLayers.Layer.Vector();
+    	vectorLayer.addFeatures([feature]);
 
     	map.addLayer(vectorLayer);
 		log(test);
 		log(vectorLayer);
 		//end test
     });
-
-	//$.getJSON('http://router.project-osrm.org/route/v1/driving/'+lat_start+','+lon_start+';'+ lat_stop +','+ lon_stop);
-	log('http://router.project-osrm.org/route/v1/driving/'+lon_start+','+lat_start+';'+ lon_stop +','+ lat_stop + '?alternatives=false&steps=false&geometries=geojson&overview=full');
 }
 
 
