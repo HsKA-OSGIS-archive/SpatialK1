@@ -175,8 +175,7 @@ var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/driving/'
   
 		var route_line = new OpenLayers.Geometry.LineString(pointArray);
 		//map.addLayer(testLine);
-		log("testline");
-		log(testLine);
+		
         //alert(testLine);
 		
 		
@@ -211,7 +210,7 @@ var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/driving/'
         	features: vectorSource
     	});*/
 		var routeStyle = {strokeColor:"#0500bd", strokeWidth:3};
-		var feature = new OpenLayers.Feature.Vector(route_line, {},routeStyle);
+		var feature = new OpenLayers.Feature.Vector(route_line, {name: "name"},routeStyle);
   
 
     	var vectorLayer = new OpenLayers.Layer.Vector();
