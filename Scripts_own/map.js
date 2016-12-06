@@ -122,7 +122,6 @@ function addr_search(id){
 		     val.lat + ", " + val.lon + "," + val.place_id +");'>" + val.display_name +
 		     '</a></li>'
 		  );
-		  console.log(val);
 		});
 	
 		//var first_item = chooseAddr(val.lat, val.lon);
@@ -157,6 +156,9 @@ function setStop(stoplat, stoplon){
 
 //------------------Routin Funktion mit OSRM--------------------------------------
 var url = "http://router.project-osrm.org/viaroute?loc=";
+var vectorLayer;
+var pArray = [];
+var lSArray = [];
 function routing(){
 	/*lat_start = dtlat_start;
 	lon_start = dtlon_start;
@@ -167,10 +169,8 @@ function routing(){
 	var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/driving/'+lon_start+','+lat_start+';'+ lon_stop +','
 	+ lat_stop + '?alternatives=false&steps=false&geometries=geojson&overview=full', function (data) {
         var test = data.routes[0].geometry.coordinates;
-		var testLine = new OpenLayers.Geometry.LineString(test);
-        alert(testLine);
 		
-		//test to add linestring to display
+		
 		
 		var routeStyle = new OpenLayers.StyleMap({
 				
@@ -181,23 +181,30 @@ function routing(){
             })
 		});
 		
-		var feature = new OpenLayers.Feature({
-        	geometry: new OpenLayers.Geometry.LineString(test)
-   		});
 		
-    	var vectorSource= new OpenLayers.Feature.Vector(
-			"Routing",
-			{
-			type: "LineString",
-        	features: [feature],
-			styleMap: routeStyle
-    	});
+		epsg4326 =  new OpenLayers.Projection("EPSG:4326");
+        projectTo = map.getProjectionObject();
+		for(var i = 0; i < test.length; i++){
+			pArray.push( new OpenLayers.Geometry.Point(test[i][0], test[i][1]).transform(epsg4326, projectTo));
+		}
+		
+		//for(var i = 0; i < pArray.length; i++){
+			lSArray.push(new OpenLayers.Geometry.LineString(pArray));
+		//}
+		
+		//mLSArray.push(new OpenLayers.Geometry.MultiLineString(lSArray));
+		
+    	var vectorSource= new OpenLayers.Feature.Vector( pArray,{},	 routeStyle);
 
-    	var vectorLayer = new OpenLayers.Layer.Vector({
+    	vectorLayer = new OpenLayers.Layer.Vector();
+		vectorLayer.addFeatures([vectorSource]);
+		/*({
         	features: vectorSource
-    	});
+    	});*/
 
     	map.addLayer(vectorLayer);
+		log(test);
+		log(vectorLayer);
 		//end test
     });
 
