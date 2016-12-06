@@ -13,6 +13,7 @@
 	left: 8px;
 	top: 30px;
 	border-radius: 6px;
+	z-index: 1050;
 }
 .InputUnit {
 	border-bottom-style: solid;
