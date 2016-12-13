@@ -86,17 +86,7 @@ var map = new OpenLayers.Map('map', {
 					var control = drawControls[key];
 					if(element == key && element) {
 						
-
-						window.onload=function() {
-						log("element");
-						log(element);
-						var a = $('#draw');
-						var svgDoc = a.contentDocument;
-						var svgItem = svgDoc.getElementById('background');
-						svgItem.setAttribute("fill", "#203C89");
-
-						log(element_svg);
-						}
+						
 
 						control.activate();
 
@@ -176,9 +166,12 @@ var vectorLayer;
 var pArray = [];
 var lSArray = [];
 pointArray =[];
+var properties;
+properties = 'cycling';
+
 function routing(){
-var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/driving/'+lon_start+','+lat_start+';'+ lon_stop +','
-	+ lat_stop + '?alternatives=false&steps=false&geometries=geojson&overview=full', function (data) {
+var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/' + properties + '/'+lon_start+','+lat_start+';'+ lon_stop +','
+	+ lat_stop + '?alternatives=true&steps=false&geometries=geojson&overview=full', function (data) {
         var test = data.routes[0].geometry.coordinates;
          epsg4326 =  new OpenLayers.Projection("EPSG:4326");
         projectTo = map.getProjectionObject();
@@ -293,6 +286,14 @@ var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/driving/'
 	  
 	  
 	}
+
+
+
+
+
+
+
+
 //-------------------Ende Fokus auf eingegebene Adresse
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
