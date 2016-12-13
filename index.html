@@ -56,14 +56,14 @@
                 <h2>Aufenthalte</h2>
                 <div class="tFieldPLUSButton">
                     <input class="locSearch" id="start" type="text" ng-model="model" name="start" placeholder="Start" value="" onkeypress="if(event.keyCode==13){document.getElementById('startButton').click()}"/>
-                    <div id="startButton" class="searchButton" onclick="addr_search('start')"  >S</div>
+                    <div > <img class="searchButton" src="./Images/search.svg" id="startButton" onclick="addr_search('start')"img></div>
                 </div>
                 <div id="resultsstart" class="searchResult">
                 </div>
                 <div class="tFieldPLUSButton">
                 <input type="text" class="locSearch" id="stop" name="destination_place" placeholder="Zielort" onkeypress="if(event.keyCode==13){document.getElementById('DestButton').click()}"/>
 
-                    <div id="DestButton" class="searchButton" onclick="addr_search('stop')">S</div>
+                    <div > <img class="searchButton" src="./Images/search.svg" id="DestButton" onclick="addr_search('stop')"img></div>
                 </div>
                 <div id="resultsstop" class="searchResult">
                 </div>
@@ -76,6 +76,7 @@
                     <img class='geomButton' src="./Images/draw.svg" id="draw" onclick="toggleControl(this.id);"></img>
                     <img class='geomButton' src='./Images/select.svg' onclick="toggleControl('select')"></img>
                     <img class='geomButton' src='./Images/drag.svg' onclick="toggleControl('drag')"></img>
+					<img class='geomButton' src='./Images/split.svg' onclick="toggleControl('split')"></img>                    
                     <img class='geomButton' src='./Images/erase.svg' onclick="editingLayer.removeFeatures(editingLayer.selectedFeatures)"></img>
                 </div>
              </div>
