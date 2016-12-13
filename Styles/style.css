@@ -64,6 +64,7 @@ h3{
 	color: #333;
 	border-radius: 4px;
 }
+
 select {
 	background-color: #F3F3F3;
 }
@@ -136,4 +137,32 @@ lable{
 	width: 275px;
 	overflow-y: hidden;
 	max-height: 200px;
+}
+
+#ResponseContainer {
+	font-family: opensansCondBold,Arial,helvetica,sans-serif;
+	height: auto;
+	width: 300px;
+	background-color: #FFF;
+	opacity: 0.9;
+	float: right;
+	
+	
+	
+	padding-left: 10px;
+	padding-bottom: 10px;
+	position: absolute;
+	right: 20px;
+	top: 30px;
+	border-radius: 6px;
+	z-index: 1051;
+}
+
+.respValue {
+	float: right;
+	position: relative;
+	top: -28px;
+	margin-right: 10px;
+	display:inline;
+
 }

@@ -1,12 +1,46 @@
 
 
 var v;
+var rbm;
+var foetus;
+var thyroid;
+var dose;
+
+
+
+var response = {
+"red_bone_marrow": 0.021267209339325046,
+"foetus_1": 1.4563841265250478E-5,
+"thyroid": 0.024101517905976158,
+"eff_dose": 0.024116610070867805
+};
 
 
 function inJson(){
 	var geoJSON = new OpenLayers.Format.GeoJSON();
 	json_var = geoJSON.write( editingLayer.features );
 	console.log('json: ' +json_var);
+}
+
+function readResponse(){
+	
+	
+	
+	rbm = response.red_bone_marrow;
+	foetus = response.foetus_1;
+	thyroid = response.thyroid;
+	dose = response.eff_dose;
+	
+
+	
+	console.log("1. " + rbm);
+	console.log("2. " + foetus);
+	console.log("3. " + thyroid);
+	console.log("4. " + dose);
+	
+	
+	
+	
 }
 
 function createXML(){  

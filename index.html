@@ -119,14 +119,53 @@
                     <label class="elemName">Aufenthaltsort</label>
                     <select class="elemValue" name="residenceStart" onchange="residence = this.value;">
                         <option value="outside">im Freien / Auto</option>
-                        <option value="house">Haus</option
+                        <option value="house">Haus</option>
                         <option value="basement">Keller</option>
                     </select>
                 </div><!-- END residens start-->
             <div class="button" onclick="JSONXML()">Dosis Berechnen</div>
+            
+            
+
+
+            
+
+
 
             </form>
+
          </div>
+
+        <div id="ResponseContainer">
+             <div class="InputUnit">
+            <h1>BERECHNETE STRAHLUNG</h1> 
+            </div>
+            <form name="wps_response"> 
+                <div class = "vNameValueContainer">
+                    <h2>Knochenmark</h2>
+                     <label id="knochenID" class= "respValue">Dosis</label>
+                </div>
+                <div class = "vNameValueContainer">
+                <h2>Fötus</h2>
+                 <label id="foetusID" class= "respValue">Dosis</label>
+                </div>
+                <div  class = "hNameValueContainer">
+                <h2>Schilddrüse</h2>
+                <label id="schildID" class= "respValue">Dosis</label>
+                </div>
+                <div class = "hNameValueContainer">
+                <h2>Effektive Dosis</h2>
+                <label id="effectID" class= "respValue">Dosis</label>
+                </div>
+
+
+
+            </form>
+        </div>
+
+       
+
+
     </div>
     <script src="Scripts_own/map.js" type="text/javascript"></script>
     <script src="Scripts_own/interfaceFunctionality.js" type="text/javascript"></script>    

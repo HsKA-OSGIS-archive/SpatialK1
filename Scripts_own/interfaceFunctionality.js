@@ -5,8 +5,18 @@ function JSONXML(){
 		
 			inJson();
 			createXML();
+            readResponse();
+            writeResult();
 		
 		}
+
+function writeResult(){
+   document.getElementById("knochenID").innerHTML=rbm;
+   document.getElementById("foetusID").innerHTML=foetus;
+   document.getElementById("schildID").innerHTML=thyroid;
+   document.getElementById("effectID").innerHTML=dose;
+   
+}
 
 $(function(){	
 			$('.daterangepickerCon').daterangepicker({
