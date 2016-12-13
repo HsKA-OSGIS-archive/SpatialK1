@@ -73,9 +73,13 @@ var map = new OpenLayers.Map('map', {
             })
 		});
 		var editingLayer = new OpenLayers.Layer.Vector("Editing", {styleMap: styleMap} );
+		editingLayer.attributes ={
+			name: "layer"
+		}
+		
+		
         map.addLayers([editingLayer]);
-        //var snapVertex = {methods: ['vertex', 'edge'], layers: [vectors]};
-
+        
 		var split = new OpenLayers.Control.Split({
 			layer: editingLayer,
 			eventListeners: {
@@ -109,30 +113,14 @@ var map = new OpenLayers.Map('map', {
 		for(var key in drawControls) {
 					map.addControl(drawControls[key]);
 		}
-		var draw = "./Images/draw.svg"
+
 		//---------------------Zeichenfunktion-----------------------------------
 		  function toggleControl(element) {
 				
 				for(key in drawControls) {
 					var control = drawControls[key];
 					if(element == key && element) {
-						
-
-						window.onload=function() {
-						log("element");
-						log(element);
-						var a = $('#draw');
-						var svgDoc = a.contentDocument;
-						var svgItem = svgDoc.getElementById('background');
-						svgItem.setAttribute("fill", "#203C89");
-
-						log(element_svg);
-						}
-
 						control.activate();
-
-
-
 					} else {
 						control.deactivate();
 					}
