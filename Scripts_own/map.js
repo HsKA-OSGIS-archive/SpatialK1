@@ -279,11 +279,11 @@ var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/driving/'
 	  if(inp=='start'){
 	  	log(markers);
 
-		var icon = new OpenLayers.Icon('./icons/Start_icon.svg', size, offset);
+		var icon = new OpenLayers.Icon('./images/Start_icon.svg', size, offset);
 
 	  }else{
 	  	log(markers);
-		var icon = new OpenLayers.Icon('./icons/Ziel_icon.svg', size, offset_2);
+		var icon = new OpenLayers.Icon('./images/Ziel_icon.svg', size, offset_2);
 		
 	  }
 	  
