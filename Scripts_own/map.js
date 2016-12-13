@@ -58,7 +58,7 @@ var map = new OpenLayers.Map('map', {
 
   // init the editing toolbar and a basic selection control
          var drawControls ={
-			line: new OpenLayers.Control.DrawFeature(editingLayer,
+			draw: new OpenLayers.Control.DrawFeature(editingLayer,
 						OpenLayers.Handler.Path),
 			drag: new OpenLayers.Control.DragFeature(editingLayer),
 			select: new OpenLayers.Control.SelectFeature(
@@ -78,14 +78,30 @@ var map = new OpenLayers.Map('map', {
 		for(var key in drawControls) {
 					map.addControl(drawControls[key]);
 		}
-		
+		var draw = "./Images/draw.svg"
 		//---------------------Zeichenfunktion-----------------------------------
 		  function toggleControl(element) {
 				
 				for(key in drawControls) {
 					var control = drawControls[key];
 					if(element == key && element) {
+						
+
+						window.onload=function() {
+						log("element");
+						log(element);
+						var a = $('#draw');
+						var svgDoc = a.contentDocument;
+						var svgItem = svgDoc.getElementById('background');
+						svgItem.setAttribute("fill", "#203C89");
+
+						log(element_svg);
+						}
+
 						control.activate();
+
+
+
 					} else {
 						control.deactivate();
 					}
@@ -172,12 +188,7 @@ var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/driving/'
         }
   
 		var route_line = new OpenLayers.Geometry.LineString(pointArray);
-		//map.addLayer(testLine);
-		log("testline");
-		log(testLine);
-        //alert(testLine);
-		
-		//test to add linestring to display
+
 		
 		var routeStyle = {strokeColor:"#0500bd", strokeWidth:3};
 		var feature = new OpenLayers.Feature.Vector(route_line, {},routeStyle);
@@ -213,7 +224,7 @@ var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/driving/'
 	}
 	}
 
-	
+	 
 	  var location = new OpenLayers.LonLat(lng,lat);
 	  map.setCenter(location.transform('EPSG:4326', 'EPSG:3857'));
 	  map.zoomTo(17);	 
@@ -221,18 +232,27 @@ var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/driving/'
 	 
 	  
 //------------------add Marker to map -------------------------------------
-	  var markers = new OpenLayers.Layer.Markers( "Markers" );
+	  var markers = new OpenLayers.Layer.Markers( "Markers");
 	  map.addLayer(markers);
+
+
 
 	  var size = new OpenLayers.Size(42,50);
 	  var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+	  var offset_2 = new OpenLayers.Pixel(-(size.w/5), -size.h);
 	  if(inp=='start'){
+	  	log(markers);
+
 		var icon = new OpenLayers.Icon('./icons/Start_icon.svg', size, offset);
+
 	  }else{
-		var icon = new OpenLayers.Icon('./icons/Ziel_icon.svg', size, offset);
+	  	log(markers);
+		var icon = new OpenLayers.Icon('./icons/Ziel_icon.svg', size, offset_2);
+		
 	  }
+	  
 	  markers.addMarker(new OpenLayers.Marker(location,icon));
-	  markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(0,0),icon.clone()));
+	  
 		  
 	  
 	  
