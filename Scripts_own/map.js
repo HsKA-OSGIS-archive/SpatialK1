@@ -190,14 +190,7 @@ var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/driving/'
         }
   
 		var route_line = new OpenLayers.Geometry.LineString(pointArray);
-<<<<<<< HEAD
 
-=======
-		//map.addLayer(testLine);
-		
-        //alert(testLine);
-		
->>>>>>> origin/master
 		
 		
 		var routeStyle = new OpenLayers.StyleMap({
