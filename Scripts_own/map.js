@@ -32,7 +32,30 @@ var map = new OpenLayers.Map('map', {
            
             });
      
+			map.addControl(new OpenLayers.Control.MousePosition());
 
+	 
+			function flashFeatures(features, index) {
+				log("flash");
+				if(!index) {
+					index = 0;
+				}
+				var current = editingLayer.features[index];
+				if(current && current.layer === editingLayer) {
+					editingLayer.drawFeature(features[index], "select");
+					log("if1");
+				}
+				var prev = editingLayer.features[index-1];
+				if(prev && prev.layer === editingLayer) {
+					editingLayer.drawFeature(prev, "default");
+					log("if2");
+				}
+				++index;
+				if(index <= editingLayer.features.length) {
+					window.setTimeout(function() {flashFeatures(editingLayer.features, index)}, 100);
+					log("if3");
+				}
+            }
 
 
         // we will use this vector layer to demonstrate editing vector features
@@ -53,7 +76,14 @@ var map = new OpenLayers.Map('map', {
         map.addLayers([editingLayer]);
         //var snapVertex = {methods: ['vertex', 'edge'], layers: [vectors]};
 
-		
+		var split = new OpenLayers.Control.Split({
+			layer: editingLayer,
+			eventListeners: {
+				aftersplit: function(event) {
+					flashFeatures(event.features);
+				}
+			}
+		});
 		        
 
   // init the editing toolbar and a basic selection control
@@ -71,7 +101,8 @@ var map = new OpenLayers.Map('map', {
 						box: true,
 						click: true
 					}
-				)
+				),
+			split: split
 		};		
 
 		

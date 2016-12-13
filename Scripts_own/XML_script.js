@@ -24,22 +24,10 @@ function inJson(){
 
 function readResponse(){
 	
-	
-	
-	rbm = response.red_bone_marrow;
-	foetus = response.foetus_1;
-	thyroid = response.thyroid;
-	dose = response.eff_dose;
-	
-
-	
-	console.log("1. " + rbm);
-	console.log("2. " + foetus);
-	console.log("3. " + thyroid);
-	console.log("4. " + dose);
-	
-	
-	
+	rbm = response.red_bone_marrow.toFixed(10);
+	foetus = response.foetus_1.toFixed(10);
+	thyroid = response.thyroid.toFixed(10);
+	dose = response.eff_dose.toFixed(10);
 	
 }
 
