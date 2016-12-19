@@ -36,24 +36,20 @@ var map = new OpenLayers.Map('map', {
 
 	 
 			function flashFeatures(features, index) {
-				log("flash");
 				if(!index) {
 					index = 0;
 				}
 				var current = editingLayer.features[index];
 				if(current && current.layer === editingLayer) {
 					editingLayer.drawFeature(features[index], "select");
-					log("if1");
 				}
 				var prev = editingLayer.features[index-1];
 				if(prev && prev.layer === editingLayer) {
 					editingLayer.drawFeature(prev, "default");
-					log("if2");
 				}
 				++index;
 				if(index <= editingLayer.features.length) {
 					window.setTimeout(function() {flashFeatures(editingLayer.features, index)}, 100);
-					log("if3");
 				}
             }
 
