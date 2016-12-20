@@ -2,6 +2,9 @@ function log(input){
 	console.log(input);
 }
 
+var elem;
+var actions;
+
 var map = new OpenLayers.Map('map', {
                 layers: [
                     new OpenLayers.Layer.OSM('OSM'),
@@ -68,11 +71,36 @@ var map = new OpenLayers.Map('map', {
 				strokeOpacity: 1,
             })
 		});
-		var editingLayer = new OpenLayers.Layer.Vector("Editing", {styleMap: styleMap} );
-		editingLayer.attributes ={
-			name: "layer"
-		}
 		
+		var editingLayer = new OpenLayers.Layer.Vector("Editing", {styleMap: styleMap});
+		 editingLayer.events.register('featureadded', editingLayer, function(evt) {
+			setVariables();
+		 });
+		
+
+		
+		function setVariables(){	
+			
+			actions  = ["iodine", "evacuation", "protecting_mask", "residence"];
+
+			var arrLength = editingLayer.features.length;
+			
+			for (var i = 0; i< actions.length; i++){
+				elem = document.getElementById(actions[i]);
+				
+				if(elem.checked  == true){
+					
+					editingLayer.features[arrLength-1].attributes[elem.id]='1';
+				}
+				if (elem.name=="residenceStart"){
+					editingLayer.features[arrLength-1].attributes[elem.name]=elem.value;
+				}
+				else{
+					editingLayer.features[arrLength-1].attributes[elem.id]='0';
+					
+				}
+			}		
+		}
 		
         map.addLayers([editingLayer]);
         
@@ -116,7 +144,7 @@ var map = new OpenLayers.Map('map', {
 				for(key in drawControls) {
 					var control = drawControls[key];
 					if(element == key && element) {
-
+						log(editingLayer);
 						control.activate();
 					} else {
 						control.deactivate();
