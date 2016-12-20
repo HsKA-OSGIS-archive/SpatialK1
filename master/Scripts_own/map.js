@@ -118,6 +118,9 @@ var map = new OpenLayers.Map('map', {
 // Snapping
 		  
 		var snap = new OpenLayers.Control.Snapping({
+				defaults:{
+					tolerance: 30
+				},
                 layer: editingLayer,
                 targets: [editingLayer],
                 greedy: false
