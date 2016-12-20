@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="40px" height="40px" viewBox="33.334 33.334 40 40" enable-background="new 33.334 33.334 40 40" xml:space="preserve">
+<g id="Ebene_1_1_">
+	<g>
+		<path id = "background" fill="#FFFFFF" d="M43.475,72.834c-5.316,0-9.641-4.325-9.641-9.641V43.475c0-5.316,4.325-9.641,9.641-9.641h19.719
+			c5.315,0,9.641,4.325,9.641,9.641v19.718c0,5.315-4.325,9.641-9.641,9.641H43.475z"/>
+		<path id = "contour" fill="#203C89" d="M63.193,34.334c5.04,0,9.141,4.101,9.141,9.141v19.718c0,5.04-4.101,9.141-9.141,9.141H43.475
+			c-5.04,0-9.141-4.101-9.141-9.141V43.475c0-5.04,4.101-9.141,9.141-9.141H63.193 M63.193,33.334H43.475
+			c-5.601,0-10.141,4.54-10.141,10.141v19.718c0,5.602,4.54,10.141,10.141,10.141h19.719c5.601,0,10.141-4.539,10.141-10.141V43.475
+			C73.334,37.875,68.794,33.334,63.193,33.334L63.193,33.334z"/>
+	</g>
+</g>
+<g id="Ebene_2">
+	
+		<line id = "line" fill="none" stroke="#203C89" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" x1="41.436" y1="65.188" x2="65.189" y2="41.436"/>
+</g>
+</svg>
