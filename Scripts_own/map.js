@@ -82,24 +82,24 @@ var map = new OpenLayers.Map('map', {
 		function setVariables(){	
 			
 			actions  = ["iodine", "evacuation", "protecting_mask", "residence"];
-
-			var arrLength = editingLayer.features.length;
+			arrLength = editingLayer.features.length;
 			
 			for (var i = 0; i< actions.length; i++){
 				elem = document.getElementById(actions[i]);
 				
-				if (elem.name=="residenceStart"){
-					editingLayer.features[arrLength-1].attributes[elem.name]=elem.value;
+				if (elem.id=="residence"){
+					editingLayer.features[arrLength-1].attributes[elem.id]=elem.value;
 				}
 				if(elem.checked  == true){
 					
 					editingLayer.features[arrLength-1].attributes[elem.id]='1';
 				}
 				
-				else{
+				else if (elem.id!= "residence"){
 					editingLayer.features[arrLength-1].attributes[elem.id]='0';
 					
 				}
+				
 			}		
 		}
 		
@@ -234,7 +234,7 @@ var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/' + prope
 
         for (i = 0; i< test.length; i++){
         	pointArray.push(new OpenLayers.Geometry.Point( test[i][0], test[i][1]).transform(epsg4326, projectTo));
-        	log(pointArray);
+        	
         }
   
 		var route_line = new OpenLayers.Geometry.LineString(pointArray);
@@ -257,30 +257,21 @@ var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/' + prope
 			pArray.push( new OpenLayers.Geometry.Point(test[i][0], test[i][1]).transform(epsg4326, projectTo));
 		}
 		
-		//for(var i = 0; i < pArray.length; i++){
-			lSArray.push(new OpenLayers.Geometry.LineString(pArray));
-		//}
+		lSArray.push(new OpenLayers.Geometry.LineString(pArray));
 		
-		//mLSArray.push(new OpenLayers.Geometry.MultiLineString(lSArray));
-		
-    	var vectorSource= new OpenLayers.Feature.Vector( pArray,{},	 routeStyle);
+    	var vectorSource= new OpenLayers.Feature.Vector( pArray);
 
-    	vectorLayer = new OpenLayers.Layer.Vector();
+    	vectorLayer = new OpenLayers.Layer.Vector("Vector");
 		vectorLayer.addFeatures([vectorSource]);
-		/*({
-        	features: vectorSource
-    	});*/
-		var routeStyle = {strokeColor:"#0500bd", strokeWidth:3};
-		var feature = new OpenLayers.Feature.Vector(route_line, {name: "name"},routeStyle);
-  
-
+		
+		var feature = new OpenLayers.Feature.Vector(route_line);
+		
+		
     	var vectorLayer = new OpenLayers.Layer.Vector();
     	vectorLayer.addFeatures([feature]);
-
-    	map.addLayer(vectorLayer);
-		log(test);
-		log(vectorLayer);
-		//end test
+		var clone = vectorLayer.clone();
+		editingLayer.addFeatures(clone.features);
+		
     });
 }
 
