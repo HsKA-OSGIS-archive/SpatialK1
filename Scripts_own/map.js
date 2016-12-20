@@ -88,13 +88,14 @@ var map = new OpenLayers.Map('map', {
 			for (var i = 0; i< actions.length; i++){
 				elem = document.getElementById(actions[i]);
 				
+				if (elem.name=="residenceStart"){
+					editingLayer.features[arrLength-1].attributes[elem.name]=elem.value;
+				}
 				if(elem.checked  == true){
 					
 					editingLayer.features[arrLength-1].attributes[elem.id]='1';
 				}
-				if (elem.name=="residenceStart"){
-					editingLayer.features[arrLength-1].attributes[elem.name]=elem.value;
-				}
+				
 				else{
 					editingLayer.features[arrLength-1].attributes[elem.id]='0';
 					
