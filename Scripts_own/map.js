@@ -115,6 +115,16 @@ var map = new OpenLayers.Map('map', {
 		});
 		        
 
+			// Snapping	
+			var snap = new OpenLayers.Control.Snapping({
+			layer: editingLayer,
+			targets: [editingLayer],
+			greedy: false
+				});
+            snap.activate();		
+				
+				
+				
   // init the editing toolbar and a basic selection control
          var drawControls ={
 			draw: new OpenLayers.Control.DrawFeature(editingLayer,
