@@ -84,7 +84,6 @@ var map = new OpenLayers.Map('map', {
 		function setVariables(){	
 			editingLayer.refresh();
 			actions= [];
-			debugger;
 			var loopAactions  = ["iodine", "evacuation", "protecting_mask", "residence"];
 			arrLength = editingLayer.features.length;
 			
