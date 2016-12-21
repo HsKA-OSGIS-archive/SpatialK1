@@ -79,9 +79,12 @@ var map = new OpenLayers.Map('map', {
 		
 
 		
+		map.addLayers([editingLayer]);
+		
 		function setVariables(){	
-		editingLayer.refresh();
-			actions.length= 0;
+			editingLayer.refresh();
+			actions= [];
+			debugger;
 			var loopAactions  = ["iodine", "evacuation", "protecting_mask", "residence"];
 			arrLength = editingLayer.features.length;
 			
@@ -92,14 +95,13 @@ var map = new OpenLayers.Map('map', {
 					editingLayer.features[arrLength-1].attributes[elem.id]=elem.value;
 				}
 				if(elem.checked  == true){
-					
 					actions.push(elem.id);
 					editingLayer.features[arrLength-1].attributes["actions"]=actions;
-					
 				}
 				
 			}
-			map.addLayers([editingLayer]);
+			
+			
 		}
 		
         
