@@ -79,31 +79,31 @@ var map = new OpenLayers.Map('map', {
 		
 
 		
+		map.addLayers([editingLayer]);
+		
 		function setVariables(){	
-			
-			actions  = ["iodine", "evacuation", "protecting_mask", "residence"];
+			editingLayer.refresh();
+			actions= [];
+			var loopAactions  = ["iodine", "evacuation", "protecting_mask", "residence"];
 			arrLength = editingLayer.features.length;
 			
-			for (var i = 0; i< actions.length; i++){
-				elem = document.getElementById(actions[i]);
+			for (var i = 0; i< loopAactions.length; i++){
+				elem = document.getElementById(loopAactions[i]);
 				
 				if (elem.id=="residence"){
 					editingLayer.features[arrLength-1].attributes[elem.id]=elem.value;
 				}
 				if(elem.checked  == true){
-					
-					editingLayer.features[arrLength-1].attributes[elem.id]='1';
+					actions.push(elem.id);
+					editingLayer.features[arrLength-1].attributes["actions"]=actions;
 				}
 				
-				else if (elem.id!= "residence"){
-					editingLayer.features[arrLength-1].attributes[elem.id]='0';
-					
-				}
-				
-			}		
+			}
+			
+			
 		}
 		
-        map.addLayers([editingLayer]);
+        
         
 		var split = new OpenLayers.Control.Split({
 			layer: editingLayer,
@@ -117,9 +117,10 @@ var map = new OpenLayers.Map('map', {
 
 // Snapping
 		  
-		var snap = new OpenLayers.Control.Snapping({
+	var snap = new OpenLayers.Control.Snapping({
 				defaults:{
-					tolerance: 30
+					tolerance: 60,
+					edge: false
 				},
                 layer: editingLayer,
                 targets: [editingLayer],
@@ -231,30 +232,34 @@ function setStop(stoplat, stoplon){
 
 //------------------Routin Funktion mit OSRM--------------------------------------
 var url = "http://router.project-osrm.org/viaroute?loc=";
-var vectorLayer;
-var pArray = [];
-var lSArray = [];
-pointArray =[];
+
 var properties;
 properties = 'cycling';
 
 function routing(){
+	
+	var vectorLayer;
+	var pArray = [];
+	var lSArray = [];
+	pointArray =[];
+	var route_line;
+	
 var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/' + properties + '/'+lon_start+','+lat_start+';'+ lon_stop +','
 	+ lat_stop + '?alternatives=true&steps=false&geometries=geojson&overview=full', function (data) {
         var test = data.routes[0].geometry.coordinates;
          epsg4326 =  new OpenLayers.Projection("EPSG:4326");
         projectTo = map.getProjectionObject();
-
-
+		
+		pArray.length = 0;
+		pointArray.length = 0;
+		lSArray.length = 0;
+		
         for (i = 0; i< test.length; i++){
         	pointArray.push(new OpenLayers.Geometry.Point( test[i][0], test[i][1]).transform(epsg4326, projectTo));
         	
         }
-  
-		var route_line = new OpenLayers.Geometry.LineString(pointArray);
+		route_line = new OpenLayers.Geometry.LineString(pointArray);
 
-		
-		
 		var routeStyle = new OpenLayers.StyleMap({
 				
 				"default": 	new OpenLayers.Style({
@@ -263,7 +268,6 @@ var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/' + prope
 				 strokeOpacity:1,
             })
 		});
-		
 		
 		epsg4326 =  new OpenLayers.Projection("EPSG:4326");
         projectTo = map.getProjectionObject();
@@ -274,17 +278,21 @@ var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/' + prope
 		lSArray.push(new OpenLayers.Geometry.LineString(pArray));
 		
     	var vectorSource= new OpenLayers.Feature.Vector( pArray);
-
-    	vectorLayer = new OpenLayers.Layer.Vector("Vector");
+		vectorLayer = new OpenLayers.Layer.Vector("Vector");
 		vectorLayer.addFeatures([vectorSource]);
 		
-		var feature = new OpenLayers.Feature.Vector(route_line);
+		var feature = new OpenLayers.Feature.Vector(route_line, routeStyle);
 		
 		
     	var vectorLayer = new OpenLayers.Layer.Vector();
+    	
     	vectorLayer.addFeatures([feature]);
 		var clone = vectorLayer.clone();
 		editingLayer.addFeatures(clone.features);
+		
+		vectorLayer.destroyFeatures();
+		vectorSource.destroy();
+		route_line.length = 0;
 		
     });
 }
