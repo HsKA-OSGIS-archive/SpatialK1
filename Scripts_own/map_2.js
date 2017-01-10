@@ -18,10 +18,10 @@ var map = new OpenLayers.Map('map', {
 
                    //new OpenLayers.Control.PanZoomBar(),
 
-                    //new OpenLayers.Control.LayerSwitcher({
-                    //    'ascending': true
-                    //}),
-                    //new OpenLayers.Control.ScaleLine(),
+                    new OpenLayers.Control.LayerSwitcher({
+                        'ascending': true
+                    }),
+                    new OpenLayers.Control.ScaleLine(),
                     //new OpenLayers.Control.MousePosition(),
                     new OpenLayers.Control.SelectFeature(),
                     new OpenLayers.Control.KeyboardDefaults(),
@@ -126,44 +126,6 @@ var map = new OpenLayers.Map('map', {
 
 
 //--------------- Geocoding Funktion mit Nominatim---------------------
-
-var errorcode;
-
-// Test if Server is available
-function servertest(url_test){
-	
-
-	var testRequest = $.ajax({url: url_test,
-			type: "HEAD",
-			timeout: 1000,
-			statusCode: {
-				200: function (response){
-					errorcode = 200
-					routing()
-					}
-				,
-				404: function (response){
-					errorcode =404
-				}
-				,
-				400: function (response){
-					errorcode =400
-				}
-				,
-				0: function (response){
-					errorcode =0
-				}
-				,
-
-			}});
-	console.log("statusCode");
-	console.log(errorcode);
-	//console.log(testRequest.statusCode.status)
-	//console.log(stat);
-	//return errorcode;
-}
-
-
 var inp;
 var items = [];
 var inp_val;
@@ -263,81 +225,67 @@ properties = 'cycling';
 
 
 function routing(){
-	console.log("routing", errorcode)
-	
-	if(errorcode != 'undefined'){
-	servertest('http://router.project-osrm.org/route/v1/driving/13.388860,52.517037;13.397634,52.529407;13.428555,52.523219?overview=false')
-	//console.log("STATUSCODE", errorcode);
-	}
-	if (errorcode == 200){
-		var rut =  $.getJSON('http://router.project-osrm.org/route/v1/' + properties + '/'+lon_start+','+lat_start+';'+ lon_stop +','
-		+ lat_stop + '?alternatives=true&steps=false&geometries=geojson&overview=full')
 
-	var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/' + properties + '/'+lon_start+','+lat_start+';'+ lon_stop +','
-		+ lat_stop + '?alternatives=true&steps=false&geometries=geojson&overview=full', function (data) {
-	        var test = data.routes[0].geometry.coordinates;
-	         epsg4326 =  new OpenLayers.Projection("EPSG:4326");
-	        projectTo = map.getProjectionObject();
-	        console.log(rut);
-
-	        for (i = 0; i< test.length; i++){
-	        	pointArray.push(new OpenLayers.Geometry.Point( test[i][0], test[i][1]).transform(epsg4326, projectTo));
-	        	log(pointArray);
-	        }
-	  
-			var route_line = new OpenLayers.Geometry.LineString(pointArray);
-
-			
-			
-			var routeStyle = new OpenLayers.StyleMap({
-					
-					"default": 	new OpenLayers.Style({
-					 strokeWidth: 4,
-					 strokeColor: '#1c74cc',
-					 strokeOpacity:1,
-	            })
-			});
-			
-			
-			epsg4326 =  new OpenLayers.Projection("EPSG:4326");
-	        projectTo = map.getProjectionObject();
-			for(var i = 0; i < test.length; i++){
-				pArray.push( new OpenLayers.Geometry.Point(test[i][0], test[i][1]).transform(epsg4326, projectTo));
-			}
-			
-			//for(var i = 0; i < pArray.length; i++){
-				lSArray.push(new OpenLayers.Geometry.LineString(pArray));
-			//}
-			
-			//mLSArray.push(new OpenLayers.Geometry.MultiLineString(lSArray));
-			
-	    	var vectorSource= new OpenLayers.Feature.Vector( pArray,{},	 routeStyle);
-
-	    	vectorLayer = new OpenLayers.Layer.Vector();
-			vectorLayer.addFeatures([vectorSource]);
-			/*({
-	        	features: vectorSource
-	    	});*/
-			var routeStyle = {strokeColor:"#0500bd", strokeWidth:3};
-			var feature = new OpenLayers.Feature.Vector(route_line, {name: "name"},routeStyle);
-	  
-
-	    	var vectorLayer = new OpenLayers.Layer.Vector();
-	    	vectorLayer.addFeatures([feature]);
-
-	    	map.addLayer(vectorLayer);
-			log(test);
-			log(vectorLayer);
-			//end test
-	    });
-	}
-	else{
-		alert("Funktioniert nicht")
-	}
-	
+var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/' + properties + '/'+lon_start+','+lat_start+';'+ lon_stop +','
+	+ lat_stop + '?alternatives=true&steps=false&geometries=geojson&overview=full', function (data) {
+        var test = data.routes[0].geometry.coordinates;
+         epsg4326 =  new OpenLayers.Projection("EPSG:4326");
+        projectTo = map.getProjectionObject();
 
 
+        for (i = 0; i< test.length; i++){
+        	pointArray.push(new OpenLayers.Geometry.Point( test[i][0], test[i][1]).transform(epsg4326, projectTo));
+        	log(pointArray);
+        }
+  
+		var route_line = new OpenLayers.Geometry.LineString(pointArray);
+
+		
+		
+		var routeStyle = new OpenLayers.StyleMap({
+				
+				"default": 	new OpenLayers.Style({
+				 strokeWidth: 4,
+				 strokeColor: '#1c74cc',
+				 strokeOpacity:1,
+            })
+		});
+		
+		
+		epsg4326 =  new OpenLayers.Projection("EPSG:4326");
+        projectTo = map.getProjectionObject();
+		for(var i = 0; i < test.length; i++){
+			pArray.push( new OpenLayers.Geometry.Point(test[i][0], test[i][1]).transform(epsg4326, projectTo));
+		}
+		
+		//for(var i = 0; i < pArray.length; i++){
+			lSArray.push(new OpenLayers.Geometry.LineString(pArray));
+		//}
+		
+		//mLSArray.push(new OpenLayers.Geometry.MultiLineString(lSArray));
+		
+    	var vectorSource= new OpenLayers.Feature.Vector( pArray,{},	 routeStyle);
+
+    	vectorLayer = new OpenLayers.Layer.Vector();
+		vectorLayer.addFeatures([vectorSource]);
+		/*({
+        	features: vectorSource
+    	});*/
+		var routeStyle = {strokeColor:"#0500bd", strokeWidth:3};
+		var feature = new OpenLayers.Feature.Vector(route_line, {name: "name"},routeStyle);
+  
+
+    	var vectorLayer = new OpenLayers.Layer.Vector();
+    	vectorLayer.addFeatures([feature]);
+
+    	map.addLayer(vectorLayer);
+		log(test);
+		log(vectorLayer);
+		//end test
+    });
 }
+
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //--------------------------------------------------------------------------
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
