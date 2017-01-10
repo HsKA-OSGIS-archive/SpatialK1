@@ -5,7 +5,7 @@ function JSONXML(){
 		
 			inJson();
 			createXML();
-			debugger;
+			//debugger;
 			$.post({
 			  url: "http://localhost",
 
@@ -16,7 +16,7 @@ function JSONXML(){
 
 			  success: function(){debugger;},
 			  error: function(){console.log('we know it does not work yet');},
-			  dataType: "json"
+			  dataType: "text/xml"
 			});
             readResponse();
             writeResult();

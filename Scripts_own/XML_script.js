@@ -23,7 +23,7 @@ function inJson(){
 }
 
 function readResponse(){
-	
+	console.log("readresponse");
 	rbm = response.red_bone_marrow.toFixed(10);
 	foetus = response.foetus_1.toFixed(10);
 	thyroid = response.thyroid.toFixed(10);
@@ -69,9 +69,9 @@ function createXML(){
   console.log("XML as String " +vx);
   
   parser = new DOMParser();
-	vx = parser.parseFromString(vx, "text/xml");
+	xml_var = parser.parseFromString(vx, "text/xml");
 	
-	console.log("XML as oject " + vx);
+	console.log("XML as object " + xml_var);
   
   
   //Old XML creation with XML Writer library
