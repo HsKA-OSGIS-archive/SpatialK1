@@ -84,41 +84,20 @@
                 <h2>Schutzmaßnahmen</h2>
                     <div class="hNameValueContainer">
                         <label class="elemName">Gasmaske</label>
-                        <input class="elemValue" type="checkbox" name="Gasmask" onchange="if(this.checked == false){
-                                while(actions.indexOf('protecting_mask') != -1){
-                                    actions.splice(actions.indexOf('protecting_mask'), 1);
-                                }
-                            }
-                            else{
-                                actions.push('protecting_mask');
-                        }"/>
+                        <input class="elemValue" type="checkbox" name="Gasmask" id="protecting_mask"  />
                     </div>
                     <div class="hNameValueContainer">
                         <label class="elemName">Iodtablette</label>
-                        <input class="elemValue" type="checkbox" name="Iodine" onchange="if(this.checked == false){
-                            while(actions.indexOf('iodine') != -1){
-                                actions.splice(actions.indexOf('iodine'), 1);
-                            }
-                            }
-                            else{
-                                actions.push('iodine');
-                            }"/>
+                        <input class="elemValue" type="checkbox" name="Iodine" id="iodine" />
                     </div>
                     <div class="hNameValueContainer">
                         <label class="elemName">Evakuierung</label>
-                        <input class="elemValue" type="checkbox" name="Evacuation" onchange="if(this.checked == false){
-                                while(actions.indexOf('evacuation') != -1){
-                                    actions.splice(actions.indexOf('evacuation'), 1);
-                                }
-                            }
-                            else{
-                                actions.push('evacuation');
-                            }"/>
+                        <input class="elemValue" type="checkbox" name="Evacuation" id="evacuation"/>
                     </div>
                 </div><!--END protection mesures-->
                 <div class="vNameValueContainer"><!-- residens start-->
                     <label class="elemName">Aufenthaltsort</label>
-                    <select class="elemValue" name="residenceStart" onchange="residence = this.value;">
+                     <select class="elemValue" name="residenceStart" id="residence" onchange="residenceVal = this.value;">
                         <option value="outside">im Freien / Auto</option>
                         <option value="house">Haus</option>
                         <option value="basement">Keller</option>

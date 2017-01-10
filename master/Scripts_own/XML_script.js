@@ -5,7 +5,7 @@ var rbm;
 var foetus;
 var thyroid;
 var dose;
-
+var vx;
 
 
 var response = {
@@ -33,6 +33,52 @@ function readResponse(){
 
 function createXML(){  
   
+  
+  
+  vx = '<?xml version="1.0" encoding="UTF-8" standalone="true" ?>' +
+'<wps:Execute version="1.0.0" service="WPS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps/1.0.0" xmlns:wfs="http://www.opengis.net/wfs" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wcs="http://www.opengis.net/wcs/1.1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsAll.xsd">' +
+	'<ows:Identifier>gs:DoseReconstruction</ows:identifier>'+
+	'<wps:DataInputs>'+
+		'<wps:Input>'+
+			'<ows:Identifier>route</ows:identifier>'+
+			'<wps:Data>'+
+				'<wps:ComplexData mimeType="application/json"><![CDATA['+ json_var +']]></wps:ComplexData>'+
+			'</wps:Data>'+
+		'</wps:Input>'+
+		'<wps:Input>'+
+			'<ows:Identifier>ageGroup</ows:identifier>'+
+			'<wps:Data>'+
+				'<wps:LiteralData>'+ ageGroup +
+				'</wps:LiteralData>'+
+			'</wps:Data>'+
+		'</wps:Input>'+
+		'<wps:Input>'+
+			'<ows:Identifier>stadiumFoetus</ows:identifier>'+
+			'<wps:Data>'+
+				'<wps:LiteralData>'+ stadiumFoetus +
+				'</wps:LiteralData>'+
+			'</wps:Data>'+
+		'</wps:Input>'+
+	'</wps:DataInputs>'+
+'</wps:Execute>'
+  
+  
+  
+  
+ // vx= '<?xml version="1.0" encoding="UTF-8" standalone="true" ?><ows:identifier>gs:DoseReconstruction</ows:identifier><wps:DataInputs><wps:Input>'
+  console.log("XML as String " +vx);
+  
+  parser = new DOMParser();
+	vx = parser.parseFromString(vx, "text/xml");
+	
+	console.log("XML as oject " + vx);
+  
+  
+  //Old XML creation with XML Writer library
+  
+/*
+  
+  
    v = new XMLWriter();
    v.writeStartDocument(true);  
    v.writeStartElement("Execute", "wps")
@@ -48,7 +94,7 @@ function createXML(){
 		v.writeAttributeString('xmlns:wcs','http://www.opengis.net/wcs/1.1.1');
 		v.writeAttributeString('xmlns:xlink','http://www.w3.org/1999/xlink');
 		v.writeAttributeString('xsi:schemaLocation','http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsAll.xsd');		
-   v.writeStartElement("Identiefier", "ows"); 
+   v.writeStartElement("identifier", "ows"); 
    v.writeString("gs:DoseReconstruction");
    v.writeEndElement();
    v.writeStartElement("DataInputs", "wps");
@@ -56,7 +102,7 @@ function createXML(){
    //JSON
 
 	   v.writeStartElement("Input", "wps"); 
-		   v.writeStartElement("Identiefier", "ows"); 
+		   v.writeStartElement("identifier", "ows"); 
 		   v.writeString("route");
 		   v.writeEndElement();
 		   v.writeStartElement("Data", "wps");   
@@ -73,7 +119,7 @@ function createXML(){
    //AgeGroup
 
 	   v.writeStartElement("Input", "wps"); 
-		   v.writeStartElement("Identiefier", "ows"); 
+		   v.writeStartElement("identifier", "ows"); 
 		   v.writeString("ageGroup");
 		   v.writeEndElement();
 		   v.writeStartElement("Data", "wps");   
@@ -88,7 +134,7 @@ function createXML(){
    //Pregnant
 
 	   v.writeStartElement("Input", "wps"); 
-		   v.writeStartElement("Identiefier", "ows"); 
+		   v.writeStartElement("identifier", "ows"); 
 		   v.writeString("stadiumFoetus");
 		   v.writeEndElement();
 		   v.writeStartElement("Data", "wps");   
@@ -102,6 +148,6 @@ function createXML(){
    v.writeEndDocument();
    console.log('' + v);
    console.log( v.flush() );
-
+*/
 }
 
