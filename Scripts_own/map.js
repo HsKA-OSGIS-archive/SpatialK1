@@ -58,24 +58,18 @@ var map = new OpenLayers.Map('map', {
 
 
         // we will use this vector layer to demonstrate editing vector features
-         var styleMap = new OpenLayers.StyleMap({
+        var styleMap = new OpenLayers.StyleMap({
 				
-				"point": new OpenLayers.Style({
-                pointRadius: 10,
-			    strokeColor: '#d81b23',
-				strokeOpacity: 1,
-            }),
 				"default": 	new OpenLayers.Style({
 				 strokeWidth: 4,
 				 strokeColor: '#1c74cc',
 				 strokeOpacity:1,
             }),
-			
                "select": new OpenLayers.Style({
                 strokeWidth: 5,
 			    strokeColor: '#d81b23',
 				strokeOpacity: 1,
-            }),
+            })
 		});
 		
 		var editingLayer = new OpenLayers.Layer.Vector("Editing", {styleMap: styleMap});
