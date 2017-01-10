@@ -60,15 +60,16 @@ var map = new OpenLayers.Map('map', {
         // we will use this vector layer to demonstrate editing vector features
          var styleMap = new OpenLayers.StyleMap({
 				
-				"point": new OpenLayers.Style({
-                pointRadius: 10,
-			    strokeColor: '#d81b23',
-				strokeOpacity: 1,
-            }),
-				"default": 	new OpenLayers.Style({
+		
+"default": 	new OpenLayers.Style({
 				 strokeWidth: 4,
-				 strokeColor: '#1c74cc',
+				 //strokeColor: '#1c74cc',
 				 strokeOpacity:1,
+				 pointRadius:5,
+			    strokeColor: '#039',
+				strokeOpacity: 1,
+				fillColor: "#3366ff",
+				graphicZIndex: 1
             }),
 			
                "select": new OpenLayers.Style({
@@ -205,31 +206,54 @@ function addr_search(id){
 	inp_val = inp_val.replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/Ä/g,"Ae").replace(/Ö/g,"Oe").replace(/Ü/g,"Ue").replace(/ß/g,"ss");
 	
 	//Zugriff auf Nominatim
-	$.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + inp_val, function(data) {
-	result=data;
-	console.log("result:"+ data);
-	items.length = 0;	 
-		 $.each(data, function(key, val) {
-		    items.push(
-		     "<li id='list'><a href='#' onclick='chooseAddr(" +
-		     val.lat + ", " + val.lon + "," + val.place_id +");'>" + val.display_name +
-		     '</a></li>'
-		  );
-		});
-	
-		//var first_item = chooseAddr(val.lat, val.lon);
-		    $(resultContainer).empty();
-	     if (items.length != 0) {
-	      $('<ul/>', {
-	         'class': 'my-new-list',
-			 'onclick' : '$('+ resultContainer + ').empty()',
-	         html: items.join('')
-	       }).appendTo(resultContainer);
+	$.ajax({url: ' http://nominatim.openstreetmap.org/search?q=135+pilkington+avenue,+birmingham&format=xml&polygon=1&addressdetails=1',
+	        type: "HEAD",
+	        timeout:1000,
+	        statusCode: { //status code
+	            200:
+	            	$.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + inp_val, function(data) {
+					result=data;
+					console.log("result:"+ data);
+					items.length = 0;	 
+						 $.each(data, function(key, val) {
+						    items.push(
+						     "<li id='list'><a href='#' onclick='chooseAddr(" +
+						     val.lat + ", " + val.lon + "," + val.place_id +");'>" + val.display_name +
+						     '</a></li>'
+						  );
+						});
+					
+						//var first_item = chooseAddr(val.lat, val.lon);
+						    $(resultContainer).empty();
+					     if (items.length != 0) {
+					      $('<ul/>', {
+					         'class': 'my-new-list',
+							 'onclick' : '$('+ resultContainer + ').empty()',
+					         html: items.join('')
+					       }).appendTo(resultContainer);
 
-	     } else {
-	       $('<p>', { html: "Keine Vorschläge gefunden" }).appendTo(resultContainer);
-	     }
-	  });
+					     } else {
+					       $('<p>', { html: "Keine Vorschläge gefunden" }).appendTo(resultContainer);
+					     }
+					  }),
+	            400: function (response) {
+	                alert('Bad Request');
+	            },
+	            0: function (response) {
+	                alert('Not working!');
+	            },
+	            404: function (response){
+	            	alert('Server not found');
+	            },
+	            444: function (respoonse){
+	            	alert('No Response');
+	            },
+	            500: function(response){
+	            	alert('Server down! Please try again later...');
+	            }  
+
+	        } //status code
+	 });
 }
 //------------------ENDE Geocoding mit Nominatim-------------------------
 
@@ -257,11 +281,15 @@ function routing(){
 	
 	var vectorLayer;
 	var pArray = [];
-	var lSArray = [];
+
 	pointArray =[];
 	var route_line;
 	
-var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/' + properties + '/'+lon_start+','+lat_start+';'+ lon_stop +','
+$.ajax({url: 'http://router.project-osrm.org/route/v1/cycling/8.4044366,49.0140679;8.694,49.4093582?alternatives=true&steps=false&geometries=geojson&overview=full',
+	        type: "HEAD",
+	        timeout:1000,
+	        statusCode: { //status code
+	            200:  $.getJSON('http://router.project-osrm.org/route/v1/' + properties + '/'+lon_start+','+lat_start+';'+ lon_stop +','
 	+ lat_stop + '?alternatives=true&steps=false&geometries=geojson&overview=full', function (data) {
         var test = data.routes[0].geometry.coordinates;
          epsg4326 =  new OpenLayers.Projection("EPSG:4326");
@@ -269,32 +297,31 @@ var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/' + prope
 		
 		pArray.length = 0;
 		pointArray.length = 0;
-		lSArray.length = 0;
+
 		
-        for (i = 0; i< test.length; i++){
+      for (i = 0; i< test.length; i++){
         	pointArray.push(new OpenLayers.Geometry.Point( test[i][0], test[i][1]).transform(epsg4326, projectTo));
         	
         }
 		route_line = new OpenLayers.Geometry.LineString(pointArray);
 
+
 		var routeStyle = new OpenLayers.StyleMap({
+	
 				
 				"default": 	new OpenLayers.Style({
-				 strokeWidth: 4,
-				 strokeColor: '#1c74cc',
-				 strokeOpacity:1,
+		
+			    strokeColor: "#ff9933",
+				strokeOpacity: 1,
+				fillColor: "#ff9933",
+				graphicZIndex: 1
+
             })
 		});
 		
-		epsg4326 =  new OpenLayers.Projection("EPSG:4326");
-        projectTo = map.getProjectionObject();
-		for(var i = 0; i < test.length; i++){
-			pArray.push( new OpenLayers.Geometry.Point(test[i][0], test[i][1]).transform(epsg4326, projectTo));
-		}
 		
-		lSArray.push(new OpenLayers.Geometry.LineString(pArray));
 		
-    	var vectorSource= new OpenLayers.Feature.Vector( pArray);
+    	var vectorSource= new OpenLayers.Feature.Vector( pointArray);
 		vectorLayer = new OpenLayers.Layer.Vector("Vector");
 		vectorLayer.addFeatures([vectorSource]);
 		
@@ -311,7 +338,28 @@ var routingResult = $.getJSON('http://router.project-osrm.org/route/v1/' + prope
 		vectorSource.destroy();
 		route_line.length = 0;
 		
-    });
+    }), 
+	              400: function (response) {
+	                alert('Bad Request');
+	            },
+	            0: function (response) {
+	                alert('Not working! Routing');
+	            },
+	            404: function (response){
+	            	alert('Server not found');
+	            },
+	            444: function (respoonse){
+	            	alert('No Response');
+	            },
+	              500: function (respoonse){
+	            	alert('Server Down! Try again later.........');
+	            },   
+	             504: function (respoonse){
+	            	alert('Server Down! Try again later.1........');
+	            }           
+	        }
+
+});
 }
 
 
