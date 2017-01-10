@@ -147,6 +147,7 @@ var map = new OpenLayers.Map('map', {
 			select: new OpenLayers.Control.SelectFeature(
 					editingLayer,
 					{
+						onSelect: returnSelected,
 						clickout: true, toggle: false,
 						multiple: false, hover: false,
 						toggleKey: "ctrlKey", // ctrl key removes from selection
@@ -157,7 +158,10 @@ var map = new OpenLayers.Map('map', {
 				),
 			split: split
 		};		
-
+		
+		function returnSelected(feature){
+			return selected;
+		}
 		
 		for(var key in drawControls) {
 					map.addControl(drawControls[key]);
