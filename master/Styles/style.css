@@ -143,7 +143,7 @@ lable{
 
 #ResponseContainer {
 	font-family: opensansCondBold,Arial,helvetica,sans-serif;
-	height: auto;
+	height: 250px;
 	width: 300px;
 	background-color: #FFF;
 	opacity: 0.9;
@@ -158,6 +158,54 @@ lable{
 	top: 30px;
 	border-radius: 6px;
 	z-index: 1051;
+}
+
+
+#InfoBox {
+	font-family: opensansCondBold,Arial,helvetica,sans-serif;
+	font-size: 10px;
+	
+	max-height: 50%;
+	width: 300px;
+	background-color: #FFF;
+	opacity: 0.9;
+	float: right;
+	
+	overflow:auto;
+	
+	padding-left: 10px;
+	padding-bottom: 10px;
+	position: absolute;
+	right: 20px;
+	bottom: 30px;
+	border-radius: 6px;
+	z-index: 1051;
+}
+
+#Info {
+	font-family: opensansCondBold,Arial,helvetica,sans-serif;
+	font-size: 10px;
+	height: 30px;
+	width: 30px;
+	background-color: #FFF;
+	opacity: 0.9;
+	float: right;
+	
+	
+	padding: 2px;
+
+	position: absolute;
+	right: 20px;
+	bottom: 30px;
+	border-radius: 6px;
+	z-index: 1051;
+	
+}
+#i{
+	font-size: 20px;
+	color: #039;
+	text-align: center;
+	
 }
 
 .respValue {

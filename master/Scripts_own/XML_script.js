@@ -29,7 +29,7 @@ function inJson(){
 //converts the unit in mSv 
 
 function readResponse(){
-	console.log("readresponse");
+	//console.log("readresponse");
 	rbm = ((response.red_bone_marrow)*1000).toFixed(2);
 	rbm = rbm + " mSv";
 	foetus = ((response.foetus_1)*1000).toFixed(4);
