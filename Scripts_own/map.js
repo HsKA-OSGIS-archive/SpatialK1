@@ -161,7 +161,16 @@ var map = new OpenLayers.Map('map', {
 		for(var key in drawControls) {
 					map.addControl(drawControls[key]);
 		}
-
+		var residenceVal;
+		function checkStay (element){
+			if (element=="point"){
+				document.getElementById("outside").style.display = "none";
+				document.getElementById("residence").value = "house";
+				residenceVal="house";				
+			}
+			toggleControl(element);
+		}
+		
 		//---------------------Zeichenfunktion-----------------------------------
 		  function toggleControl(element) {
 				
