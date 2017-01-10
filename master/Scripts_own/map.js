@@ -125,7 +125,7 @@ var map = new OpenLayers.Map('map', {
 		  
 	var snap = new OpenLayers.Control.Snapping({
 				defaults:{
-					tolerance: 60,
+					tolerance: 40,
 					edge: false
 				},
                 layer: editingLayer,
