@@ -20,7 +20,7 @@ function JSONXML(){
 			});
             readResponse();
             writeResult();
-			
+			document.getElementById("ResponseContainer").style.display = "block";
 		
 		}
 
