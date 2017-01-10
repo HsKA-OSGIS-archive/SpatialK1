@@ -8,8 +8,12 @@ function JSONXML(){
 			debugger;
 			$.post({
 			  url: "http://localhost",
+
 			  data: vx,
 			  //data: {"foo":"bar"},
+
+			 
+
 			  success: function(){debugger;},
 			  error: function(){console.log('we know it does not work yet');},
 			  dataType: "json"
