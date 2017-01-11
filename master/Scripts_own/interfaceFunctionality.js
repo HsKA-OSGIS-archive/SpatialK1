@@ -1,5 +1,9 @@
-var begin, end, residence, ageGroup, stadiumFoetus, result, json_var;
+var begin, end, residence, result, json_var;
 var actions = [];
+
+var ageGroup = "A1"; 
+var stadiumFoetus = "0";
+
 
 function JSONXML(){
 		
