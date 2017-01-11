@@ -160,7 +160,7 @@ var map = new OpenLayers.Map('map', {
 		};		
 		
 		function returnSelected(feature){
-			return selected;
+			return feature;
 		}
 		
 		for(var key in drawControls) {
