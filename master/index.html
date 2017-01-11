@@ -23,7 +23,7 @@
 
 <script src="Scripts_external/XML_Writer.js" type="text/javascript"></script>
 <script src="Scripts_own/XML_script.js" type="text/javascript"></script>
-
+<script src="Scripts_own/url_config.js" type="text/javascript"></script>
 <link href="Styles/style.css" rel="stylesheet" type="text/css" />
 
 </head>
@@ -164,15 +164,31 @@ Wenn alle Routenabschnitte erstellt sind kann die Strahlendosis durch einen Klic
 
         </div>
 		
-		<div id="Info" onClick="div_change('InfoBox')">
+		<div id="Info" onClick="div_change('InfoBox', 'icon1', 'icon2')">
 		  
-		  <img src="images/info_icon.svg" width="25"><img>
-		 <script language="JavaScript">		
-		 function div_change(strID){
+		  <img id="icon1" src="images/close_icon.svg"  width="25"><img>
+		  <img id="icon2" src="images/info_icon.svg" width="25"><img>
+		 <script language="JavaScript">	
+
+		 
+		 function div_change(strID, strID2, strID3){
         document.getElementById(strID).style.display = (document.getElementById(strID).style.display == 'none' ) ? 'block' : 'none';
-        document.getElementById(strID+ "_shown").style.display = (document.getElementById(strID + "_shown").style.display == 'none' ) ? 'block' : 'none';
+		document.getElementById(strID2).style.display = (document.getElementById(strID2).style.display == 'none' ) ? 'block' : 'none';
+		document.getElementById(strID3).style.display = (document.getElementById(strID3).style.display == 'block' ) ? 'none' : 'block';
+		
+        document.getElementById(strID + "_shown").style.display = (document.getElementById(strID + "_shown").style.display == 'none' ) ? 'block' : 'none';
+		document.getElementById(strID2 + "_shown").style.display = (document.getElementById(strID2 + "_shown").style.display == 'none' ) ? 'block' : 'none';
+		document.getElementById(strID3 + "_hidden").style.display = (document.getElementById(strID3 + "_hidden").style.display == 'none' ) ? 'block' : 'none';
+		
         document.getElementById(strID + "_hidden").style.display = (document.getElementById(strID + "_hidden").style.display == 'none' ) ? 'block' : 'none';
+		document.getElementById(strID2 + "_hidden").style.display = (document.getElementById(strID2 + "_hidden").style.display == 'none' ) ? 'block' : 'none';
+		document.getElementById(strID3 + "_shown").style.display = (document.getElementById(strID3 + "_shown").style.display == 'none' ) ? 'block' : 'none';
+		
+        
+        
+		
 		} 	
+	
 		</script>
              <div class="InputUnit" >
           

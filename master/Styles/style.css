@@ -201,6 +201,26 @@ lable{
 	z-index: 1051;
 	
 }
+
+#icon1{
+	
+	position:relative;
+	right: 0px;
+	bottom: 0px;
+	visibility: visible;
+	
+}
+
+#icon2{
+	
+	position:relative;
+	right: 0px;
+	bottom: 0px;
+	
+	display: none;
+	
+}
+
 #i{
 	font-size: 20px;
 	color: #039;
