@@ -1,6 +1,6 @@
 var begin, end, residence, result, json_var;
 var actions = [];
-
+var begin, fertig;
 var ageGroup = "A1"; 
 var stadiumFoetus = "0";
 
@@ -80,7 +80,8 @@ $(function(){
 			}, function(start, end, label) {
 				end = end.format('DD.MM.YYYY HH:MM');
 				start = start.format('DD.MM.YYYY HH:MM');
-				alert('Start: ' + start + ', End: ' + end);
+				begin = start;
+				fertig = end;
 			});;
 		})
 		//$('#start').keyup($.debounce(addr_search(), 300))

@@ -61,22 +61,22 @@ var map = new OpenLayers.Map('map', {
          var styleMap = new OpenLayers.StyleMap({
 				
 		
-"default": 	new OpenLayers.Style({
-				 strokeWidth: 4,
-				 //strokeColor: '#1c74cc',
-				 strokeOpacity:1,
-				 pointRadius:5,
-			    strokeColor: '#039',
-				strokeOpacity: 1,
-				fillColor: "#3366ff",
-				graphicZIndex: 1
-            }),
-			
-               "select": new OpenLayers.Style({
-                strokeWidth: 5,
-			    strokeColor: '#d81b23',
-				strokeOpacity: 1,
-            }),
+		"default": 	new OpenLayers.Style({
+						 strokeWidth: 4,
+						 //strokeColor: '#1c74cc',
+						 strokeOpacity:1,
+						 pointRadius:5,
+						strokeColor: '#039',
+						strokeOpacity: 1,
+						fillColor: "#3366ff",
+						graphicZIndex: 1
+					}),
+					
+					   "select": new OpenLayers.Style({
+						strokeWidth: 5,
+						strokeColor: '#d81b23',
+						strokeOpacity: 1,
+					}),
 		});
 		
 		var editingLayer = new OpenLayers.Layer.Vector("Editing", {styleMap: styleMap});
@@ -95,8 +95,11 @@ var map = new OpenLayers.Map('map', {
 		function setVariables(){	
 			editingLayer.refresh();
 			actions= [];
-			var loopAactions  = ["iodine", "evacuation", "protecting_mask", "residence"];
+			
+			var loopAactions  = [ "iodine", "evacuation", "protecting_mask", "residence"];
 			arrLength = editingLayer.features.length;
+			editingLayer.features[arrLength-1].attributes["begin"]=begin;
+			editingLayer.features[arrLength-1].attributes["end"]=fertig;
 			
 			for (var i = 0; i< loopAactions.length; i++){
 				elem = document.getElementById(loopAactions[i]);
@@ -104,11 +107,12 @@ var map = new OpenLayers.Map('map', {
 				if (elem.id=="residence"){
 					editingLayer.features[arrLength-1].attributes[elem.id]=elem.value;
 				}
-				if(elem.checked  == true){
+				else if(elem.checked  == true){
 					actions.push(elem.id);
 					editingLayer.features[arrLength-1].attributes["actions"]=actions;
 				}
 			}
+			
 		}
 		
 		function toLine(){
@@ -142,7 +146,9 @@ var map = new OpenLayers.Map('map', {
 	var snap = new OpenLayers.Control.Snapping({
 				defaults:{
 					tolerance: 40,
-					edge: false
+					edge: false,
+					node: true,
+					vertex: false
 				},
                 layer: editingLayer,
                 targets: [editingLayer],
