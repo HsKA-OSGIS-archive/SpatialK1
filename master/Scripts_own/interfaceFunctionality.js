@@ -11,7 +11,8 @@ function JSONXML(){
 			createXML();
 			//debugger;
 			$.post({
-			  url: "http://localhost",
+			  //url: "http://localhost",
+			  url: url_bfs,
 
 			  data: vx,
 			  //data: {"foo":"bar"},

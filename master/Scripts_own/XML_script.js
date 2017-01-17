@@ -49,23 +49,23 @@ function createXML(){
   
   vx = '<?xml version="1.0" encoding="UTF-8" ?>' +
 '<wps:Execute version="1.0.0" service="WPS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps/1.0.0" xmlns:wfs="http://www.opengis.net/wfs" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wcs="http://www.opengis.net/wcs/1.1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsAll.xsd">' +
-	'<ows:Identifier>gs:DoseReconstruction</ows:identifier>'+
+	'<ows:Identifier>gs:DoseReconstruction</ows:Identifier>'+
 	'<wps:DataInputs>'+
 		'<wps:Input>'+
-			'<ows:Identifier>route</ows:identifier>'+
+			'<ows:Identifier>route</ows:Identifier>'+
 			'<wps:Data>'+
 				'<wps:ComplexData mimeType="application/json"><![CDATA['+ json_var +']]></wps:ComplexData>'+ //the JSON is included in the XML
 			'</wps:Data>'+
 		'</wps:Input>'+
 		'<wps:Input>'+
-			'<ows:Identifier>ageGroup</ows:identifier>'+
+			'<ows:Identifier>ageGroup</ows:Identifier>'+
 			'<wps:Data>'+
 				'<wps:LiteralData>'+ ageGroup + //the age variable is included in the XML
 				'</wps:LiteralData>'+
 			'</wps:Data>'+
 		'</wps:Input>'+
 		'<wps:Input>'+
-			'<ows:identifier>stadiumFoetus</ows:identifier>'+
+			'<ows:Identifier>stadiumFoetus</ows:Identifier>'+
 			'<wps:Data>'+
 				'<wps:LiteralData>'+ stadiumFoetus + //the pregnancy variable is included in the XML
 				'</wps:LiteralData>'+
