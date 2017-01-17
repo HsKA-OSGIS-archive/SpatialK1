@@ -83,10 +83,14 @@ var map = new OpenLayers.Map('map', {
 		 editingLayer.events.register('featureadded', editingLayer, function(evt) {
 			setVariables();
 		 });
-		
+		var pointLayer = new  OpenLayers.Layer.Vector("Point", {styleMap: styleMap});
+		 pointLayer.events.register('featureadded', pointLayer, function(evt) {
+			toLine();
+		 });
 
 		
 		map.addLayers([editingLayer]);
+		map.addLayers([pointLayer]);
 		
 		function setVariables(){	
 			editingLayer.refresh();
@@ -104,12 +108,23 @@ var map = new OpenLayers.Map('map', {
 					actions.push(elem.id);
 					editingLayer.features[arrLength-1].attributes["actions"]=actions;
 				}
-				
 			}
-			
-			
 		}
 		
+		function toLine(){
+			
+			var x, y;
+			var points=[];
+			var ind = pointLayer.features.length-1;
+			for (var i = 0; i<pointLayer.features.length; i++){
+				var points = pointLayer.features[ind].geometry;
+			}
+			var pline = new OpenLayers.Geometry.LineString(points);
+			var fL= new OpenLayers.Feature.Vector(pline);
+		
+			editingLayer.addFeatures(fL);
+			points= [0];	
+		}
         
         
 		var split = new OpenLayers.Control.Split({
@@ -139,7 +154,7 @@ var map = new OpenLayers.Map('map', {
 			
   // init the editing toolbar and a basic selection control
          var drawControls ={
-			point: new OpenLayers.Control.DrawFeature(editingLayer,
+			point: new OpenLayers.Control.DrawFeature(pointLayer,
                         OpenLayers.Handler.Point),
 			draw: new OpenLayers.Control.DrawFeature(editingLayer,
 						OpenLayers.Handler.Path),			
