@@ -15,6 +15,40 @@
 	border-radius: 6px;
 	z-index: 1050;
 }
+#wPContainer {
+	display: none;
+	position: absolute;
+	left: 45%;
+	top: 42%;
+	font-family: opensansCondBold,Arial,helvetica,sans-serif;
+	height: auto;
+	width: 300px;
+	background-color: #FFF;
+	opacity: 0.9;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	border-radius: 6px;
+	z-index: 1080;
+}
+
+#wPSContainer {
+	display: none;
+	position: absolute;
+	left: 45%;
+	top: 42%;
+	font-family: opensansCondBold,Arial,helvetica,sans-serif;
+	height: auto;
+	width: 300px;
+	background-color: #FFF;
+	opacity: 0.9;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	border-radius: 6px;
+	z-index: 1080;
+}
+
 .InputUnit {
 	border-bottom-style: solid;
 	border-top-style: none;
@@ -225,7 +259,6 @@ lable{
 	font-size: 20px;
 	color: #039;
 	text-align: center;
-	
 }
 
 .respValue {
@@ -234,5 +267,4 @@ lable{
 	top: -28px;
 	margin-right: 10px;
 	display:inline;
-
 }

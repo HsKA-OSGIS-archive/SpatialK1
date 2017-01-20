@@ -16,7 +16,8 @@
 
 <link href="Styles/map_style.css" rel="stylesheet" type="text/css"/>
 
-
+	<script src="Scripts_external/jquery-ui.min.js"></script>
+	<link href="Scripts_external/jquery-ui.min.css"/>
 
 <script src="Scripts_external/daterangepicker/daterangepicker.js"></script>
 <link href="Scripts_external/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
@@ -62,59 +63,87 @@
                 <div class="tFieldPLUSButton">
                 <input type="text" class="locSearch" id="stop" name="destination_place" placeholder="Zielort" onkeypress="if(event.keyCode==13){document.getElementById('DestButton').click()}"/>
 
-                    <div > <img class="searchButton" src="./Images/search.svg" id="DestButton" onclick="addr_search('stop')"img></div>
-                </div>
-                <div id="resultsstop" class="searchResult">
-                </div>
-                <div>
-                    <input type="text" class="daterangepickerCon" name="timerange"/>
-                </div>
-                <div class="button" id= "rButton" onclick="routing()">Route automatisch berechnen</div>
-                <h2>Route einzeichnen</h2>
-                <div id='buttoncontainer'>
-					<img class='geomButton' src="./Images/house.svg" id="point" onclick="checkStay(this.id);"></img>
-					<img class='geomButton' src="./Images/draw.svg" id="draw" onclick="toggleControl(this.id);"></img>
-                    <img class='geomButton' src='./Images/select.svg' onclick="toggleControl('select')"></img>
-                    <img class='geomButton' src='./Images/drag.svg' onclick="toggleControl('drag')"></img>
-					<img class='geomButton' src='./Images/split.svg' onclick="toggleControl('split')"></img>                    
-                    <img class='geomButton' src='./Images/erase.svg' onclick="editingLayer.removeFeatures(editingLayer.selectedFeatures)"></img>
-                </div>
-             </div>
-             <div class="InputUnit">
-                <h2>Schutzmaßnahmen</h2>
-                    <div class="hNameValueContainer">
-                        <label class="elemName">Gasmaske</label>
-                        <input class="elemValue" type="checkbox" name="Gasmask" id="protecting_mask"  />
-                    </div>
-                    <div class="hNameValueContainer">
-                        <label class="elemName">Iodtablette</label>
-                        <input class="elemValue" type="checkbox" name="Iodine" id="iodine" />
-                    </div>
-                    <div class="hNameValueContainer">
-                        <label class="elemName">Evakuierung</label>
-                        <input class="elemValue" type="checkbox" name="Evacuation" id="evacuation"/>
-                    </div>
-                </div><!--END protection mesures-->
-                <div class="vNameValueContainer"><!-- residens start-->
-                    <label class="elemName">Aufenthaltsort</label>
-                     <select class="elemValue" name="residenceStart" id="residence" onchange="residenceVal = this.value; log(residenceVal);if(residenceVal=='house' || residenceVal=='basement'){toggleControl('point');}">
-                        <option id="outside" value="outside">im Freien / Auto</option>
-                        <option value="house">Haus</option>
-                        <option value="basement">Keller</option>
-                    </select>
-                </div><!-- END residens start-->
-            <div class="button" onclick="JSONXML()">Dosis Berechnen</div>
-            
-            
+                <div > <img class="searchButton" src="./Images/search.svg" id="DestButton" onClick="addr_search('stop')"img></div>
+            </div>
+            <div id="resultsstop" class="searchResult">
+            </div>
+            <div>
+                <input type="text" class="daterangepickerCon" name="timerange"/>
+            </div>
+            <div class="button" id= "rButton" onClick="routing()">Route automatisch berechnen</div>
+            <h2>Route einzeichnen</h2>
+            <div id='buttoncontainer'>
+               <img class='geomButton' src="./Images/house.svg" id="point" onClick="resetSelected(); checkStay(this.id);"></img>
+               <img class='geomButton' src="./Images/draw.svg" id="draw" onClick="resetSelected(); toggleControl(this.id);"></img>
+               <img class='geomButton' src='./Images/select.svg' onClick="toggleControl('select')"></img>
+               <img class='geomButton' src='./Images/drag.svg' onClick="toggleControl('drag')"></img>
+               <img class='geomButton' src='./Images/split.svg' onClick="toggleControl('split')"></img>                    
+               <img class='geomButton' src='./Images/erase.svg' onClick="editingLayer.removeFeatures(editingLayer.selectedFeatures)"></img>
+           </div>
+       </div>
+       <div class="InputUnit">
 
+    <div class="button" onClick="JSONXML()">Dosis Berechnen</div>
+	</div>
+	</form>
+</div>
+</div>
 
-            
+<div id="wPContainer" onload="$('#wPContainer').hide('fade', 300)">
+	<h2>Schutzmaßnahmen</h2>
+    <form>
+        <div class="hNameValueContainer">
+            <label class="elemName">Gasmaske</label>
+            <input class="elemValue" type="checkbox" name="Gasmask" id="protecting_mask"  />
+        </div>
+        <div class="hNameValueContainer">
+            <label class="elemName">Iodtablette</label>
+            <input class="elemValue" type="checkbox" name="Iodine" id="iodine" />
+        </div>
+        <div class="hNameValueContainer">
+            <label class="elemName">Evakuierung</label>
+            <input class="elemValue" type="checkbox" name="Evacuation" id="evacuation"/>
+        </div>
+    	<!--END protection mesures-->
+    	<div class="vNameValueContainer"><!-- residens start-->
+        	<label class="elemName">Aufenthaltsort</label>
+        	<select class="elemValue" name="residenceStart" id="residence" onChange="residenceVal = this.value; log(residenceVal);if(residenceVal=='house' || residenceVal=='basement'){toggleControl('point');}">
+	            <option id="outside" value="outside">im Freien / Auto</option>
+	            <option value="house">Haus</option>
+	            <option value="basement">Keller</option>
+	        </select>
+    	</div><!-- END residens start-->
+		<div class="button" id="wPProppB" onclick="$('#wPContainer').hide('fade', 300);">Bestätigen</div>
+    </form>
+</div>
 
-
-
-            </form>
-
-         </div>
+<div id="wPSContainer" onload="$('#wPContainer').hide('fade', 300)">
+    <h2>Schutzmaßnahmen</h2>
+    <form>
+        <div class="hNameValueContainer">
+            <label class="elemName">Gasmaske</label>
+            <input class="elemValue" type="checkbox" name="Gasmask" id="protecting_mask"  />
+        </div>
+        <div class="hNameValueContainer">
+            <label class="elemName">Iodtablette</label>
+            <input class="elemValue" type="checkbox" name="Iodine" id="iodine" />
+        </div>
+        <div class="hNameValueContainer">
+            <label class="elemName">Evakuierung</label>
+            <input class="elemValue" type="checkbox" name="Evacuation" id="evacuation"/>
+        </div>
+        <!--END protection mesures-->
+        <div class="vNameValueContainer"><!-- residens start-->
+            <label class="elemName">Aufenthaltsort</label>
+            <select class="elemValue" name="residenceStart" id="residence" onChange="residenceVal = this.value; log(residenceVal);if(residenceVal=='house' || residenceVal=='basement'){toggleControl('point');}">
+                <option id="outside" value="outside">im Freien / Auto</option>
+                <option value="house">Haus</option>
+                <option value="basement">Keller</option>
+            </select>
+        </div><!-- END residens start-->
+        <div class="button" id="wPProppB" onclick="saveChanges();$('#wPContainer').hide('fade', 300);">Bestätigen</div>
+    </form>
+</div>
 
         <div id="ResponseContainer">
              <div class="InputUnit">

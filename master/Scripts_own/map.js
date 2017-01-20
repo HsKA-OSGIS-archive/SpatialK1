@@ -95,8 +95,7 @@ var map = new OpenLayers.Map('map', {
 		function setVariables(){	
 			editingLayer.refresh();
 			actions= [];
-			
-			var loopAactions  = [ "iodine", "evacuation", "protecting_mask", "residence"];
+			var loopAactions  = ["iodine", "evacuation", "protecting_mask", "residence"];
 			arrLength = editingLayer.features.length;
 			editingLayer.features[arrLength-1].attributes["begin"]=begin;
 			editingLayer.features[arrLength-1].attributes["end"]=fertig;
@@ -181,7 +180,49 @@ var map = new OpenLayers.Map('map', {
 		};		
 		
 		function returnSelected(feature){
+			showSelected(feature)
 			return feature;
+		}
+
+		function showSelected(feature){
+			var iodineSel, evacuationSel, protecting_maskSel, residenceSel;
+			if(feature.attributes.actions){
+				iodineSel = feature.attributes.actions.includes("iodine");
+				evacuationSel = feature.attributes.actions.includes("evacuation");
+				protecting_maskSel = feature.attributes.actions.includes("protecting_mask");
+			}else{
+				iodineSel = false;
+				evacuationSel = false;
+				protecting_maskSel = false;
+			}
+			residenceSel = feature.attributes.residence;
+			$("#protecting_mask").checked = protecting_maskSel;
+			$("#iodine").checked = iodineSel;
+			$("#evacuation").checked = evacuationSel;
+			$("#residence").val(residenceSel);
+			$("#wPSContainer").show('fade', 300);
+		}
+
+		function saveChanges(feature){
+			var actions = {};
+			if($("#protecting_mask").checked = true){
+				actions.push("protecting_mask")
+			}
+			if($("#iodine").checked = true){
+				actions.push("iodine")
+			}
+			if($("#evacuation").checked = true){
+				actions.push("evacuation")
+			}
+			feature.attributes.actions = actions;
+		}
+
+		function resetSelected(feature){
+			$("#protecting_mask").checked = false;
+			$("#iodine").checked = false;
+			$("#evacuation").checked = false;
+			$("#residence").val("outside");
+			$("#wPContainer").show('fade', 300);
 		}
 		
 		for(var key in drawControls) {
