@@ -1,4 +1,4 @@
-
+var response_var;
 
 
 var rbm;
@@ -9,7 +9,7 @@ var vx; //variable containing the xml
 
 // variable containing the response from the Server
 
-var response = {
+response_var = {
 "red_bone_marrow": 0.021267209339325046,
 "foetus_1": 1.4563841265250478E-5,
 "thyroid": 0.024101517905976158,
@@ -30,13 +30,13 @@ function inJson(){
 
 function readResponse(){
 	//console.log("readresponse");
-	rbm = ((response.red_bone_marrow)*1000).toFixed(2);
+	rbm = ((response_var.red_bone_marrow)*1000).toFixed(2);
 	rbm = rbm + " mSv";
-	foetus = ((response.foetus_1)*1000).toFixed(4);
+	foetus = ((response_var.foetus_1)*1000).toFixed(4);
 	foetus = foetus +  " mSv";
-	thyroid = ((response.thyroid)*1000).toFixed(2);
+	thyroid = ((response_var.thyroid)*1000).toFixed(2);
 	thyroid = thyroid + " mSv";
-	dose = ((response.eff_dose)*1000).toFixed(2);
+	dose = ((response_var.eff_dose)*1000).toFixed(2);
 	dose = dose +" mSv";
 	
 }

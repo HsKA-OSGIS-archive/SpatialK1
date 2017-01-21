@@ -76,7 +76,9 @@ var map = new OpenLayers.Map('map', {
 						strokeWidth: 5,
 						strokeColor: '#d81b23',
 						strokeOpacity: 1,
+						
 					}),
+						
 		});
 		
 		var editingLayer = new OpenLayers.Layer.Vector("Editing", {styleMap: styleMap});
@@ -141,6 +143,7 @@ var map = new OpenLayers.Map('map', {
 		  
 
 // Snapping
+// two Snapping variables are necessary because there are two layers with geometries
 		  
 	var snap = new OpenLayers.Control.Snapping({
 				defaults:{
@@ -150,12 +153,26 @@ var map = new OpenLayers.Map('map', {
 					vertex: false
 				},
                 layer: editingLayer,
-                targets: [editingLayer],
+                targets: [editingLayer, pointLayer],
                 greedy: false
             });
             snap.activate();
 			
-			
+	
+
+	var snap2 = new OpenLayers.Control.Snapping({
+				defaults:{
+					tolerance: 40,
+					edge: false,
+					node: true,
+					vertex: false
+				},
+                layer: pointLayer,
+                targets: [editingLayer, pointLayer],
+                greedy: false
+            });
+            snap2.activate();
+	
 			
   // init the editing toolbar and a basic selection control
          var drawControls ={
@@ -167,6 +184,7 @@ var map = new OpenLayers.Map('map', {
 			select: new OpenLayers.Control.SelectFeature(
 					editingLayer,
 					{
+						layers:[pointLayer, editingLayer],
 						onSelect: returnSelected,
 						clickout: true, toggle: false,
 						multiple: false, hover: false,
@@ -174,8 +192,11 @@ var map = new OpenLayers.Map('map', {
 						multipleKey: "shiftKey", // shift key adds to selection
 						box: true,
 						click: true
-					}
-				),
+					}),
+				
+					
+								
+					
 			split: split
 		};		
 		
@@ -311,7 +332,7 @@ function addr_search(id){
 	            404: function (response){
 	            	alert('Server not found');
 	            },
-	            444: function (respoonse){
+	            444: function (response){
 	            	alert('No Response');
 	            },
 	            500: function(response){
@@ -414,13 +435,13 @@ $.ajax({url: 'http://router.project-osrm.org/route/v1/cycling/8.4044366,49.01406
 	            404: function (response){
 	            	alert('Server not found');
 	            },
-	            444: function (respoonse){
+	            444: function (response){
 	            	alert('No Response');
 	            },
-	              500: function (respoonse){
+	              500: function (response){
 	            	alert('Server Down! Try again later.........');
 	            },   
-	             504: function (respoonse){
+	             504: function (response){
 	            	alert('Server Down! Try again later.1........');
 	            }           
 	        }

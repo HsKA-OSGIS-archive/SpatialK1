@@ -19,9 +19,24 @@ function JSONXML(){
 
 			 
 
-			  success: function(){debugger;},
-			  error: function(){console.log('we know it does not work yet');},
-			  dataType: "text/xml"
+			  success: function (response) {
+				  
+                console.log(response);
+				//console.log("Status: " + response.status);
+				console.log("ResponseText: " + response.responseText);
+				response_var = response;
+				},
+				
+				
+			  error: function(jqXHR){
+				  console.log('we know it does not work yet');
+				  console.log(jqXHR.status);
+				  //alert("Der BfS-Server ist im Moment nicht verfügbar - Status: "+ jqXHR.status);
+				  }//,
+			  
+			  
+			  
+			  //dataType: "text/xml"
 			});
             readResponse();
             writeResult();
