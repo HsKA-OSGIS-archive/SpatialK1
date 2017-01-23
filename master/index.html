@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>GUI</title>
+<title>Strahlungsdosis Rekonstruktion</title>
 
 
 
@@ -78,7 +78,7 @@
                <img class='geomButton' src='./Images/select.svg' onClick="toggleControl('select')"></img>
                <img class='geomButton' src='./Images/drag.svg' onClick="toggleControl('drag')"></img>
                <img class='geomButton' src='./Images/split.svg' onClick="toggleControl('split')"></img>                    
-               <img class='geomButton' src='./Images/erase.svg' onClick="editingLayer.removeFeatures(editingLayer.selectedFeatures)"></img>
+               <img class='geomButton' src='./Images/erase.svg' onClick="editingLayer.removeFeatures(editingLayer.selectedFeatures); editingLayer.removeFeatures(pointLayer.selectedFeatures);"></img>
            </div>
        </div>
        <div class="InputUnit">
