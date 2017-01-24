@@ -256,9 +256,9 @@ var map = new OpenLayers.Map('map', {
 		}
 
 		function resetSelected(feature){
-			$("#protecting_mask").is(":checked") == false;
-			$("#iodine").is(":checked") == false;
-			$("#evacuation").is(":checked") == false;
+			$("#protecting_mask").prop("checked",false);
+			$("#iodine").prop("checked",false);
+			$("#evacuation").prop("checked",false);
 			$("#residence").val("outside");
 			$("#wPContainer").show('fade', 300);
 		}
