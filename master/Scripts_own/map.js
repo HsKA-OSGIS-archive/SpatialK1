@@ -27,11 +27,12 @@ var map = new OpenLayers.Map('map', {
                     new OpenLayers.Control.ScaleLine(),
                     new OpenLayers.Control.MousePosition(),
                     new OpenLayers.Control.SelectFeature(),
-                    new OpenLayers.Control.KeyboardDefaults(),
-                    
+                    new OpenLayers.Control.KeyboardDefaults()
                 ],
+                projection: new OpenLayers.Projection("EPSG:4326"),
                 center: new OpenLayers.LonLat(8.4028, 49.011 ).transform('EPSG:4326', 'EPSG:3857'),
                 zoom: 13
+
            
             });
      
@@ -109,6 +110,7 @@ var map = new OpenLayers.Map('map', {
 					editingLayer.features[arrLength-1].attributes[elem.id]=elem.value;
 				}
 				else if(elem.checked  == true){
+					log("ACTION");
 					console.log(actions);
 					actions.push(elem.id);
 					editingLayer.features[arrLength-1].attributes["actions"]=actions;
@@ -268,6 +270,7 @@ var map = new OpenLayers.Map('map', {
 				for(key in drawControls) {
 					var control = drawControls[key];
 					if(element == key && element) {
+						log("EditingLAYER");
 						log(editingLayer);
 						control.activate();
 					} else {
@@ -382,7 +385,7 @@ $.ajax({url: 'http://router.project-osrm.org/route/v1/cycling/8.4044366,49.01406
 	            200:  $.getJSON('http://router.project-osrm.org/route/v1/' + properties + '/'+lon_start+','+lat_start+';'+ lon_stop +','
 	+ lat_stop + '?alternatives=true&steps=false&geometries=geojson&overview=full', function (data) {
         var test = data.routes[0].geometry.coordinates;
-         epsg4326 =  new OpenLayers.Projection("EPSG:3857");
+         epsg4326 =  new OpenLayers.Projection("EPSG:4326");
         projectTo = map.getProjectionObject();
 		
 		pArray.length = 0;
@@ -390,10 +393,10 @@ $.ajax({url: 'http://router.project-osrm.org/route/v1/cycling/8.4044366,49.01406
 
 		
       for (i = 0; i< test.length; i++){
-        	pointArray.push(new OpenLayers.Geometry.Point( test[i][0], test[i][1]).transform(epsg4326, projectTo));
+        	pointArray.push(new OpenLayers.Geometry.Point( test[i][0], test[i][1]).transform("EPSG:3857", epsg4326));
         	
         }
-		route_line = new OpenLayers.Geometry.LineString(pointArray);
+		route_line = new OpenLayers.Geometry.LineString(pointArray).transform("EPSG:3857", epsg4326);
 
 
 		var routeStyle = new OpenLayers.StyleMap({
@@ -493,11 +496,13 @@ $.ajax({url: 'http://router.project-osrm.org/route/v1/cycling/8.4044366,49.01406
 	  var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
 	  var offset_2 = new OpenLayers.Pixel(-(size.w/5), -size.h);
 	  if(inp=='start'){
+	  	log("MARKERS");
 	  	log(markers);
 
 		var icon = new OpenLayers.Icon('./images/Start_icon.svg', size, offset);
 
 	  }else{
+	  	log("MARKERS2")
 	  	log(markers);
 		var icon = new OpenLayers.Icon('./images/Ziel_icon.svg', size, offset_2);
 		
