@@ -31,7 +31,7 @@ var map = new OpenLayers.Map('map', {
                     new OpenLayers.Control.SelectFeature(),
                     new OpenLayers.Control.KeyboardDefaults()
                 ],
-                projection: new OpenLayers.Projection("EPSG:4326"),
+                //projection: new OpenLayers.Projection("EPSG:4326"),
                 center: new OpenLayers.LonLat(8.4028, 49.011 ).transform('EPSG:4326', 'EPSG:3857'),
                 zoom: 13
            
@@ -118,7 +118,7 @@ var map = new OpenLayers.Map('map', {
 				else{
 					editingLayer.features[arrLength-1].attributes["actions"]=[];
 				}
-				editingLayer.features[arrLength-1].geometry.transform(new OpenLayers.Projection("EPSG:3857"),new OpenLayers.Projection("EPSG:4326"));
+				editingLayer.features[arrLength-1].geometry;
 			}
 			
 		}
@@ -176,8 +176,8 @@ var map = new OpenLayers.Map('map', {
 				},
                 layer: pointLayer,
                 targets: [editingLayer, pointLayer],
-                greedy: false,
-                
+                greedy: false
+
             });
             snap2.activate();
 	
