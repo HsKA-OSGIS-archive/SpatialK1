@@ -2,6 +2,8 @@ function log(input){
 	console.log(input);
 }
 
+var selectedFeature;
+
 var elem;
 var actions;
 
@@ -32,7 +34,6 @@ var map = new OpenLayers.Map('map', {
                 projection: new OpenLayers.Projection("EPSG:4326"),
                 center: new OpenLayers.LonLat(8.4028, 49.011 ).transform('EPSG:4326', 'EPSG:3857'),
                 zoom: 13
-
            
             });
      
@@ -110,10 +111,12 @@ var map = new OpenLayers.Map('map', {
 					editingLayer.features[arrLength-1].attributes[elem.id]=elem.value;
 				}
 				else if(elem.checked  == true){
-					log("ACTION");
 					console.log(actions);
 					actions.push(elem.id);
 					editingLayer.features[arrLength-1].attributes["actions"]=actions;
+				}
+				else{
+					editingLayer.features[arrLength-1].attributes["actions"]=[];
 				}
 			}
 			
@@ -205,12 +208,13 @@ var map = new OpenLayers.Map('map', {
 		
 		function returnSelected(feature){
 			showSelected(feature)
+			selectedFeature = feature;
 			return feature;
 		}
 
 		function showSelected(feature){
 			var iodineSel, evacuationSel, protecting_maskSel, residenceSel;
-			if(feature.attributes.actions){
+			if(feature.attributes["actions"]){
 				iodineSel = feature.attributes.actions.includes("iodine");
 				evacuationSel = feature.attributes.actions.includes("evacuation");
 				protecting_maskSel = feature.attributes.actions.includes("protecting_mask");
@@ -220,34 +224,41 @@ var map = new OpenLayers.Map('map', {
 				protecting_maskSel = false;
 			}
 			residenceSel = feature.attributes.residence;
-			$("#protecting_mask").checked = protecting_maskSel;
-			$("#iodine").checked = iodineSel;
+			$("#protecting_mask").checked == protecting_maskSel;
+			$("#iodine").checked == iodineSel;
+			$("#evacuation").checked == evacuationSel;
 			$("#residence").val(residenceSel);
-			$("#evacuation").checked = evacuationSel;
-			
 			$("#wPSContainer").show('fade', 300);
 		}
 
-		function saveChanges(feature){
-			var actions = {};
-			if($("#protecting_mask").checked = true){
+		function saveChanges(){
+			var actions = Array(0);
+			if($("#protecting_maskC").is(":checked") == true){
 				actions.push("protecting_mask")
 			}
-			if($("#iodine").checked = true){
+			if($("#iodineC").is(":checked") == true){
 				actions.push("iodine")
 			}
-			if($("#evacuation").checked = true){
+			if($("#evacuationC").is(":checked") == true){
 				actions.push("evacuation")
 			}
-			feature.attributes.actions = actions;
+			console.log(selectedFeature.attributes);
+			console.log(actions);
+			console.log(selectedFeature.attributes["actions"]);
+			if(selectedFeature.attributes["actions"]){
+				selectedFeature.attributes["actions"] = actions;
+			}
+			else{
+				console.log("Das Feature enthält kein actions Array!");
+			}
+			console.log(selectedFeature);
 		}
 
 		function resetSelected(feature){
-			$("#protecting_mask").checked = false;
-			$("#iodine").checked = false;
+			$("#protecting_mask").is(":checked") == false;
+			$("#iodine").is(":checked") == false;
+			$("#evacuation").is(":checked") == false;
 			$("#residence").val("outside");
-			$("#evacuation").checked = false;
-			
 			$("#wPContainer").show('fade', 300);
 		}
 		
@@ -270,7 +281,6 @@ var map = new OpenLayers.Map('map', {
 				for(key in drawControls) {
 					var control = drawControls[key];
 					if(element == key && element) {
-						log("EditingLAYER");
 						log(editingLayer);
 						control.activate();
 					} else {
@@ -330,19 +340,32 @@ function addr_search(id){
 					     }
 					  }),
 	            400: function (response) {
-	                alert('Bad Request');
+	                //alert('Bad Request');
+					
+				var error = "Der Nominatim Server is derzeit nicht verfügbar. ";
+				  showPopup(error, "400 Bad Request");
+					
+					
 	            },
 	            0: function (response) {
-	                alert('Not working!');
+	                //alert('Not working!');
+					var error = "Der Nominatim Server is derzeit nicht verfügbar. ";
+				  showPopup(error, "0 Not working!");
 	            },
 	            404: function (response){
-	            	alert('Server not found');
+	            	//alert('Server not found');
+					var error = "Der Nominatim Server is derzeit nicht verfügbar. ";
+				  showPopup(error, "404 Server not found");
 	            },
 	            444: function (response){
-	            	alert('No Response');
+	            	//alert('No Response');
+					var error = "Der Nominatim Server is derzeit nicht verfügbar. ";
+				  showPopup(error, "444 No Response");
 	            },
 	            500: function(response){
-	            	alert('Server down! Please try again later...');
+	            	//alert('Server down! Please try again later...');
+					var error = "Der Nominatim Server is derzeit nicht verfügbar. ";
+				  showPopup(error, "500 Server down! Please try again later...");
 	            }  
 
 	        } //status code
@@ -393,10 +416,10 @@ $.ajax({url: 'http://router.project-osrm.org/route/v1/cycling/8.4044366,49.01406
 
 		
       for (i = 0; i< test.length; i++){
-        	pointArray.push(new OpenLayers.Geometry.Point( test[i][0], test[i][1]).transform("EPSG:3857", epsg4326));
+        	pointArray.push(new OpenLayers.Geometry.Point( test[i][0], test[i][1]).transform(epsg4326, projectTo));
         	
         }
-		route_line = new OpenLayers.Geometry.LineString(pointArray).transform("EPSG:3857", epsg4326);
+		route_line = new OpenLayers.Geometry.LineString(pointArray);
 
 
 		var routeStyle = new OpenLayers.StyleMap({
@@ -432,24 +455,34 @@ $.ajax({url: 'http://router.project-osrm.org/route/v1/cycling/8.4044366,49.01406
 		route_line.length = 0;
 		
     }), 
-	              400: function (response) {
-	                alert('Bad Request');
+	            400: function (response) {
+	                //alert('Bad Request');
+					
+				var error = "Der OSRM Server is derzeit nicht verfügbar. ";
+				  showPopup(error, "400 Bad Request");
+					
+					
 	            },
 	            0: function (response) {
-	                alert('Not working! Routing');
+	                //alert('Not working!');
+					var error = "Der OSRM Server is derzeit nicht verfügbar. ";
+				  showPopup(error, "0 Not working!");
 	            },
 	            404: function (response){
-	            	alert('Server not found');
+	            	//alert('Server not found');
+					var error = "Der OSRM Server is derzeit nicht verfügbar. ";
+				  showPopup(error, "404 Server not found");
 	            },
 	            444: function (response){
-	            	alert('No Response');
+	            	//alert('No Response');
+					var error = "Der OSRM Server is derzeit nicht verfügbar. ";
+				  showPopup(error, "444 No Response");
 	            },
-	              500: function (response){
-	            	alert('Server Down! Try again later.........');
-	            },   
-	             504: function (response){
-	            	alert('Server Down! Try again later.1........');
-	            }           
+	            500: function(response){
+	            	//alert('Server down! Please try again later...');
+					var error = "Der OSRM Server is derzeit nicht verfügbar. ";
+				  showPopup(error, "500 Server down! Please try again later...");
+	            }         
 	        }
 
 });
@@ -496,13 +529,11 @@ $.ajax({url: 'http://router.project-osrm.org/route/v1/cycling/8.4044366,49.01406
 	  var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
 	  var offset_2 = new OpenLayers.Pixel(-(size.w/5), -size.h);
 	  if(inp=='start'){
-	  	log("MARKERS");
 	  	log(markers);
 
 		var icon = new OpenLayers.Icon('./images/Start_icon.svg', size, offset);
 
 	  }else{
-	  	log("MARKERS2")
 	  	log(markers);
 		var icon = new OpenLayers.Icon('./images/Ziel_icon.svg', size, offset_2);
 		

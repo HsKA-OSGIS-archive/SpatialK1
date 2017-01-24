@@ -122,26 +122,26 @@
     <form>
         <div class="hNameValueContainer">
             <label class="elemName">Gasmaske</label>
-            <input class="elemValue" type="checkbox" name="Gasmask" id="protecting_mask"  />
+            <input class="elemValue" type="checkbox" name="Gasmask" id="protecting_maskC"  />
         </div>
         <div class="hNameValueContainer">
             <label class="elemName">Iodtablette</label>
-            <input class="elemValue" type="checkbox" name="Iodine" id="iodine" />
+            <input class="elemValue" type="checkbox" name="Iodine" id="iodineC" />
         </div>
         <div class="hNameValueContainer">
             <label class="elemName">Evakuierung</label>
-            <input class="elemValue" type="checkbox" name="Evacuation" id="evacuation"/>
+            <input class="elemValue" type="checkbox" name="Evacuation" id="evacuationC"/>
         </div>
         <!--END protection mesures-->
         <div class="vNameValueContainer"><!-- residens start-->
             <label class="elemName">Aufenthaltsort</label>
-            <select class="elemValue" name="residenceStart" id="residence" onChange="residenceVal = this.value; log(residenceVal);if(residenceVal=='house' || residenceVal=='basement'){toggleControl('point');}">
+            <select class="elemValue" name="residenceStart" id="residenceC" onChange="residenceVal = this.value; log(residenceVal);if(residenceVal=='house' || residenceVal=='basement'){toggleControl('point');}">
                 <option id="outside" value="outside">im Freien / Auto</option>
                 <option value="house">Haus</option>
                 <option value="basement">Keller</option>
             </select>
         </div><!-- END residens start-->
-        <div class="button" id="wPProppB" onclick="saveChanges();$('#wPContainer').hide('fade', 300);">Bestätigen</div>
+        <div class="button" id="wPProppB" onclick="saveChanges();$('#wPSContainer').hide('fade', 300);">Bestätigen</div>
     </form>
 </div>
 
@@ -224,11 +224,33 @@ Wenn alle Routenabschnitte erstellt sind kann die Strahlendosis durch einen Klic
 
 
         </div>
-       
+
 
 
     </div>
 
+       				<div id="alertContainer" >
+             <div class="InputUnit" >
+            <h1>Server-Problem</h1> 
+            </div>
+            
+               
+				
+				<p id="alertContainerLabel" >Nutzerbezogene Informationen</p>
+				
+<div class="button2" id="buttonAlert" width="220px" onclick="hideAlert()">Ok</div>
+				<script>
+				
+				
+				function hideAlert(){
+					var myElement = document.querySelector("#alertContainer");
+				myElement.style.visibility="hidden";
+					console.log(myElement);
+				}
+				
+				</script>
+
+        </div>
        
 
 

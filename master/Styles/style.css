@@ -115,6 +115,23 @@ select {
 	cursor: pointer;
 	border-radius: 4px;
 }
+
+.button2 {
+	color: #FFF;
+	background-color: #039;
+	text-align: center;
+	padding-top: 4px;
+	padding-right: 0px;
+	padding-bottom: 4px;
+	padding-left: 0px;
+	cursor: pointer;
+	
+	margin-right: 8px;
+	
+	
+	border-radius: 4px;
+}
+
 .searchButton {
 	
 	text-align: center;
@@ -197,7 +214,7 @@ lable{
 
 #InfoBox {
 	font-family: opensansCondBold,Arial,helvetica,sans-serif;
-	font-size: 10px;
+	font-size: 12px;
 	
 	max-height: 50%;
 	width: 300px;
@@ -214,6 +231,35 @@ lable{
 	bottom: 30px;
 	border-radius: 6px;
 	z-index: 1051;
+}
+
+#alertContainer {
+	
+	visibility: hidden;
+	
+	
+	font-family: opensansCondBold,Arial,helvetica,sans-serif;
+	font-size: 10px;
+	
+	max-height: 200px;
+	width: 250px;
+	background-color: #FFF;
+	opacity: 0.9;
+	float: right;
+	
+	overflow:auto;
+	
+	padding-left: 10px;
+	padding-bottom: 10px;
+	position: absolute;
+	margin: auto;
+	left: 0px;
+	right: 0px;
+	top: 30px;
+	
+	border-radius: 6px;
+	z-index: 1051;
+	
 }
 
 #Info {

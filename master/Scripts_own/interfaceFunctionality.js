@@ -15,8 +15,6 @@ function JSONXML(){
 			inJson();
 			createXML();
 			//debugger;
-			
-			
 			$.post({
 			  url: url_bfs,
 
