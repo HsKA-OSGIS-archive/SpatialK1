@@ -7,7 +7,13 @@ var stadiumFoetus = "0";
 
 
 
-
+function showPopup(ErrorText, ServerStatus){
+	
+	var myElement = document.querySelector("#alertContainer");
+	var myElement2 = document.querySelector("#alertContainerLabel");
+	myElement.style.visibility="visible";
+	myElement2.innerHTML = ErrorText + "<br/>"+ "Status: "+ServerStatus;
+}
 
 
 function JSONXML(){
@@ -28,7 +34,14 @@ function JSONXML(){
 				  response_var = response;
 
 			  },
-			  error: function(){console.log('we know it does not work yet');},
+			  error: function(){
+				  
+				  
+				  var error = "Der BfS Server is derzeit nicht verfügbar. ";
+				  showPopup(error, response.Status);
+				  
+				  //console.log('we know it does not work yet');
+				  },
 			  
 			});
 			
