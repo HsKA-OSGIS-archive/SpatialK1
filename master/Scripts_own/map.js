@@ -229,6 +229,7 @@ var map = new OpenLayers.Map('map', {
 			$("#residence").val(residenceSel);
 			$("#wPSContainer").show('fade', 300);
 		}
+		
 
 		function saveChanges(){
 			var actions = Array(0);
