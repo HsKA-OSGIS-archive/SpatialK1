@@ -52,10 +52,8 @@ var map = new OpenLayers.Map('map', {
             }
 
 
-        // we will use this vector layer to demonstrate editing vector features
-         var styleMap = new OpenLayers.StyleMap({
-				
-		
+           //-----------set Style for vector layers   
+    var styleMap = new OpenLayers.StyleMap({
 		"default": 	new OpenLayers.Style({
 						 strokeWidth: 4,
 						 //strokeColor: '#1c74cc',
@@ -75,61 +73,58 @@ var map = new OpenLayers.Map('map', {
 					}),
 						
 		});
-		
+	//------------implement editingLayer		
 		var editingLayer = new OpenLayers.Layer.Vector("Editing", {styleMap: styleMap});
 		 editingLayer.events.register('featureadded', editingLayer, function(evt) {
 			setVariables();
 		 });
+	//------------implement point layer
 		var pointLayer = new  OpenLayers.Layer.Vector("Point", {styleMap: styleMap});
 		 pointLayer.events.register('featureadded', pointLayer, function(evt) {
 			toLine();
 		 });
 
-		
+	//-----------add layers to map	
 		map.addLayers([editingLayer]);
 		map.addLayers([pointLayer]);
-		
+
+	//-----------set Variable of security to editing layer	
 		function setVariables(){	
 			editingLayer.refresh();
 			actions= [];
 			var loopAactions  = ["residence","iodine", "evacuation", "protecting_mask"];
 			arrLength = editingLayer.features.length;
-			editingLayer.features[arrLength-1].attributes["begin"]=begin;
-			editingLayer.features[arrLength-1].attributes["end"]=fertig;
+			editingLayer.features[arrLength-1].attributes["begin"]=begin; //set start date to editingLayer
+			editingLayer.features[arrLength-1].attributes["end"]=fertig;//set end date to editingLayer
 			
-			for (var i = 0; i< loopAactions.length; i++){
-				elem = document.getElementById(loopAactions[i]);
+			for (var i = 0; i< loopAactions.length; i++){ //loops through possible actions
+				elem = document.getElementById(loopAactions[i]);//gets the element of the checked feature
 				
 				if (elem.id=="residence"){
-					editingLayer.features[arrLength-1].attributes[elem.id]=elem.value;
+					editingLayer.features[arrLength-1].attributes[elem.id]=elem.value; //assigns action to editingLayer if attribute is checked
 				}
-				else if(elem.checked  == true){
-					console.log(actions);
-					actions.push(elem.id);
-					
+				else if(elem.checked  == true){//checks which attribute is checked
+					actions.push(elem.id);//adds attributes to editingLayer
 				}
-				
-				editingLayer.features[arrLength-1].attributes["actions"]=actions;
+				editingLayer.features[arrLength-1].attributes["actions"]=actions;//assigns action to editingLayer if attribute is checked
 			}
-			
 		}
 		
+		//---------transforms points to line	
 		function toLine(){
-			
 			var x, y;
 			var points=[];
-			var ind = pointLayer.features.length-1;
-			for (var i = 0; i<pointLayer.features.length; i++){
-				var points = pointLayer.features[ind].geometry;
-			}
-			var pline = new OpenLayers.Geometry.LineString(points);
-			var fL= new OpenLayers.Feature.Vector(pline);
+			var ind = pointLayer.features.length-1; //gets current index of point feature
+				var points = pointLayer.features[ind].geometry;//gets geometry of point
+			
+			var pline = new OpenLayers.Geometry.LineString(points);//adds point to new linestring feature
+			var fL= new OpenLayers.Feature.Vector(pline);//get feature from linestring of point
 		
-			editingLayer.addFeatures(fL);
-			points= [0];	
+			editingLayer.addFeatures(fL);//add feature of point to editingLayer
+			points= [0];	//empties point layer;
 		}
         
-        
+    //---------split function        
 		var split = new OpenLayers.Control.Split({
 			layer: editingLayer,
 			eventListeners: {
@@ -140,25 +135,23 @@ var map = new OpenLayers.Map('map', {
 		});
 		  
 
-// Snapping
-// two Snapping variables are necessary because there are two layers with geometries
-		  
+	//--------snap function			  
 	var snap = new OpenLayers.Control.Snapping({
 				defaults:{
 					tolerance: 40,
-					edge: false,
-					node: true,
-					vertex: false
+					edge: false,	//no snapping on edges
+					node: true,		// snapping on nodes allowed
+					vertex: false	//no snapping on vertices
 				},
                 layer: editingLayer,
-                targets: [editingLayer, pointLayer],
+                 targets: [editingLayer, pointLayer],//allows snapping of point- and editingLayer
                 greedy: false
             });
-            snap.activate();
+            snap.activate();//activates  snapping
 			
 	
 
-	var snap2 = new OpenLayers.Control.Snapping({
+	var snap2 = new OpenLayers.Control.Snapping({//enables both layers to be snapped
 				defaults:{
 					tolerance: 40,
 					edge: false,
@@ -173,7 +166,7 @@ var map = new OpenLayers.Map('map', {
             snap2.activate();
 	
 			
-  // init the editing toolbar and a basic selection control
+ //--------controls options to interact with map content
          var drawControls ={
 			point: new OpenLayers.Control.DrawFeature(pointLayer,
                         OpenLayers.Handler.Point),
@@ -187,33 +180,30 @@ var map = new OpenLayers.Map('map', {
 						onSelect: showSelected,
 						clickout: true, toggle: true,
 						multiple: false, hover: false,
-						toggleKey: "ctrlKey", // ctrl key removes from selection
-						multipleKey: "shiftKey", // shift key adds to selection
+						toggleKey: "ctrlKey",
+						multipleKey: "shiftKey", 
 						box: true,
 						click: true
 					}),
-					
-								
-					
 			split: split
 		};		
 		
 		
-
+//------displays the selected checkboxes again 	
 		function showSelected(feature){
-			selectedFeature=feature;
+			selectedFeature=feature;//gets selected feature
 			var iodineSel, evacuationSel, protecting_maskSel, residenceSel;
-			if(feature.attributes["actions"]){
-				iodineSel = feature.attributes.actions.includes("iodine");
-				evacuationSel = feature.attributes.actions.includes("evacuation");
-				protecting_maskSel = feature.attributes.actions.includes("protecting_mask");
+			if(feature.attributes["actions"]){//checks if actions array has values
+				iodineSel = feature.attributes.actions.includes("iodine");//assigns true if iodine was checked
+				evacuationSel = feature.attributes.actions.includes("evacuation");//assigns true if evacuation was checked
+				protecting_maskSel = feature.attributes.actions.includes("protecting_mask");//assigns true if protecting_mask was checked
 			}else{
-				iodineSel = false;
+				iodineSel = false;// if it wasn't checked assigns false
 				evacuationSel = false;
 				protecting_maskSel = false;
 			}
-			residenceSel = feature.attributes.residence;
-			$("#protecting_maskC").attr('checked', protecting_maskSel);
+			residenceSel = feature.attributes.residence;//gets residence value
+			$("#protecting_maskC").attr('checked', protecting_maskSel);//checks the boxes if true
 			$("#iodineC").attr('checked', iodineSel);
 			$("#evacuationC").attr('checked', evacuationSel);
 			$("#residence").val(residenceSel);
@@ -221,10 +211,10 @@ var map = new OpenLayers.Map('map', {
 			console.log($('.daterangepickerCon').data('daterangepicker'))
 			$('.daterangepickerCon').data('daterangepicker').setStartDate(feature.attributes.begin);
 			$('.daterangepickerCon').data('daterangepicker').setEndDate(feature.attributes.end);
-			$("#wPSContainer").show('fade', 300);
+			$("#wPSContainer").show('fade', 300);//opens info box
 		}
 		
-
+	//-----saves changes to editingLayer attributes
 		function saveChanges(){
 			var actions = Array(0);
 			selectedFeature.attributes.begin = $('.daterangepickerCon').data('daterangepicker').startDate;
@@ -273,8 +263,9 @@ var map = new OpenLayers.Map('map', {
 			toggleControl(element);
 		}
 		
-		//---------------------Zeichenfunktion-----------------------------------
-		  function toggleControl(element) {
+	//---------checkes which draw control is activated-----------------------------------
+	
+	function toggleControl(element) {
 				
 				for(key in drawControls) {
 					var control = drawControls[key];
@@ -286,10 +277,11 @@ var map = new OpenLayers.Map('map', {
 					}
 				}
 			}
+	//----------projects coordinates of editingLayer to WGS84			
 		function project(){
 			for (var i = 0; i<editingLayer.features.length; i++){
 				editingLayer.features[i].geometry.transform(new OpenLayers.Projection("EPSG:3857"),new OpenLayers.Projection("EPSG:4326"));
-				console.log("e: "+ i);
+				
 			}
 		}
 
@@ -414,16 +406,15 @@ $.ajax({url: 'http://router.project-osrm.org/route/v1/cycling/8.4044366,49.01406
 		pointArray.length = 0;
 
 		
-      for (i = 0; i< test.length; i++){
+      for (i = 0; i< test.length; i++){//pushes coordinates to point array
         	pointArray.push(new OpenLayers.Geometry.Point( test[i][0], test[i][1]).transform(epsg4326, projectTo));
         	
         }
-		route_line = new OpenLayers.Geometry.LineString(pointArray);
+		route_line = new OpenLayers.Geometry.LineString(pointArray);//creates linestring of routing points
 
 
-		var routeStyle = new OpenLayers.StyleMap({
+		var routeStyle = new OpenLayers.StyleMap({//assigns style for the route
 	
-				
 				"default": 	new OpenLayers.Style({
 		
 			    strokeColor: "#ff9933",
@@ -434,11 +425,9 @@ $.ajax({url: 'http://router.project-osrm.org/route/v1/cycling/8.4044366,49.01406
             })
 		});
 		
-		
-		
-    	var vectorSource= new OpenLayers.Feature.Vector( pointArray);
-		vectorLayer = new OpenLayers.Layer.Vector("Vector");
-		vectorLayer.addFeatures([vectorSource]);
+    	var vectorSource= new OpenLayers.Feature.Vector( pointArray);//creates feature layer of point array
+		vectorLayer = new OpenLayers.Layer.Vector("Vector");// new vector layer 
+		vectorLayer.addFeatures([vectorSource]);//features added to vector layer
 		
 		var feature = new OpenLayers.Feature.Vector(route_line, routeStyle);
 		
@@ -446,10 +435,10 @@ $.ajax({url: 'http://router.project-osrm.org/route/v1/cycling/8.4044366,49.01406
     	var vectorLayer = new OpenLayers.Layer.Vector();
     	
     	vectorLayer.addFeatures([feature]);
-		var clone = vectorLayer.clone();
-		editingLayer.addFeatures(clone.features);
+		var clone = vectorLayer.clone();//duplicates vector layer
+		editingLayer.addFeatures(clone.features);//add features to editingLayer
 		
-		vectorLayer.destroyFeatures();
+		vectorLayer.destroyFeatures();//delete all features from vectorLayer
 		vectorSource.destroy();
 		route_line.length = 0;
 		
