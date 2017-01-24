@@ -200,7 +200,7 @@ var map = new OpenLayers.Map('map', {
 						multipleKey: "shiftKey", // shift key adds to selection
 						box: true,
 						click: true
-					}),
+					}).transform(new OpenLayers.Projection("EPSG:4326"),new OpenLayers.Projection("EPSG:3857")),
 				
 					
 								
