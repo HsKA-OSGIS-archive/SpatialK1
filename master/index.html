@@ -64,7 +64,7 @@
                 <div class="tFieldPLUSButton">
                 <input type="text" class="locSearch" id="stop" name="destination_place" placeholder="Zielort" onkeypress="if(event.keyCode==13){document.getElementById('DestButton').click()}"/>
 
-                <div > <img class="searchButton" src="./Images/search.svg" id="DestButton" onClick="addr_search('stop')"img></div>
+                <div > <img class="searchButton" src="./Images/search.svg" id="DestButton" onClick="$('#wPContainer').show('fade', 300);addr_search('stop')"img></div>
 				</div>
             <div id="resultsstop" class="searchResult">
             </div>
