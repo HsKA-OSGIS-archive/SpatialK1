@@ -8,6 +8,7 @@ var elem;
 var actions;
 
 var map = new OpenLayers.Map('map', {
+
                 layers: [
                     new OpenLayers.Layer.OSM('OSM'),
                     new OpenLayers.Layer.OSM('OpenCycleMap',
@@ -23,9 +24,9 @@ var map = new OpenLayers.Map('map', {
 
                    //new OpenLayers.Control.PanZoomBar(),
 
-                    new OpenLayers.Control.LayerSwitcher({
+                    /*new OpenLayers.Control.LayerSwitcher({
                         'ascending': true
-                    }),
+                    }),*/
                     new OpenLayers.Control.ScaleLine(),
                     new OpenLayers.Control.MousePosition(),
                     new OpenLayers.Control.SelectFeature(),
@@ -190,9 +191,9 @@ var map = new OpenLayers.Map('map', {
 			select: new OpenLayers.Control.SelectFeature(
 					editingLayer,
 					{
-						layers:[pointLayer, editingLayer],
+						layer:editingLayer,
 						onSelect: returnSelected,
-						clickout: true, toggle: false,
+						clickout: true, toggle: true,
 						multiple: false, hover: false,
 						toggleKey: "ctrlKey", // ctrl key removes from selection
 						multipleKey: "shiftKey", // shift key adds to selection
