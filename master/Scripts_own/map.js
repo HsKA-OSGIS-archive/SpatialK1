@@ -176,7 +176,8 @@ var map = new OpenLayers.Map('map', {
 				},
                 layer: pointLayer,
                 targets: [editingLayer, pointLayer],
-                greedy: false
+                greedy: false,
+                
             });
             snap2.activate();
 	
