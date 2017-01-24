@@ -10,18 +10,19 @@
 <script src="Scripts_external/jquery-3.0.0.min.js/jquery-3.0.0.min.js" type="text/javascript"></script>
 <script src="Scripts_external/daterangepicker/moment.min.js"></script>
 <link href="Scripts_external/daterangepicker/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-
-<script src="Scripts_external/OpenLayers.bfs.js"></script>
-
-
-<link href="Styles/map_style.css" rel="stylesheet" type="text/css"/>
-
-	<script src="Scripts_external/jquery-ui.min.js"></script>
-	<link href="Scripts_external/jquery-ui.min.css"/>
-
 <script src="Scripts_external/daterangepicker/daterangepicker.js"></script>
 <link href="Scripts_external/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+<!-- library for OpenLayers-->
+<script src="Scripts_external/OpenLayers.bfs.js"></script>
 
+<!-- Style sheet-->
+<link href="Styles/map_style.css" rel="stylesheet" type="text/css"/>
+
+<!-- library for JQuery-->
+<script src="Scripts_external/jquery-ui.min.js"></script>
+<link href="Scripts_external/jquery-ui.min.css"/>
+
+<!-- own library-->
 <script src="Scripts_external/XML_Writer.js" type="text/javascript"></script>
 <script src="Scripts_own/XML_script.js" type="text/javascript"></script>
 <script src="Scripts_own/url_config.js" type="text/javascript"></script>
@@ -30,8 +31,8 @@
 </head>
 
 <body>
-    <div id="map"></div>
-    <div id="Container">
+    <div id="map"></div><!-- container for the map-->
+    <div id="Container"><!-- container for the user input-->
         <h1>DOSISRECHNER</h1>
       <form name="persData">
              <h2>Persönliche Informationen</h2>
@@ -53,7 +54,7 @@
                 </div><!-- END pregnancy -->
             </div><!-- END general personal data-->
             <div class="InputUnit"><!-- Departure info input -->
-                <h2>Aufenthalte</h2>
+                <h2>Aufenthalte</h2><!-- Routing container-->
                 <div class="tFieldPLUSButton">
                     <input class="locSearch" id="start" type="text" ng-model="model" name="start" placeholder="Start" value="" onkeypress="if(event.keyCode==13){document.getElementById('startButton').click()}"/>
                     <div > <img class="searchButton" src="./Images/search.svg" id="startButton" onclick="addr_search('start')"img></div>
@@ -64,41 +65,44 @@
                 <input type="text" class="locSearch" id="stop" name="destination_place" placeholder="Zielort" onkeypress="if(event.keyCode==13){document.getElementById('DestButton').click()}"/>
 
                 <div > <img class="searchButton" src="./Images/search.svg" id="DestButton" onClick="addr_search('stop')"img></div>
-            </div>
+				</div>
             <div id="resultsstop" class="searchResult">
             </div>
+            <div>
+                <input type="text" class="daterangepickerCon" name="timerange"/>
+            </div>
             <div class="button" id= "rButton" onClick="routing()">Route automatisch berechnen</div>
-            <h2>Route einzeichnen</h2>
+            <h2>Route einzeichnen</h2><!-- options for manual route creation-->
             <div id='buttoncontainer'>
-               <img class='geomButton' src="./Images/house.svg" id="point" onClick="resetSelected(); checkStay(this.id);"></img>
-               <img class='geomButton' src="./Images/draw.svg" id="draw" onClick="resetSelected(); toggleControl(this.id);"></img>
-               <img class='geomButton' src='./Images/select.svg' onClick="toggleControl('select')"></img>
-               <img class='geomButton' src='./Images/drag.svg' onClick="toggleControl('drag')"></img>
-               <img class='geomButton' src='./Images/split.svg' onClick="toggleControl('split')"></img>                    
-               <img class='geomButton' src='./Images/erase.svg' onClick="editingLayer.removeFeatures(editingLayer.selectedFeatures); editingLayer.removeFeatures(pointLayer.selectedFeatures);"></img>
+               <img class='geomButton' src="./Images/house.svg" id="point" onClick="resetSelected(); checkStay(this.id);"></img><!-- Draw point option-->
+               <img class='geomButton' src="./Images/draw.svg" id="draw" onClick="resetSelected(); toggleControl(this.id);"></img><!-- Draw line option-->
+               <img class='geomButton' src='./Images/select.svg' onClick="toggleControl('select')"></img><!-- Select option-->
+               <img class='geomButton' src='./Images/drag.svg' onClick="toggleControl('drag')"></img><!-- Drag option-->
+               <img class='geomButton' src='./Images/split.svg' onClick="toggleControl('split')"></img> <!-- split option-->                   
+               <img class='geomButton' src='./Images/erase.svg' onClick="editingLayer.removeFeatures(editingLayer.selectedFeatures); editingLayer.removeFeatures(pointLayer.selectedFeatures);"></img><!-- Delete option-->
            </div>
        </div>
        <div class="InputUnit">
 
-    <div class="button" onClick="JSONXML()">Dosis Berechnen</div>
+    <div class="button" onClick="JSONXML()">Dosis Berechnen</div><!-- get result button-->
 	</div>
 	</form>
 </div>
 </div>
 
-<div id="wPContainer" onload="$('#wPContainer').hide('fade', 300)">
+<div id="wPContainer" onload="$('#wPContainer').hide('fade', 300)"><!-- info window at start-->
 	<h2>Schutzmaßnahmen</h2>
     <form>
         <div class="hNameValueContainer">
-            <label class="elemName">Gasmaske</label>
+            <label class="elemName">Gasmaske</label><!-- gas mask option-->
             <input class="elemValue" type="checkbox" name="Gasmask" id="protecting_mask"  />
         </div>
         <div class="hNameValueContainer">
-            <label class="elemName">Iodtablette</label>
+            <label class="elemName">Iodtablette</label><!-- iodine tablette option-->
             <input class="elemValue" type="checkbox" name="Iodine" id="iodine" />
         </div>
         <div class="hNameValueContainer">
-            <label class="elemName">Evakuierung</label>
+            <label class="elemName">Evakuierung</label><!-- Evacuation option-->
             <input class="elemValue" type="checkbox" name="Evacuation" id="evacuation"/>
         </div>
     	<!--END protection mesures-->
@@ -110,26 +114,23 @@
 	            <option value="basement">Keller</option>
 	        </select>
     	</div><!-- END residens start-->
-        <div>
-            <input type="text" class="daterangepickerCon" name="timerange"/>
-        </div>
 		<div class="button" id="wPProppB" onclick="$('#wPContainer').hide('fade', 300);">Bestätigen</div>
     </form>
 </div>
 
-<div id="wPSContainer" onload="$('#wPContainer').hide('fade', 300)">
+<div id="wPSContainer" onload="$('#wPContainer').hide('fade', 300)"><!-- info window on select-->
     <h2>Schutzmaßnahmen</h2>
     <form>
         <div class="hNameValueContainer">
-            <label class="elemName">Gasmaske</label>
+            <label class="elemName">Gasmaske</label><!-- gas mask option-->
             <input class="elemValue" type="checkbox" name="Gasmask" id="protecting_maskC"  />
         </div>
         <div class="hNameValueContainer">
-            <label class="elemName">Iodtablette</label>
+            <label class="elemName">Iodtablette</label><!-- iodine tablette option-->
             <input class="elemValue" type="checkbox" name="Iodine" id="iodineC" />
         </div>
         <div class="hNameValueContainer">
-            <label class="elemName">Evakuierung</label>
+            <label class="elemName">Evakuierung</label><!-- evacuation option-->
             <input class="elemValue" type="checkbox" name="Evacuation" id="evacuationC"/>
         </div>
         <!--END protection mesures-->
@@ -145,26 +146,26 @@
     </form>
 </div>
 
-        <div id="ResponseContainer">
+        <div id="ResponseContainer"><!-- result container-->
              <div class="InputUnit">
             <h1>BERECHNETE DOSIS</h1> 
             </div>
             <form name="wps_response"> 
                 <div class = "vNameValueContainer">
                     <h2>Knochenmark</h2>
-                     <label id="knochenID" class= "respValue">Dosis</label>
+                     <label id="knochenID" class= "respValue">Dosis</label><!-- displays result-->
                 </div>
                 <div class = "vNameValueContainer">
                 <h2>Fötus</h2>
-                 <label id="foetusID" class= "respValue">Dosis</label>
+                 <label id="foetusID" class= "respValue">Dosis</label><!-- displays result-->
                 </div>
                 <div  class = "hNameValueContainer">
                 <h2>Schilddrüse</h2>
-                <label id="schildID" class= "respValue">Dosis</label>
+                <label id="schildID" class= "respValue">Dosis</label><!-- displays result-->
                 </div>
                 <div class = "hNameValueContainer">
                 <h2>Effektive Dosis</h2>
-                <label id="effectID" class= "respValue">Dosis</label>
+                <label id="effectID" class= "respValue">Dosis</label><!-- displays result-->
                 </div>
 
 
@@ -172,7 +173,7 @@
             </form>
         </div>
 		
-				<div id="InfoBox" >
+				<div id="InfoBox" ><!-- info box for user -->
              <div class="InputUnit" >
             <h1>Anleitung</h1> 
             </div>
@@ -184,10 +185,10 @@
 				<p>Zunächst müssen, für das Bewegungsprofil allgemeingültige, Informationen zum Nutzer angegeben werden (Alter, vorliegende Schwangerschaft). Die Angaben werden einmalig für das gesamte Bewegungsprofil abgefragt.</p>
 				<h3>Erstellung des Bewegungsprofils</h3>
 				<p>Anschließend muss die Route bzw. Routenabschnitte angegeben werden. Eine Route muss in verschiedene Abschnitte unterteilt werden, sobald sich ein oder mehrere Routenattribute (bspw. Aufenthaltsdauer) ändern. 
-Die Routengeometrie kann anhand der Routingfunktion oder alternativ durch die manuelle Erstellung von Punkt- und Liniengeometrien erstellt werden. Bei längerer Aufenthaltsdauer an einem Ort muss dies als einzelner Routenabschnitt in Form einer Punktgeometrie angegeben werden. Andernfalls ist die Route als Liniengeometrie zu erstellen.
-Sobald die Geometrie eines Routenabschnitts erstellt wurde, müssen im Anschluss die Attribute festgelegt werden. Nachfolgend können weitere Routenabschnitte erstellt werden. Attribute eines Routenabschnittes können nachträglich überarbeitet werden, indem der betreffende Abschnitt selektiert wird.
-Wenn alle Routenabschnitte erstellt sind kann die Strahlendosis durch einen Klick auf den Button „Dosis berechnen“ berechnet werden. 
-</p>
+				Die Routengeometrie kann anhand der Routingfunktion oder alternativ durch die manuelle Erstellung von Punkt- und Liniengeometrien erstellt werden. Bei längerer Aufenthaltsdauer an einem Ort muss dies als einzelner Routenabschnitt in Form einer Punktgeometrie angegeben werden. Andernfalls ist die Route als Liniengeometrie zu erstellen.
+				Sobald die Geometrie eines Routenabschnitts erstellt wurde, müssen im Anschluss die Attribute festgelegt werden. Nachfolgend können weitere Routenabschnitte erstellt werden. Attribute eines Routenabschnittes können nachträglich überarbeitet werden, indem der betreffende Abschnitt selektiert wird.
+				Wenn alle Routenabschnitte erstellt sind kann die Strahlendosis durch einen Klick auf den Button „Dosis berechnen“ berechnet werden. 
+				</p>
 				
                 
 
