@@ -229,6 +229,8 @@ var map = new OpenLayers.Map('map', {
 			var actions = Array(0);
 			selectedFeature.attributes.begin = $('.daterangepickerCon').data('daterangepicker').startDate;
 			selectedFeature.attributes.end = $('.daterangepickerCon').data('daterangepicker').endDate;
+			console.log("$('.daterangepickerCon').data('daterangepicker').startDate");
+			console.log($('.daterangepickerCon').data('daterangepicker').startDate);
 			if($("#protecting_maskC").is(":checked") == true){
 				actions.push("protecting_mask")
 			}
