@@ -118,6 +118,7 @@ var map = new OpenLayers.Map('map', {
 				else{
 					editingLayer.features[arrLength-1].attributes["actions"]=[];
 				}
+				editingLayer.features[arrLength-1].geometry.transform(new OpenLayers.Projection("EPSG:3857"),new OpenLayers.Projection("EPSG:4326"));
 			}
 			
 		}
