@@ -1,15 +1,16 @@
-function log(input){
+//quick access to console.log
+function log(input){ 
 	console.log(input);
 }
-
+//global variables
 var selectedFeature;
-
 var elem;
 var actions;
 
+//implement map layer
 var map = new OpenLayers.Map('map', {
 
-                layers: [
+                layers: [ //gets layers
                     new OpenLayers.Layer.OSM('OSM'),
                     new OpenLayers.Layer.OSM('OpenCycleMap',
                     ['http://a.tile.opencyclemap.org/cycle/${z}/${x}/${y}.png',
@@ -19,28 +20,19 @@ var map = new OpenLayers.Map('map', {
                 controls: [
                     new OpenLayers.Control.Navigation(),
                     new OpenLayers.Control.Attribution(),
-
-                    //new OpenLayers.Control.PanZoomBar(),
-
-                   //new OpenLayers.Control.PanZoomBar(),
-
-                    /*new OpenLayers.Control.LayerSwitcher({
-                        'ascending': true
-                    }),*/
                     new OpenLayers.Control.ScaleLine(),
                     new OpenLayers.Control.MousePosition(),
                     new OpenLayers.Control.SelectFeature(),
                     new OpenLayers.Control.KeyboardDefaults()
                 ],
-                //projection: new OpenLayers.Projection("EPSG:4326"),
                 center: new OpenLayers.LonLat(8.4028, 49.011 ).transform('EPSG:4326', 'EPSG:3857'),
                 zoom: 13
            
             });
-     
+			//add controls to map
 			map.addControl(new OpenLayers.Control.MousePosition());
 
-	 
+			//flashes splitted features
 			function flashFeatures(features, index) {
 				if(!index) {
 					index = 0;
@@ -350,11 +342,7 @@ function addr_search(id){
 					
 					
 	            },
-	            0: function (response) {
-	                //alert('Not working!');
-					var error = "Der Nominatim Server is derzeit nicht verfügbar. ";
-				  showPopup(error, "0 Not working!");
-	            },
+	            
 	            404: function (response){
 	            	//alert('Server not found');
 					var error = "Der Nominatim Server is derzeit nicht verfügbar. ";
@@ -466,11 +454,7 @@ $.ajax({url: 'http://router.project-osrm.org/route/v1/cycling/8.4044366,49.01406
 					
 					
 	            },
-	            0: function (response) {
-	                //alert('Not working!');
-					var error = "Der OSRM Server is derzeit nicht verfügbar. ";
-				  showPopup(error, "0 Not working!");
-	            },
+	            
 	            404: function (response){
 	            	//alert('Server not found');
 					var error = "Der OSRM Server is derzeit nicht verfügbar. ";
