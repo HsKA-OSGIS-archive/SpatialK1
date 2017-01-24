@@ -18,6 +18,7 @@ response_var = {
 
 // reads the JSON from the layer in the map
 function inJson(){
+	project();
 	var geoJSON = new OpenLayers.Format.GeoJSON();
 	json_var = geoJSON.write( editingLayer.features );
 	console.log('json: ' +json_var);

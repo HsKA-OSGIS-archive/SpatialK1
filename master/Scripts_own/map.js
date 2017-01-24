@@ -200,8 +200,7 @@ var map = new OpenLayers.Map('map', {
 						multipleKey: "shiftKey", // shift key adds to selection
 						box: true,
 						click: true
-					}).transform(new OpenLayers.Projection("EPSG:4326"),new OpenLayers.Projection("EPSG:3857")),
-				
+					}),
 					
 								
 					
@@ -290,7 +289,12 @@ var map = new OpenLayers.Map('map', {
 					}
 				}
 			}
-
+		function project(){
+			for (var i = 0; i<editingLayer.features.length; i++){
+				editingLayer.features[i].geometry.transform(new OpenLayers.Projection("EPSG:3857"),new OpenLayers.Projection("EPSG:4326"));
+				console.log("e: "+ i);
+			}
+		}
 
 //--------------- Geocoding Funktion mit Nominatim---------------------
 var inp;
