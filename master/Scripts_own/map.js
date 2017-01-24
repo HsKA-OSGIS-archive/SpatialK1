@@ -97,7 +97,7 @@ var map = new OpenLayers.Map('map', {
 		function setVariables(){	
 			editingLayer.refresh();
 			actions= [];
-			var loopAactions  = ["iodine", "evacuation", "protecting_mask", "residence"];
+			var loopAactions  = ["residence","iodine", "evacuation", "protecting_mask"];
 			arrLength = editingLayer.features.length;
 			editingLayer.features[arrLength-1].attributes["begin"]=begin;
 			editingLayer.features[arrLength-1].attributes["end"]=fertig;
@@ -109,6 +109,7 @@ var map = new OpenLayers.Map('map', {
 					editingLayer.features[arrLength-1].attributes[elem.id]=elem.value;
 				}
 				else if(elem.checked  == true){
+					console.log(actions);
 					actions.push(elem.id);
 					editingLayer.features[arrLength-1].attributes["actions"]=actions;
 				}
@@ -219,8 +220,9 @@ var map = new OpenLayers.Map('map', {
 			residenceSel = feature.attributes.residence;
 			$("#protecting_mask").checked = protecting_maskSel;
 			$("#iodine").checked = iodineSel;
-			$("#evacuation").checked = evacuationSel;
 			$("#residence").val(residenceSel);
+			$("#evacuation").checked = evacuationSel;
+			
 			$("#wPSContainer").show('fade', 300);
 		}
 
@@ -241,8 +243,9 @@ var map = new OpenLayers.Map('map', {
 		function resetSelected(feature){
 			$("#protecting_mask").checked = false;
 			$("#iodine").checked = false;
-			$("#evacuation").checked = false;
 			$("#residence").val("outside");
+			$("#evacuation").checked = false;
+			
 			$("#wPContainer").show('fade', 300);
 		}
 		
@@ -379,7 +382,7 @@ $.ajax({url: 'http://router.project-osrm.org/route/v1/cycling/8.4044366,49.01406
 	            200:  $.getJSON('http://router.project-osrm.org/route/v1/' + properties + '/'+lon_start+','+lat_start+';'+ lon_stop +','
 	+ lat_stop + '?alternatives=true&steps=false&geometries=geojson&overview=full', function (data) {
         var test = data.routes[0].geometry.coordinates;
-         epsg4326 =  new OpenLayers.Projection("EPSG:4326");
+         epsg4326 =  new OpenLayers.Projection("EPSG:3857");
         projectTo = map.getProjectionObject();
 		
 		pArray.length = 0;

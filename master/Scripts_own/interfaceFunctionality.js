@@ -20,6 +20,8 @@ function JSONXML(){
 			 
 
 			  success: function (response) {
+			  	console.log("vx");
+			  	console.log(vx);
 				  
                 console.log(response);
 				//console.log("Status: " + response.status);
