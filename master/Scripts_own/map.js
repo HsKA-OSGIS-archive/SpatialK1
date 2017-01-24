@@ -189,9 +189,9 @@ var map = new OpenLayers.Map('map', {
 						OpenLayers.Handler.Path),			
 			drag: new OpenLayers.Control.DragFeature(editingLayer),
 			select: new OpenLayers.Control.SelectFeature(
-					editingLayer,
+					[editingLayer, pointLayer],
 					{
-						layer:editingLayer,
+						//layer:editingLayer,
 						onSelect: returnSelected,
 						clickout: true, toggle: true,
 						multiple: false, hover: false,
@@ -256,9 +256,9 @@ var map = new OpenLayers.Map('map', {
 		}
 
 		function resetSelected(feature){
-			$("#protecting_mask").prop("checked",false);
-			$("#iodine").prop("checked",false);
-			$("#evacuation").prop("checked",false);
+			$("#protecting_mask").is(":checked") == false;
+			$("#iodine").is(":checked") == false;
+			$("#evacuation").is(":checked") == false;
 			$("#residence").val("outside");
 			$("#wPContainer").show('fade', 300);
 		}
