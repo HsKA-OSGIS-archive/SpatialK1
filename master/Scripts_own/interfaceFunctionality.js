@@ -5,41 +5,41 @@ var ageGroup = "A1";
 var stadiumFoetus = "0";
 
 
+
+
+
+
+
 function JSONXML(){
 		
 			inJson();
 			createXML();
 			//debugger;
+			
+			
 			$.post({
-			  //url: "http://localhost",
 			  url: url_bfs,
 
 			  data: vx,
 			  //data: {"foo":"bar"},
 
-			 
 
-			  success: function (response) {
-			  	console.log("vx");
-			  	console.log(vx);
+			  success: function(response){
 				  
-                console.log(response);
-				//console.log("Status: " + response.status);
-				console.log("ResponseText: " + response.responseText);
-				response_var = response;
-				},
-				
-				
-			  error: function(jqXHR){
-				  console.log('we know it does not work yet');
-				  console.log(jqXHR.status);
-				  //alert("Der BfS-Server ist im Moment nicht verfügbar - Status: "+ jqXHR.status);
-				  }//,
+				  console.log(response);
+				  response_var = response;
+
+			  },
+			  error: function(){console.log('we know it does not work yet');},
 			  
-			  
-			  
-			  //dataType: "text/xml"
 			});
+			
+			
+			
+			var request = new XMLHttpRequest();
+			request.open("POST",vx);
+
+			
             readResponse();
             writeResult();
 			document.getElementById("ResponseContainer").style.display = "block";
