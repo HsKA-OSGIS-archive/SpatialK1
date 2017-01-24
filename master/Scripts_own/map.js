@@ -113,12 +113,10 @@ var map = new OpenLayers.Map('map', {
 				else if(elem.checked  == true){
 					console.log(actions);
 					actions.push(elem.id);
-					editingLayer.features[arrLength-1].attributes["actions"]=actions;
+					
 				}
-				else{
-					editingLayer.features[arrLength-1].attributes["actions"]=[];
-				}
-				editingLayer.features[arrLength-1].geometry;
+				
+				editingLayer.features[arrLength-1].attributes["actions"]=actions;
 			}
 			
 		}
@@ -225,9 +223,9 @@ var map = new OpenLayers.Map('map', {
 				protecting_maskSel = false;
 			}
 			residenceSel = feature.attributes.residence;
-			$("#protecting_mask").checked == protecting_maskSel;
-			$("#iodine").checked == iodineSel;
-			$("#evacuation").checked == evacuationSel;
+			$("#protecting_maskC").attr('checked', protecting_maskSel);
+			$("#iodineC").attr('checked', iodineSel);
+			$("#evacuationC").attr('checked', evacuationSel);
 			$("#residence").val(residenceSel);
 			$("#wPSContainer").show('fade', 300);
 		}
