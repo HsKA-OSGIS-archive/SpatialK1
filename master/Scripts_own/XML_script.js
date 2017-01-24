@@ -78,19 +78,19 @@ function createXML(){
 		  '<ows:Identifier>result</ows:Identifier>'+
 		'</wps:RawDataOutput>'+
   '</wps:ResponseForm>'+
-'</wps:Execute>'
+'</wps:Execute>';
   
-  
-  
+console.log(typeof vx);  
+
   
 
-  console.log("XML as String " +vx);
+  //console.log("XML as String " +vx);
   
   
   // creates a XML-Object from the String
   parser = new DOMParser();
 	xml_var = parser.parseFromString(vx, "text/xml");
-	
+console.log(typeof xml_var);	
 	//console.log("XML as object " + xml_var);
   
 }
