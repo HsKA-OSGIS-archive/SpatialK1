@@ -65,7 +65,7 @@ function writeResult(){
    
 }
 
-$(function(){	
+var inTimeRange = $(function(){	
 			$('.daterangepickerCon').daterangepicker({
     			locale : {
 					"format": "DD.MMM.YYYY HH:MM",
@@ -110,8 +110,6 @@ $(function(){
 				start = start.format('DD.MM.YYYY HH:MM');
 				begin = start;
 				fertig = end;
-			});;
+			});
 		})
-		//$('#start').keyup($.debounce(addr_search(), 300))
-		
-		
+	

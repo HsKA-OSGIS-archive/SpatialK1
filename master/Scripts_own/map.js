@@ -217,12 +217,18 @@ var map = new OpenLayers.Map('map', {
 			$("#iodineC").attr('checked', iodineSel);
 			$("#evacuationC").attr('checked', evacuationSel);
 			$("#residence").val(residenceSel);
+			console.log("$('.daterangepickerCon').data('daterangepicker')");
+			console.log($('.daterangepickerCon').data('daterangepicker'))
+			$('.daterangepickerCon').data('daterangepicker').setStartDate(feature.attributes.begin);
+			$('.daterangepickerCon').data('daterangepicker').setEndDate(feature.attributes.end);
 			$("#wPSContainer").show('fade', 300);
 		}
 		
 
 		function saveChanges(){
 			var actions = Array(0);
+			selectedFeature.attributes.begin = $('.daterangepickerCon').data('daterangepicker').startDate;
+			selectedFeature.attributes.end = $('.daterangepickerCon').data('daterangepicker').endDate;
 			if($("#protecting_maskC").is(":checked") == true){
 				actions.push("protecting_mask")
 			}
@@ -531,7 +537,7 @@ $.ajax({url: 'http://router.project-osrm.org/route/v1/cycling/8.4044366,49.01406
 		  
 	  
 	  
-	}
+	} 
 
 
 

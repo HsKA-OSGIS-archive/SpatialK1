@@ -142,6 +142,9 @@
                 <option value="basement">Keller</option>
             </select>
         </div><!-- END residens start-->
+        <div>
+            <input type="text" class="daterangepickerCon" name="timerange"/>
+        </div>
         <div class="button" id="wPProppB" onclick="saveChanges();$('#wPSContainer').hide('fade', 300);">Bestätigen</div>
     </form>
 </div>
@@ -196,8 +199,8 @@
 		
 		<div id="Info" onClick="div_change('InfoBox', 'icon1', 'icon2')">
 		  
-		  <img id="icon1" src="images/close_icon.svg"  width="25"><img>
-		  <img id="icon2" src="images/info_icon.svg" width="25"><img>
+		  <img id="icon1" style="display:block" src="images/close_icon.svg"  width="25"><img>
+		  <img id="icon2" style="display:none" src="images/info_icon.svg" width="25"><img>
 		 <script language="JavaScript">	
 
 		 
