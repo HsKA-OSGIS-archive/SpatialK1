@@ -192,7 +192,7 @@ var map = new OpenLayers.Map('map', {
 					[editingLayer, pointLayer],
 					{
 						//layer:editingLayer,
-						onSelect: returnSelected,
+						onSelect: showSelected,
 						clickout: true, toggle: true,
 						multiple: false, hover: false,
 						toggleKey: "ctrlKey", // ctrl key removes from selection
@@ -206,13 +206,10 @@ var map = new OpenLayers.Map('map', {
 			split: split
 		};		
 		
-		function returnSelected(feature){
-			showSelected(feature)
-			selectedFeature = feature;
-			return feature;
-		}
+		
 
 		function showSelected(feature){
+			selectedFeature=feature;
 			var iodineSel, evacuationSel, protecting_maskSel, residenceSel;
 			if(feature.attributes["actions"]){
 				iodineSel = feature.attributes.actions.includes("iodine");
