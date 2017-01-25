@@ -115,9 +115,8 @@ var map = new OpenLayers.Map('map', {
 			var x, y;
 			var points=[];
 			var ind = pointLayer.features.length-1; //gets current index of point feature
-				//var points = pointLayer.features[ind].geometry;//gets geometry of point
 				points.push(pointLayer.features[ind].geometry);
-				points.push(pointLayer.features[ind].geometry);
+				points.push(pointLayer.features[ind].geometry);//inserts two geometries for one feature to get start and end point
 			var pline = new OpenLayers.Geometry.LineString(points);//adds point to new linestring feature
 			var fL= new OpenLayers.Feature.Vector(pline);//get feature from linestring of point
 		
