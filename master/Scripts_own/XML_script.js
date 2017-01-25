@@ -31,13 +31,13 @@ function inJson(){
 
 function readResponse(){
 	//console.log("readresponse");
-	rbm = ((response_var.red_bone_marrow)*1000).toFixed(2);
+	rbm = (response_var.red_bone_marrow).toFixed(2);
 	rbm = rbm + " mSv";
-	foetus = ((response_var.foetus_1)*1000).toFixed(4);
+	foetus = (response_var.foetus_1).toFixed(4);
 	foetus = foetus +  " mSv";
-	thyroid = ((response_var.thyroid)*1000).toFixed(2);
+	thyroid = (response_var.thyroid).toFixed(2);
 	thyroid = thyroid + " mSv";
-	dose = ((response_var.eff_dose)*1000).toFixed(2);
+	dose = (response_var.eff_dose).toFixed(2);
 	dose = dose +" mSv";
 	
 }
